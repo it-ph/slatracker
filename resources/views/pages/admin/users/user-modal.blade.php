@@ -22,8 +22,7 @@
                         <label id="emailError" class="error" style="display:none"></label>
                     </div>
                     <div class="form-group">
-                        {{-- <label for="client_id" class="col-form-label"><strong>Client:<span class="important">*</span></strong></label> --}}
-                        <label for="client_id" class="col-form-label"><strong>Client:</strong></label>
+                        <label for="client_id" class="col-form-label"><strong>Client:<span class="important">*</span></strong></label>
                         <select class="form-control select2" name="client_id" id="client_id" style="width:100%;">
                             <option value="" selected disabled>-- Select Client -- </option>
                                 @foreach ($clients as $client )

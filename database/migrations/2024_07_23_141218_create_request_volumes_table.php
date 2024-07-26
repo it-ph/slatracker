@@ -18,7 +18,7 @@ class CreateRequestVolumesTable extends Migration
             $table->string('name'); // number of pages E.g 1, 2, 3, etc
             $table->string('created_by');
             $table->string('updated_by')->nullable();
-            $table->string('status');
+            $table->string('status')->default('active');;
             $table->softDeletes();
             $table->timestamps();
         });

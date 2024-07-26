@@ -4,109 +4,70 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use App\Models\User;
-use Illuminate\Http\Request;
 use App\Models\Client;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Facades\App\Http\Helpers\CredentialsHelper;
 use App\Http\Controllers\GlobalVariableController;
 
 class PageController extends GlobalVariableController
 {
-    private $credentials;
     public function __construct()
     {
         parent::__construct();
     }
 
-    /** Getter and Setter */
-    public function setCredentials()
+    public function thecredentials()
     {
-        $user = User::with('theroles:id,user_id,name')->findOrFail(auth()->user()->id);
-        $roles = [];
-        foreach ($user->theroles as $role) {
-            array_push($roles, $role->name);
-        }
-
-        $theroles = '';
-        foreach ($roles as $role) {
-            $theroles .= !next($roles) ? $role : $role .' | ';
-        }
-
-        $userdata = [
-                'id'        => $user->id,
-                'username'  => ucwords($user->username,'.'),
-                'email'  => strtolower($user->email),
-                'roles'     => $roles,
-                'theroles' => ucwords($theroles)
-        ];
-        $this->credentials = $userdata;
-    }
-
-    public function getCredentials()
-    {
-        return $this->credentials;
+        return CredentialsHelper::get_set_credentials();
     }
 
     /** Home */
     public function showHome()
     {
-        $this->setCredentials();
-        $user = $this->getCredentials();
-
+        $user = $this->thecredentials();
         return view('index', compact('user'));
     }
 
     /** Add Job */
     public function addJob()
     {
-        $this->setCredentials();
-        $user = $this->getCredentials();
-
+        $user = $this->thecredentials();
         return view('pages.admin.jobs.create', compact('user'));
     }
 
     /** Users */
     public function showUsers(Request $request)
     {
-        $this->setCredentials();
-        $user = $this->getCredentials();
-
+        $user = $this->thecredentials();
         return view('pages.admin.users.list', compact('user'));
     }
 
     /** Clients */
     public function showClients()
     {
-        $this->setCredentials();
-        $user = $this->getCredentials();
-
-
+        $user = $this->thecredentials();
         return view('pages.admin.clients.list', compact('user'));
     }
 
     /** Request Types */
     public function showRequestTypes()
     {
-        $this->setCredentials();
-        $user = $this->getCredentials();
-
+        $user = $this->thecredentials();
         return view('pages.admin.request-types.list', compact('user'));
     }
 
     /** Request Volumes */
     public function showRequestVolumes()
     {
-        $this->setCredentials();
-        $user = $this->getCredentials();
-
+        $user = $this->thecredentials();
         return view('pages.admin.request-volumes.list', compact('user'));
     }
 
     /** Request SLAs */
     public function showRequestSLAs()
     {
-        $this->setCredentials();
-        $user = $this->getCredentials();
-
+        $user = $this->thecredentials();
         return view('pages.admin.request-slas.list', compact('user'));
     }
 

@@ -30,7 +30,7 @@ class RequestTypeStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required',Rule::unique('request_types')->ignore($this->edit_id)],
+            'name' => ['required',Rule::unique('request_types')->ignore($this->edit_id)->whereNull('deleted_at')],
         ];
     }
 

@@ -28,14 +28,17 @@
                 <div class="card-body">
                     <div class="row mb-3">
                         <div class="col-md-12">
-                            <button type="button" class="btn btn-primary btn-sm waves-effect waves-light" onclick="VOLUME.showModal()"><i class="fas fa-plus"></i> Create</button>
+                            <button type="button" class="btn btn-primary btn-sm waves-effect waves-light" onclick="REQUEST_VOLUME.showModal()"><i class="fas fa-plus"></i> Create</button>
                         </div>
                     </div>
-                    <table id="tbl_volumes" class="table table-bordered table-striped table-sm nowrap w-100">
+                    <table id="tbl_request_volumes" class="table table-bordered table-striped table-sm nowrap w-100">
                         <thead>
                             <tr>
-                                <th>Name</th>
+                                <th>Num Pages</th>
+                                <th>Created At </th>
+                                <th>Created By </th>
                                 <th>Updated At </th>
+                                <th>Updated By </th>
                                 <th width="5%" class="text-center">Action</th>
                             </tr>
                         </thead>

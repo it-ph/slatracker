@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use App\Traits\ResponseTraits;
 use Illuminate\Validation\Rule;
+use Facades\App\Http\Helpers\CredentialsHelper;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -29,12 +31,25 @@ class UserStoreRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'username' => ['required'],
-            'email' => ['required',Rule::unique('users')->ignore($this->edit_id)],
-            // 'client_id' => ['required'],
-            'role-ctr' => ['required'],
-        ];
+        $user = CredentialsHelper::get_set_credentials();
+        if(in_array('admin', $user['roles']))
+        {
+            return [
+                'username' => ['required'],
+                'email' => ['required',Rule::unique('users')->ignore($this->edit_id)],
+                // 'client_id' => ['required'],
+                'role-ctr' => ['required'],
+            ];
+        }
+        else
+        {
+            return [
+                'username' => ['required'],
+                'email' => ['required',Rule::unique('users')->ignore($this->edit_id)],
+                'client_id' => ['required'],
+                'role-ctr' => ['required'],
+            ];
+        }
     }
 
     public function messages()
@@ -43,7 +58,7 @@ class UserStoreRequest extends FormRequest
             'username.required' => 'FullName is required.',
             'email.required' => 'Email Address is required.',
             'email.unique' => 'Email Address is already exists.',
-            // 'client_id.required' => 'Client is required.',
+            'client_id.required' => 'Client is required.',
             'role-ctr.required' => 'Select atleast 1 Role.',
         ];
     }

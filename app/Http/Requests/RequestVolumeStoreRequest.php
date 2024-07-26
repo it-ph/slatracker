@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Traits\ResponseTraits;
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -29,7 +30,7 @@ class RequestVolumeStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required'],
+            'name' => ['required',Rule::unique('request_volumes')->ignore($this->edit_id)->whereNotNull('deleted_at')],
         ];
     }
 
@@ -37,6 +38,7 @@ class RequestVolumeStoreRequest extends FormRequest
     {
         return [
             'name.required' => 'Num Pages is required.',
+            'name.unique' => 'Num Pages already exists.',
         ];
     }
 

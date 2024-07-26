@@ -117,7 +117,7 @@ class TasksController extends GlobalVariableController
         try {
             $task = $this->model->findOrfail($id);
             $status = $request['status'];
-            
+
             $values = TaskHelper::getActualHandlingTime($task);
 
             $task->update([
@@ -151,7 +151,7 @@ class TasksController extends GlobalVariableController
         try {
             $task = $this->model->findOrfail($id);
             $status = $request['status'];
-            
+
             // resume handling time elapse
             // $actual_handling_time = "";
 
@@ -185,7 +185,7 @@ class TasksController extends GlobalVariableController
             $volume = $request['volume'];
             $remarks = $request['remarks'];
 
-            
+
 
             // $task->update([
             //     'status' => $status,
