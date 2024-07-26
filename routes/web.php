@@ -1,0 +1,245 @@
+<?php
+
+use App\Models\RequestType;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\JobController;
+use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\TasksController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ExportController;
+use App\Http\Controllers\ImportController;
+use App\Http\Controllers\ReportController;;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\RequestSLAController;
+use App\Http\Controllers\UserClientController;
+use App\Http\Controllers\RequestTypeController;
+use App\Http\Controllers\RequestVolumeController;
+use App\Http\Controllers\Auth\TwoFactorController;
+use App\Http\Controllers\ClientActivityController;
+use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\DashboardActivityController;
+
+// LOGIN
+Auth::routes(['register' => false]);
+
+
+Route::get('/', function () {
+    return redirect()->guest('/login');
+});
+
+// SSO
+// Route::group(['middleware' => ['web', 'guest']], function(){
+//     Route::get('login', [AuthController::class, 'login'])->name('login')->middleware('csp');
+//     Route::get('connect', [AuthController::class, 'connect'])->name('connect');
+// });
+
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
+
+Route::get('unauthorized', function () {
+    return view('errors.401');
+})->name('unauthorized');
+
+Route::get('/clear-cache', function() {
+    Artisan::call('cache:clear');
+    return "Cache is cleared";
+});
+
+/**
+ *
+ * REDIS CACHE CLEAR
+ */
+Route::GET('redis/clear-cache', function () {
+    Redis::flushdb();
+    echo 'redis cache cleared successfully!';
+});
+
+// 2FA
+// Route::GET('verify/resend', 'Auth\TwoFactorController@resend')->name('verify.resend');
+// Route::resource('verify', 'Auth\TwoFactorController')->only(['index', 'store']);
+
+// 2FA
+Route::GET('verify/resend', [TwoFactorController::class, 'resend'])->name('verify.resend');
+Route::GET('verify', [TwoFactorController::class, 'index'])->name('verify.index');;
+Route::POST('verify', [TwoFactorController::class, 'store'])->name('verify.store');;
+
+// FORGOT PASSWORD
+Route::GET('forgot-password', [ForgotPasswordController::class,'forgotPassword'])->name('forgot-password');
+Route::POST('forgot-password', [ForgotPasswordController::class,'submitForgotPassword'])->name('forgot.password.submit');
+Route::GET('forgot-password-verify/{request_key}', [ForgotPasswordController::class,'verifyForgotPassword'])->name('forgot.password.verify');
+Route::GET('successful-reset/{userId}/{password}/{request_key}', [ForgotPasswordController::class,'successfulForgotPassword'])->name('successful.verify.forgot.password');
+
+/**
+ *  START OF AUTHORIZE & ACTIVE USERS
+ */
+Auth::routes();
+Route::group(['middleware' => ['auth','twofactor','web','active.user']],function () {
+    Route::get('home', [PageController::class, 'showHome'])->name('home');
+    Route::get('index', [PageController::class, 'showHome'])->name('index');
+    // Route::get('home', [HomeController::class, 'index'])->name('home');
+    // Route::get('index', [HomeController::class, 'index'])->name('index');
+
+    // // Users' Activities
+    // Route::get('activities', [ClientActivityController::class, 'showActivities'])->name('activities');
+
+    // // Agent Task: Start / Update / Stop
+    // Route::get('/my-tasks/{status?}', [PageController::class, 'showAgentTasks'])->name('my-tasks.index');
+    // Route::group(['prefix' => 'my-task'],
+    //         function ()
+    //     {
+    //         Route::get('/{status?}', [TasksController::class,'agentTask'])->name('my-task.index');
+    //         Route::post('/store', [TasksController::class,'store'])->name('my-task.store');
+    //         Route::get('/show/{id}', [TasksController::class,'show'])->name('my-task.show');
+    //         Route::post('/update/{id}', [TasksController::class,'update'])->name('my-task.update');
+    //         Route::post('/stop/{id}', [TasksController::class,'stopTask'])->name('my-task.stop');
+    //         Route::post('/pause/{id}', [TasksController::class,'pauseTask'])->name('my-task.pause');
+    //         Route::post('/resume/{id}', [TasksController::class,'resumeTask'])->name('my-task.resume');
+
+    //     });
+
+    // Route::put('task/start/{taskId}', [TasksController::class, 'startTask'])->name('task.start');
+    // Route::put('task/updateStatus/{taskId}', [TasksController::class, 'updateTaskStatus'])->name('task.status.update');
+    // // Route::put('task/pause/{taskId}', [TasksController::class, 'pauseTask'])->name('task.pause');
+    // Route::put('task/resume/{taskId}', [TasksController::class, 'resumeTask'])->name('task.resume');
+    // Route::put('task/stop/{taskId}', [TasksController::class, 'stopTask'])->name('task.stop');
+
+    // Route::resource('task', TasksController::class);
+    // Route::get('tasks', [PageController::class, 'showAgentTaskLists'])->name('tasks.index');
+
+    /**
+     * START OF ADMIN, TL, MANAGER
+     */
+
+    // Route::group(['middleware' => ['tlom.admin'],], function ()
+    //     {
+            // JOBS
+            Route::get('/jobs', [PageController::class, 'showJobs'])->name('jobs.index');
+            Route::group(['prefix' => 'job'],
+            function ()
+            {
+                Route::get('/all', [JobController::class,'index'])->name('job.index');
+                Route::get('/create', [PageController::class,'addJob'])->name('job.create');
+                Route::post('/store', [JobController::class,'store'])->name('job.store');
+                Route::get('/show/{id}', [JobController::class,'show'])->name('job.show');
+                Route::post('/update/{id}', [JobController::class,'update'])->name('job.update');
+                Route::post('/delete/{id}', [JobController::class,'destroy'])->name('job.delete');
+            });
+
+            // CLIENTS
+            Route::get('/clients', [PageController::class, 'showClients'])->name('clients.index');
+            Route::group(['prefix' => 'client'],
+            function ()
+            {
+                Route::get('/all', [ClientController::class,'index'])->name('client.index');
+                Route::post('/store', [ClientController::class,'store'])->name('client.store');
+                Route::get('/show/{id}', [ClientController::class,'show'])->name('client.show');
+                Route::post('/update/{id}', [ClientController::class,'update'])->name('client.update');
+                Route::post('/delete/{id}', [ClientController::class,'destroy'])->name('client.delete');
+            });
+
+            // REQUEST
+            Route::group(['prefix' => 'request'],
+            function ()
+            {
+                // TYPES
+                Route::get('/types', [PageController::class, 'showRequestTypes'])->name('request-types.index');
+                Route::group(['prefix' => 'type'],
+                function ()
+                {
+                    Route::get('/all', [RequestTypeController::class,'index'])->name('request-type.index');
+                    Route::post('/store', [RequestTypeController::class,'store'])->name('request-type.store');
+                    Route::get('/show/{id}', [RequestTypeController::class,'show'])->name('request-type.show');
+                    Route::post('/update/{id}', [RequestTypeController::class,'update'])->name('request-type.update');
+                    Route::post('/delete/{id}', [RequestTypeController::class,'destroy'])->name('request-type.delete');
+                });
+
+                // VOLUMES
+                Route::get('/volumes', [PageController::class, 'showRequestVolumes'])->name('request-volumes.index');
+                Route::group(['prefix' => 'volume'],
+                function ()
+                {
+                    Route::get('/all', [RequestVolumeController::class,'index'])->name('request-volume.index');
+                    Route::post('/store', [RequestVolumeController::class,'store'])->name('request-volume.store');
+                    Route::get('/show/{id}', [RequestVolumeController::class,'show'])->name('request-volume.show');
+                    Route::post('/update/{id}', [RequestVolumeController::class,'update'])->name('request-volume.update');
+                    Route::post('/delete/{id}', [RequestVolumeController::class,'destroy'])->name('request-volume.delete');
+                });
+
+                // SLAS
+                Route::get('/slas', [PageController::class, 'showRequestSLAs'])->name('request-slas.index');
+                Route::group(['prefix' => 'sla'],
+                function ()
+                {
+                    Route::get('/all', [RequestSLAController::class,'index'])->name('request-sla.index');
+                    Route::post('/store', [RequestSLAController::class,'store'])->name('request-sla.store');
+                    Route::get('/show/{id}', [RequestSLAController::class,'show'])->name('request-sla.show');
+                    Route::post('/update/{id}', [RequestSLAController::class,'update'])->name('request-sla.update');
+                    Route::post('/delete/{id}', [RequestSLAController::class,'destroy'])->name('request-sla.delete');
+                });
+            });
+
+            // // REQUEST TYPE
+            // Route::get('/request-types', [PageController::class, 'showRequestTypes'])->name('request-types.index');
+            // Route::group(['prefix' => 'request-type'],
+            // function ()
+            // {
+            //     Route::get('/all', [RequestTypeController::class,'index'])->name('request-type.index');
+            //     Route::post('/store', [RequestTypeController::class,'store'])->name('request-type.store');
+            //     Route::get('/show/{id}', [RequestTypeController::class,'show'])->name('request-type.show');
+            //     Route::post('/update/{id}', [RequestTypeController::class,'update'])->name('request-type.update');
+            //     Route::post('/delete/{id}', [RequestTypeController::class,'destroy'])->name('request-type.delete');
+            // });
+
+            // // REQUEST VOLUME
+            // Route::get('/request-volumes', [PageController::class, 'showRequestVolumes'])->name('request-volumes.index');
+            // Route::group(['prefix' => 'request-volume'],
+            // function ()
+            // {
+            //     Route::get('/all', [RequestVolumeController::class,'index'])->name('request-volume.index');
+            //     Route::post('/store', [RequestVolumeController::class,'store'])->name('request-volume.store');
+            //     Route::get('/show/{id}', [RequestVolumeController::class,'show'])->name('request-volume.show');
+            //     Route::post('/update/{id}', [RequestVolumeController::class,'update'])->name('request-volume.update');
+            //     Route::post('/delete/{id}', [RequestVolumeController::class,'destroy'])->name('request-volume.delete');
+            // });
+
+            // // REQUEST SLA
+            // Route::get('/request-slas', [PageController::class, 'showRequestSLAs'])->name('request-slas.index');
+            // Route::group(['prefix' => 'request-sla'],
+            // function ()
+            // {
+            //     Route::get('/all', [RequestSLAController::class,'index'])->name('request-sla.index');
+            //     Route::post('/store', [RequestSLAController::class,'store'])->name('request-sla.store');
+            //     Route::get('/show/{id}', [RequestSLAController::class,'show'])->name('request-sla.show');
+            //     Route::post('/update/{id}', [RequestSLAController::class,'update'])->name('request-sla.update');
+            //     Route::post('/delete/{id}', [RequestSLAController::class,'destroy'])->name('request-sla.delete');
+            // });
+
+            Route::get('users', [PageController::class, 'showUsers'])->name('users.index');
+            Route::group(['prefix' => 'user'],
+            function ()
+            {
+                Route::get('/all', [UserController::class,'index'])->name('user.index');
+                Route::post('/store', [UserController::class,'store'])->name('user.store');
+                Route::get('/show/{id}', [UserController::class,'show'])->name('user.show');
+                Route::post('/update/{id}', [UserController::class,'update'])->name('user.update');
+                Route::post('/delete/{id}', [UserController::class,'destroy'])->name('user.delete');
+            });
+    //     }
+    // );
+
+    /**
+     * END OF ADMIN, TL, OM
+     */
+
+});
+/**
+ * END OF AUTHORIZE & ACTIVE USERS
+ *
+ */
+
+//Language Translation
+Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
