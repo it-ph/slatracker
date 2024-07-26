@@ -27,9 +27,7 @@
                             <option value="" selected disabled>-- Select Client -- </option>
                                 @foreach ($clients as $client )
                                     @if($client)
-                                        <option {{ old('client_id') == $client->id ? "selected" : "" }}
-                                            value="{{ $client->id }}">{{ ucwords($client->name) }}
-                                        </option>
+                                        <option value="{{ $client->id }}">{{ ucwords($client->name) }}</option>
                                     @endif
                                 @endforeach
                         </select>

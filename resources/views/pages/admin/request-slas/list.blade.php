@@ -6,6 +6,7 @@
     <!-- DataTables -->
     <link href="{{ asset('assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/libs/datatables/buttons.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -28,14 +29,20 @@
                 <div class="card-body">
                     <div class="row mb-3">
                         <div class="col-md-12">
-                            <button type="button" class="btn btn-primary btn-sm waves-effect waves-light" onclick="SLA.showModal()"><i class="fas fa-plus"></i> Create</button>
+                            <button type="button" class="btn btn-primary btn-sm waves-effect waves-light" onclick="REQUEST_SLA.showModal()"><i class="fas fa-plus"></i> Create</button>
                         </div>
                     </div>
-                    <table id="tbl_slas" class="table table-bordered table-striped table-sm nowrap w-100">
+                    <table id="tbl_request_slas" class="table table-bordered table-striped table-sm nowrap w-100">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Updated At </th>
+                                <th>Request Type</th>
+                                <th>Num Pages</th>
+                                <th>Agreed SLA (hours)</th>
+                                <th>Created By</th>
+                                <th>Created On</th>
+                                <th>Last Modified By</th>
+                                <th>Last Modified On</th>
+                                <th>Status</th>
                                 <th width="5%" class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -57,6 +64,8 @@
     <script src="{{ asset('assets/libs/datatables/dataTables.buttons.min.js') }}"></script>
     <script src="{{ asset('assets/libs/jszip/jszip.min.js') }}"></script>
     <script src="{{ asset('assets/libs/pdfmake/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/select2/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/select2/select2.js') }}"></script>
 @endsection
 
 @section('custom-js')

@@ -35,10 +35,11 @@
                         <thead>
                             <tr>
                                 <th>Num Pages</th>
-                                <th>Created At </th>
-                                <th>Created By </th>
-                                <th>Updated At </th>
-                                <th>Updated By </th>
+                                <th>Created By</th>
+                                <th>Created On</th>
+                                <th>Last Modified By</th>
+                                <th>Last Modified On</th>
+                                <th>Status</th>
                                 <th width="5%" class="text-center">Action</th>
                             </tr>
                         </thead>

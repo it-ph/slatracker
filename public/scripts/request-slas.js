@@ -1,13 +1,13 @@
 $(document).ready(function() {
-    REQUEST_VOLUME.load();
+    REQUEST_SLA.load();
 });
 
-const REQUEST_VOLUME = (() => {
-    let this_request_volume = {}
-    let _request_volume_id;
+const REQUEST_SLA = (() => {
+    let this_request_sla = {}
+    let _request_sla_id;
 
     // store / update data
-    $('#requestVolumeForm').on('submit', function(e) {
+    $('#requestSLAForm').on('submit', function(e) {
         e.preventDefault();
         Swal.fire({
             title: 'Are you sure?',
@@ -31,18 +31,18 @@ const REQUEST_VOLUME = (() => {
                 // Send a POST request
                 axios({
                     method: 'POST',
-                    url: `${APP_URL}/request/volume/store`,
+                    url: `${APP_URL}/request/sla/store`,
                     data: formdata
                 }).then((response) => {
                     console.log(response.data.status)
                     if (response.data.status === 'success') {
                         $('#loader').show();
-                        $("#tbl_request_volumes > tbody").empty();
-                        $("#tbl_request_volumes_info").hide();
-                        $("#tbl_request_volumes_paginate").hide();
+                        $("#tbl_request_slas > tbody").empty();
+                        $("#tbl_request_slas_info").hide();
+                        $("#tbl_request_slas_paginate").hide();
                         resetForm();
-                        REQUEST_VOLUME.load();
-                        $('#requestVolumeModal').modal('hide');
+                        REQUEST_SLA.load();
+                        $('#requestSLAModal').modal('hide');
                         toastr.success(response.data.message);
                     } else if (response.data.status === 'warning') {
                         Object.keys(response.data.error).forEach((key) => {
@@ -64,16 +64,18 @@ const REQUEST_VOLUME = (() => {
     });
 
     // load data
-    this_request_volume.load = () => {
-        axios(`${APP_URL}/request/volume/all`).then(function(response) {
-            $('#tbl_request_volumes').DataTable().clear().draw();
-            $('#tbl_request_volumes').DataTable().destroy();
+    this_request_sla.load = () => {
+        axios(`${APP_URL}/request/sla/all`).then(function(response) {
+            $('#tbl_request_slas').DataTable().clear().draw();
+            $('#tbl_request_slas').DataTable().destroy();
             var table;
             console.log(response.data.data)
             response.data.data.forEach(val => {
                 table +=
                     `<tr>
-                        <td>${val.name}</td>
+                        <td>${val.request_type}</td>
+                        <td>${val.num_pages}</td>
+                        <td>${val.agreed_sla}</td>
                         <td>${val.created_by}</td>
                         <td>${val.created_at}</td>
                         <td>${val.updated_by}</td>
@@ -82,9 +84,9 @@ const REQUEST_VOLUME = (() => {
                         <td class="text-center">${val.action}</td>
                     </tr>`;
             });
-            $('#tbl_request_volumes tbody').html(table)
+            $('#tbl_request_slas tbody').html(table)
 
-            $('#tbl_request_volumes').DataTable({
+            $('#tbl_request_slas').DataTable({
                 language: {
                     oPaginate: {
                         sNext: '<i class="fa fa-forward"></i>',
@@ -113,36 +115,38 @@ const REQUEST_VOLUME = (() => {
     }
 
     // show modal
-    this_request_volume.showModal = () => {
-        $('#requestVolumeModal').modal('show');
-        $('#requestVolumeModalTitle').text('Create New Request Volume');
+    this_request_sla.showModal = () => {
+        $('#requestSLAModal').modal('show');
+        $('#requestSLAModalTitle').text('Create New Request SLA');
         resetForm();
     }
 
     // show data
-    this_request_volume.show = (id) => {
+    this_request_sla.show = (id) => {
         resetForm();
-        $('#requestVolumeModal').modal('show');
+        $('#requestSLAModal').modal('show');
         $('#btn_save').empty();
         $('#btn_save').append('<i class="fa fa-spinner fa-spin"></i> Loading...');
         $('#btn_save').prop("disabled", true);
-        toastr.info('Retrieving Request Volume Data...');
-        axios(`${APP_URL}/request/volume/show/${id}`).then((response) => {
-            _request_volume_id = id;
-            $('#requestVolumeModalTitle').text('Update Request Volume');
+        toastr.info('Retrieving Request SLA Data...');
+        axios(`${APP_URL}/request/sla/show/${id}`).then((response) => {
+            _request_sla_id = id;
+            $('#requestSLAModalTitle').text('Update Request SLA');
             $("#edit_id").val(response.data.data.id);
-            $("#name").val(response.data.data.name);
+            $("#request_type_id").val(response.data.data.request_type_id).trigger("change");
+            $("#request_volume_id").val(response.data.data.request_volume_id).trigger("change");
+            $("#agreed_sla").val(response.data.data.agreed_sla);
             $('#btn_save').empty();
             $('#btn_save').append('<i class="fa fa-save"></i> Update');
             $('#btn_save').prop("disabled", false);
-            toastr.success('Request Volume data retrieved successfully!');
+            toastr.success('Request SLA data retrieved successfully!');
         }).catch(error => {
             toastr.error(error);
         });
     }
 
     // destroy data
-    this_request_volume.destroy = (id) => {
+    this_request_sla.destroy = (id) => {
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -157,18 +161,18 @@ const REQUEST_VOLUME = (() => {
             if (result.isConfirmed) {
                 axios({
                         method: 'post',
-                        url: `${APP_URL}/request/volume/delete/${id}`,
+                        url: `${APP_URL}/request/sla/delete/${id}`,
                     })
                     .then(function(response) {
                         console.log(response.data.status)
                         if (response.data.status === 'success') {
                             $('#loader').show();
-                            $("#tbl_request_volumes > tbody").empty();
-                            $("#tbl_request_volumes_info").hide();
-                            $("#tbl_request_volumes_paginate").hide();
+                            $("#tbl_request_slas > tbody").empty();
+                            $("#tbl_request_slas_info").hide();
+                            $("#tbl_request_slas_paginate").hide();
                             resetForm()
                             toastr.success(response.data.message);
-                            REQUEST_VOLUME.load();
+                            REQUEST_SLA.load();
                         } else {
                             toastr.error(response.data.message);
                         }
@@ -200,8 +204,8 @@ const REQUEST_VOLUME = (() => {
     });
 
     function resetForm() {
-        $('#requestVolumeModalTitle').text('Create New Request Volume');
-        $('#requestVolumeForm')[0].reset();
+        $('#requestSLAModalTitle').text('Create New Request SLA');
+        $('#requestSLAForm')[0].reset();
         $("#edit_id").val(null);
         $("#name").empty();
         $('.error').hide();
@@ -211,5 +215,5 @@ const REQUEST_VOLUME = (() => {
         console.clear();
     }
 
-    return this_request_volume;
+    return this_request_sla;
 })()

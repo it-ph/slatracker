@@ -32,24 +32,12 @@ class UserStoreRequest extends FormRequest
     public function rules()
     {
         $user = CredentialsHelper::get_set_credentials();
-        if(in_array('admin', $user['roles']))
-        {
-            return [
-                'username' => ['required'],
-                'email' => ['required',Rule::unique('users')->ignore($this->edit_id)],
-                // 'client_id' => ['required'],
-                'role-ctr' => ['required'],
-            ];
-        }
-        else
-        {
-            return [
-                'username' => ['required'],
-                'email' => ['required',Rule::unique('users')->ignore($this->edit_id)],
-                'client_id' => ['required'],
-                'role-ctr' => ['required'],
-            ];
-        }
+        return [
+            'username' => ['required'],
+            'email' => ['required',Rule::unique('users')->ignore($this->edit_id)],
+            'client_id' => !in_array('admin', $user['roles']) ? ['required'] : 'nullable',
+            'role-ctr' => ['required'],
+        ];
     }
 
     public function messages()

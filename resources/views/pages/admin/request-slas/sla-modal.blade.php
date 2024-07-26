@@ -11,24 +11,34 @@
                     @csrf
                     <div class="form-group">
                         <input type="hidden" name="edit_id" id="edit_id">
-                        <label for="name" class="col-form-label"><strong>Department:<span class="important">*</span></strong></label>
-                        <input type="text" class="form-control" name="name" id="name" placeholder="Enter Department Name">
-                        <label id="nameError" class="error"></label>
-                    </div>
-                    {{-- <div class="form-group">
-                        <label for="department_id" class="col-form-label"><strong>Department:<span class="important">*</span></strong></label>
-                        <select class="form-control select2" name="department_id" id="department_id" style="width:100%;">
-                            <option value="" selected disabled>-- Select Department -- </option>
-                                @foreach ($departments as $department )
-                                    @if($department)
-                                        <option {{ old('department_id') == $department->id ? "selected" : "" }}
-                                            value="{{ $department->id }}">{{ ucwords($department->name) }}
-                                        </option>
+                        <label for="request_type_id" class="col-form-label"><strong>Type of Request:<span class="important">*</span></strong></label>
+                        <select class="form-control select2" name="request_type_id" id="request_type_id" style="width:100%;">
+                            <option value="" selected disabled>-- Select Type of Request -- </option>
+                                @foreach ($request_types as $request_type )
+                                    @if($request_type)
+                                        <option value="{{ $request_type->id }}">{{ ucwords($request_type->name) }}</option>
                                     @endif
                                 @endforeach
                         </select>
-                        <label id="department_idError" class="error" style="display:none"></label>
-                    </div> --}}
+                        <label id="request_type_idError" class="error"></label>
+                    </div>
+                    <div class="form-group">
+                        <label for="request_volume_id" class="col-form-label"><strong>Num Pages:<span class="important">*</span></strong></label>
+                        <select class="form-control select2" name="request_volume_id" id="request_volume_id" style="width:100%;">
+                            <option value="" selected disabled>-- Select Num Pages -- </option>
+                                @foreach ($request_volumes as $request_volume )
+                                    @if($request_volume)
+                                        <option value="{{ $request_volume->id }}">{{ ucwords($request_volume->name) }}</option>
+                                    @endif
+                                @endforeach
+                        </select>
+                        <label id="request_volume_idError" class="error"></label>
+                    </div>
+                    <div class="form-group">
+                        <label for="agreed_sla" class="col-form-label"><strong>Agreed SLA (hours):<span class="important">*</span></strong></label>
+                        <input type="text" class="form-control" name="agreed_sla" id="agreed_sla" placeholder="Enter Agreed SLA E.g 8">
+                        <label id="agreed_slaError" class="error"></label>
+                    </div>
             </div>
             <div class="modal-footer">
                 <button type="submit" id="btn_save" class="btn btn-primary waves-effect waves-light"><i class="fa fa-save"></i> Save</button>
