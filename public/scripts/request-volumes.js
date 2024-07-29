@@ -73,12 +73,13 @@ const REQUEST_VOLUME = (() => {
             response.data.data.forEach(val => {
                 table +=
                     `<tr>
+                        <td hidden>${val.id}</td>
                         <td>${val.name}</td>
                         <td>${val.created_by}</td>
                         <td>${val.created_at}</td>
                         <td>${val.updated_by}</td>
                         <td>${val.updated_at}</td>
-                        <td>${val.status}</td>
+                        <td class="text-center">${val.status}</td>
                         <td class="text-center">${val.action}</td>
                     </tr>`;
             });

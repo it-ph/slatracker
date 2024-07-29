@@ -39,8 +39,8 @@
                                 <th>Email Address</th>
                                 <th>Client</th>
                                 <th>Role</th>
-                                <th>Status</th>
                                 <th>Last Login Time</th>
+                                <th class="text-center">Status</th>
                                 <th width="5%" class="text-center">Action</th>
                             </tr>
                         </thead>

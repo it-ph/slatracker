@@ -18,17 +18,14 @@
                         </a>
                     </li>
 
-                    @if(in_array('admin',$user['roles']) || in_array('developer',$user['roles']))
-                        {{--REPORTS --}}
+                    {{-- @if(in_array('admin',$user['roles']) || in_array('developer',$user['roles']))
                         <li>
                             <a href="{{ url('my-jobs/all') }}" class="waves-effect">
                                 <i class="bx bx-task" @if(\Request::routeIs('my-jobs.index')) style="color:#fff" @endif></i>
                                 <span key="t-jobs" @if(\Request::routeIs('my-jobs.index')) style="color:#fff" @endif>My Jobs</span>
                             </a>
                         </li>
-                        {{-- MANAGE --}}
-                        {{-- <li class="menu-title" key="t-apps">Manage</li> --}}
-                    @endif
+                    @endif --}}
 
                 {{-- End of Developers --}}
 
@@ -114,13 +111,13 @@
                     <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
                             <i class="bx bx-cog"></i>
-                            <span key="t-settings">Manage</span>
+                            <span key="t-settings">Miscellaneous</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
                             <li><a href="{{ url('request/types') }}" key="t-read-email">Request Type</a></li>
                             <li><a href="{{ url('request/volumes') }}" key="t-read-email">Request Volume</a></li>
                             <li><a href="{{ url('request/slas') }}" key="t-read-email">Request SLA</a></li>
-                            <li><a href="{{ url('reports') }}" key="t-read-email">Configuration</a></li>
+                            <li><a href="{{ url('configurations') }}" key="t-read-email">Email Configuration</a></li>
                         </ul>
                     </li>
                 {{-- End of ADMIN / TL / OM --}}

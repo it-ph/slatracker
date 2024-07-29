@@ -44,7 +44,7 @@ class GlobalVariableController extends Controller
         $this->request_volumes = RequestVolume::query()
             ->select('id','name')
             ->where('status','active')
-            ->orderBy('name','ASC')
+            ->orderBy('id','ASC')
             ->get();
 
         View::share('clients', $this->clients);

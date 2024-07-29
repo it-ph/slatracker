@@ -44,12 +44,28 @@ class ClientController extends GlobalVariableController
         try{
             if($request->edit_id === null)
             {
+                $request['created_by'] = auth()->user()->id;
                 $client = Client::create($request->except('edit_id'));
             }
             else
             {
+                $request['updated_by'] = auth()->user()->id;
                 $result = $this->update($request, $request->edit_id);
             }
+        } catch (\Throwable $th) {
+            return $this->errorResponse($th);
+        }
+
+        return $this->returnResponse($result);
+    }
+
+    public function updateEmailConfig(ClientStoreRequest $request)
+    {
+        $result = $this->successResponse('Email Configuration updated successfully!');
+        try{
+                $request['updated_by'] = auth()->user()->id;
+                Client::findOrfail($request['edit_id'])->update($request->except('edit_id'));
+
         } catch (\Throwable $th) {
             return $this->errorResponse($th);
         }

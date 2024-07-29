@@ -42,7 +42,7 @@
                                     <label for="name" class="col-sm-3 col-form-label"><strong>Job Name <span class="important">*</span></strong></label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" name="name" id="name" placeholder="Enter Job Name">
-                                        <label id="nameError" class="error" style="display:none" style="display:none"></label>
+                                        <label id="nameError" class="error" style="display:none"></label>
                                     </div>
                                 </div>
 
@@ -57,12 +57,12 @@
                                 <div class="form-group row mb-3">
                                     <label for="platform" class="col-sm-3 col-form-label"><strong>Platform <span class="important">*</span></strong></label>
                                     <div class="col-sm-9">
-                                        <select class="form-control select2" name="platform" id="platform"  style="width:100%;">
+                                        <select class="form-control" name="platform" id="platform">
                                             <option value=""disabled selected>-- Select Platform -- </option>
                                             <option value="Duda" >Duda</option>
                                             <option value="Wordpress" >Wordpress</option>
                                         </select>
-                                        <label id="platformError" class="error" style="display:none" style="display:none"></label>
+                                        <label id="platformError" class="error" style="display:none"></label>
                                     </div>
                                 </div>
 
@@ -71,34 +71,43 @@
                                     <div class="col-sm-9">
                                         <select class="form-control select2" name="developer_id" id="developer_id"  style="width:100%;">
                                             <option value=""disabled selected>-- Select Developer -- </option>
-                                            <option value="Active" >Active</option>
-                                            <option value="Inactive" >Inactive</option>
+                                                @foreach ($developers as $developer )
+                                                    @if($developer)
+                                                        <option value="{{ $developer->id }}">{{ ucwords($developer->username) }}</option>
+                                                    @endif
+                                                @endforeach
                                         </select>
-                                        <label id="developer_idError" class="error" style="display:none" style="display:none"></label>
+                                        <label id="developer_idError" class="error" style="display:none"></label>
                                     </div>
                                 </div>
 
                                 <div class="form-group row mb-3">
-                                    <label for="request_type" class="col-sm-3 col-form-label"><strong>Type of Request <span class="important">*</span></strong></label>
+                                    <label for="request_type_id" class="col-sm-3 col-form-label"><strong>Type of Request <span class="important">*</span></strong></label>
                                     <div class="col-sm-9">
-                                        <select class="form-control select2" name="request_type" id="request_type"  style="width:100%;">
-                                            <option value=""disabled selected>-- Select Request Type -- </option>
-                                            <option value="Active" >Active</option>
-                                            <option value="Inactive" >Inactive</option>
+                                        <select class="form-control select2" name="request_type_id" id="request_type_id"  style="width:100%;">
+                                            <option value=""disabled selected>-- Select Type of Request -- </option>
+                                                @foreach ($request_types as $request_type)
+                                                    @if($request_type)
+                                                        <option value="{{ $request_type->id }}">{{ ucwords($request_type->name) }}</option>
+                                                    @endif
+                                                @endforeach
                                         </select>
-                                        <label id="request_typeError" class="error" style="display:none" style="display:none"></label>
+                                        <label id="request_type_idError" class="error" style="display:none"></label>
                                     </div>
                                 </div>
 
                                 <div class="form-group row mb-3">
-                                    <label for="num_pages" class="col-sm-3 col-form-label"><strong>Num Pages <span class="important">*</span></strong></label>
+                                    <label for="request_volume_id" class="col-sm-3 col-form-label"><strong>Num Pages <span class="important">*</span></strong></label>
                                     <div class="col-sm-9">
-                                        <select class="form-control select2" name="num_pages" id="num_pages"  style="width:100%;">
+                                        <select class="form-control select2" name="request_volume_id" id="request_volume_id"  style="width:100%;">
                                             <option value=""disabled selected>-- Select Num Pages -- </option>
-                                            <option value="Active" >Active</option>
-                                            <option value="Inactive" >Inactive</option>
+                                                @foreach ($request_volumes as $request_volume)
+                                                    @if($request_volume)
+                                                        <option value="{{ $request_volume->id }}">{{ ucwords($request_volume->name) }}</option>
+                                                    @endif
+                                                @endforeach
                                         </select>
-                                        <label id="num_pagesError" class="error" style="display:none" style="display:none"></label>
+                                        <label id="request_volume_idError" class="error" style="display:none"></label>
                                     </div>
                                 </div>
 
@@ -140,10 +149,10 @@
                                         <label id="addon_commentsError" class="error" style="display:none"></label>
                                     </div>
                                 </div>
-
                             </div>
+                            <hr>
                             <div class="col-md-12">
-                                <div class="form-group float-end">
+                                <div class="form-group">
                                     <button type="submit" id="btn_save" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
                                     <button type="button" id="btn_cancel" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-close"></i> Reset</button>
                                 </div>
@@ -168,5 +177,5 @@
 @endsection
 
 @section('custom-js')
-    {{-- <script src="{{asset('scripts/tasklists.js')}}"></script> --}}
+    <script src="{{asset('scripts/jobs.js')}}"></script>
 @endsection

@@ -16,8 +16,8 @@ class CreateRequestVolumesTable extends Migration
         Schema::create('request_volumes', function (Blueprint $table) {
             $table->id();
             $table->string('name'); // number of pages E.g 1, 2, 3, etc
-            $table->string('created_by');
-            $table->string('updated_by')->nullable();
+            $table->integer('created_by');
+            $table->integer('updated_by')->nullable();
             $table->string('status')->default('active');;
             $table->softDeletes();
             $table->timestamps();

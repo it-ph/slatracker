@@ -1,6 +1,6 @@
 <div class="modal fade" id="clientModal" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog"
     aria-labelledby="clientModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="clientModalTitle">Create New Client</h5>
@@ -15,9 +15,9 @@
                         <input type="text" class="form-control" name="name" id="name" placeholder="Enter Client Name">
                         <label id="nameError" class="error"></label>
                     </div>
-                    {{-- <div class="form-group">
-                        <label for="sla_threshold" class="col-form-label"><strong>SLA Threshold for Email Notifs (%) :<span class="important">*</span></strong></label>
-                        <input type="text" class="form-control" name="sla_threshold" id="sla_threshold" placeholder="Enter SLA Threshold E.g 70">
+                    <div class="form-group">
+                        <label for="sla_threshold" class="col-form-label"><strong>SLA Threshold for Email Notifs (%):<span class="important">*</span></strong></label>
+                        <input type="text" class="form-control" name="sla_threshold" id="sla_threshold" min="0" max="100"  placeholder="Enter SLA Threshold E.g 70">
                         <label id="sla_thresholdError" class="error"></label>
                     </div>
                     <div class="form-group">
@@ -41,14 +41,14 @@
                         <label id="sla_missed_ccError" class="error"></label>
                     </div>
                     <div class="form-group">
-                        <label for="sla_missed_cc" class="col-form-label"><strong>New Job Email Recipients (CC):<span class="important">*</span></strong></label>
-                        <input type="text" class="form-control" name="sla_missed_cc" id="sla_missed_cc" placeholder="Enter New Job Email Recipients (CC)">
-                        <label id="sla_missed_ccError" class="error"></label>
+                        <label for="new_job_cc" class="col-form-label"><strong>New Job Email Recipients (CC):<span class="important">*</span></strong></label>
+                        <input type="text" class="form-control" name="new_job_cc" id="new_job_cc" placeholder="Enter New Job Email Recipients (CC)">
+                        <label id="new_job_ccError" class="error"></label>
                     </div>
                     <div class="form-group">
-                        <label for="sla_missed_cc" class="col-form-label"><strong>QC Send Email Recipients (CC):<span class="important">*</span></strong></label>
-                        <input type="text" class="form-control" name="sla_missed_cc" id="sla_missed_cc" placeholder="Enter SLA Missed Email Recipients (CC)">
-                        <label id="sla_threshold_ccError" class="error"></label>
+                        <label for="qc_send_cc" class="col-form-label"><strong>QC Send Email Recipients (CC):<span class="important">*</span></strong></label>
+                        <input type="text" class="form-control" name="qc_send_cc" id="qc_send_cc" placeholder="Enter SLA Missed Email Recipients (CC)">
+                        <label id="qc_send_ccError" class="error"></label>
                     </div>
                     <div class="form-group">
                         <label for="daily_report_to" class="col-form-label"><strong>Daily Report Recipients (TO):<span class="important">*</span></strong></label>
@@ -59,7 +59,7 @@
                         <label for="daily_report_cc" class="col-form-label"><strong>Daily Report Recipients (CC):<span class="important">*</span></strong></label>
                         <input type="text" class="form-control" name="daily_report_cc" id="daily_report_cc" placeholder="Enter Daily Report Recipients (CC)">
                         <label id="daily_report_ccError" class="error"></label>
-                    </div> --}}
+                    </div>
             </div>
             <div class="modal-footer">
                 <button type="submit" id="btn_save" class="btn btn-primary waves-effect waves-light"><i class="fa fa-save"></i> Save</button>

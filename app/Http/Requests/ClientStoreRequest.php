@@ -31,6 +31,15 @@ class ClientStoreRequest extends FormRequest
     {
         return [
             'name' => ['required',Rule::unique('clients')->ignore($this->edit_id)],
+            'sla_threshold' => ['required'],
+            'sla_threshold_to' => ['required'],
+            'sla_threshold_cc' => ['required'],
+            'sla_missed_to' => ['required'],
+            'sla_missed_cc' => ['required'],
+            'new_job_cc' => ['required'],
+            'qc_send_cc' => ['required'],
+            'daily_report_to' => ['required'],
+            'daily_report_cc' => ['required'],
         ];
     }
 
@@ -39,6 +48,15 @@ class ClientStoreRequest extends FormRequest
         return [
             'name.required' => 'Client is required.',
             'name.unique' => 'Client is already exists.',
+            'sla_threshold.required' => 'SLA Threshold is required.',
+            'sla_threshold_to.required' => 'SLA Threshold Cross Email Recipients (TO) is required.',
+            'sla_threshold_cc.required' => 'SLA Threshold Cross Email Recipients (CC) is required.',
+            'sla_missed_to.required' => 'SLA Missed Email Recipients (TO) is required.',
+            'sla_missed_cc.required' => 'SLA Missed Email Recipients (CC) is required.',
+            'new_job_cc.required' => 'New Job Email Recipients (CC) is required.',
+            'qc_send_cc.required' => 'SLA Missed Email Recipients (CC) is required.',
+            'daily_report_to.required' => 'Daily Report Recipients (TO) is required.',
+            'daily_report_cc.required' => 'Daily Report Recipients (CC) is required.',
         ];
     }
 

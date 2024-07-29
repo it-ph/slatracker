@@ -39,7 +39,7 @@
                                 <th>Created On</th>
                                 <th>Last Modified By</th>
                                 <th>Last Modified On</th>
-                                <th>Status</th>
+                                <th class="text-center">Status</th>
                                 <th width="5%" class="text-center">Action</th>
                             </tr>
                         </thead>

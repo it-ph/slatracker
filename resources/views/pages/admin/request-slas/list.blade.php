@@ -36,13 +36,13 @@
                         <thead>
                             <tr>
                                 <th>Request Type</th>
-                                <th>Num Pages</th>
-                                <th>Agreed SLA (hours)</th>
+                                <th class="text-center">Num Pages</th>
+                                <th class="text-center">Agreed SLA (hours)</th>
                                 <th>Created By</th>
                                 <th>Created On</th>
                                 <th>Last Modified By</th>
                                 <th>Last Modified On</th>
-                                <th>Status</th>
+                                <th class="text-center">Status</th>
                                 <th width="5%" class="text-center">Action</th>
                             </tr>
                         </thead>

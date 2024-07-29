@@ -34,12 +34,13 @@
                     <table id="tbl_request_volumes" class="table table-bordered table-striped table-sm nowrap w-100">
                         <thead>
                             <tr>
+                                <th hidden>ID</th>
                                 <th>Num Pages</th>
                                 <th>Created By</th>
                                 <th>Created On</th>
                                 <th>Last Modified By</th>
                                 <th>Last Modified On</th>
-                                <th>Status</th>
+                                <th class="text-center">Status</th>
                                 <th width="5%" class="text-center">Action</th>
                             </tr>
                         </thead>

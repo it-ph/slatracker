@@ -77,8 +77,8 @@ const USER = (() => {
                         <td>${val.email_address}</td>
                         <td>${val.client}</td>
                         <td>${val.roles}</td>
-                        <td>${val.status}</td>
                         <td>${val.last_login_at}</td>
+                        <td class="text-center">${val.status}</td>
                         <td class="text-center">${val.action}</td>
                     </tr>`;
             });

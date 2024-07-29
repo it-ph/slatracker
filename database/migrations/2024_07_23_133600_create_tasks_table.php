@@ -16,13 +16,13 @@ class CreateTasksTable extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('site_id');
+            $table->integer('site_id');
             $table->string('platform'); // duda or wordpress
-            $table->string('client_id'); // auto populate based on user client
-            $table->string('developer_id');
-            $table->string('request_type_id');
-            $table->string('request_volume_id'); // num pages
-            $table->string('request_sla_id'); // auto populate based on selected request type and num pages
+            $table->integer('client_id'); // auto populate based on user client
+            $table->integer('developer_id');
+            $table->integer('request_type_id');
+            $table->integer('request_volume_id'); // num pages
+            $table->integer('request_sla_id'); // auto populate based on selected request type and num pages
             $table->longText('salesforce_link');
             $table->boolean('is_special_request');
             $table->longText('comments'); // comments for special request

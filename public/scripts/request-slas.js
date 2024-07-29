@@ -74,13 +74,13 @@ const REQUEST_SLA = (() => {
                 table +=
                     `<tr>
                         <td>${val.request_type}</td>
-                        <td>${val.num_pages}</td>
-                        <td>${val.agreed_sla}</td>
+                        <td class="text-center">${val.num_pages}</td>
+                        <td class="text-center">${val.agreed_sla}</td>
                         <td>${val.created_by}</td>
                         <td>${val.created_at}</td>
                         <td>${val.updated_by}</td>
                         <td>${val.updated_at}</td>
-                        <td>${val.status}</td>
+                        <td class="text-center">${val.status}</td>
                         <td class="text-center">${val.action}</td>
                     </tr>`;
             });
@@ -207,7 +207,8 @@ const REQUEST_SLA = (() => {
         $('#requestSLAModalTitle').text('Create New Request SLA');
         $('#requestSLAForm')[0].reset();
         $("#edit_id").val(null);
-        $("#name").empty();
+        $("#request_type_id").val(null).trigger("change");
+        $("#request_volume_id").val(null).trigger("change");
         $('.error').hide();
         $('.error').text('');
         $('#btn_save').empty();

@@ -74,6 +74,9 @@ const CLIENT = (() => {
                 table +=
                     `<tr>
                         <td>${val.name}</td>
+                        <td>${val.created_by}</td>
+                        <td>${val.created_at}</td>
+                        <td>${val.updated_by}</td>
                         <td>${val.updated_at}</td>
                         <td class="text-center">${val.action}</td>
                     </tr>`;
@@ -128,6 +131,15 @@ const CLIENT = (() => {
             $('#clientModalTitle').text('Update Client');
             $("#edit_id").val(response.data.data.id);
             $("#name").val(response.data.data.name);
+            $("#sla_threshold").val(response.data.data.sla_threshold);
+            $("#sla_threshold_to").val(response.data.data.sla_threshold_to);
+            $("#sla_threshold_cc").val(response.data.data.sla_threshold_cc);
+            $("#sla_missed_to").val(response.data.data.sla_missed_to);
+            $("#sla_missed_cc").val(response.data.data.sla_missed_cc);
+            $("#new_job_cc").val(response.data.data.new_job_cc);
+            $("#qc_send_cc").val(response.data.data.qc_send_cc);
+            $("#daily_report_to").val(response.data.data.daily_report_to);
+            $("#daily_report_cc").val(response.data.data.daily_report_cc);
             $('#btn_save').empty();
             $('#btn_save').append('<i class="fa fa-save"></i> Update');
             $('#btn_save').prop("disabled", false);

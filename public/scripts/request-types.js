@@ -78,7 +78,7 @@ const REQUEST_TYPE = (() => {
                         <td>${val.created_at}</td>
                         <td>${val.updated_by}</td>
                         <td>${val.updated_at}</td>
-                        <td>${val.status}</td>
+                        <td class="text-center">${val.status}</td>
                         <td class="text-center">${val.action}</td>
                     </tr>`;
             });

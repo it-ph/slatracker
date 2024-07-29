@@ -141,6 +141,19 @@ Route::group(['middleware' => ['auth','twofactor','web','active.user']],function
                 Route::post('/delete/{id}', [ClientController::class,'destroy'])->name('client.delete');
             });
 
+            // CLIENTS
+            Route::get('/configurations', [PageController::class, 'showConfigurations'])->name('configurations.index');
+            Route::post('client/updateEmailConfig', [ClientController::class,'updateEmailConfig'])->name('client.updateEmailConfig');
+            // Route::group(['prefix' => 'client'],
+            // function ()
+            // {
+            //     Route::get('/all', [ClientController::class,'index'])->name('client.index');
+            //     Route::post('/store', [ClientController::class,'store'])->name('client.store');
+            //     Route::get('/show/{id}', [ClientController::class,'show'])->name('client.show');
+            //     Route::post('/update/{id}', [ClientController::class,'update'])->name('client.update');
+            //     Route::post('/delete/{id}', [ClientController::class,'destroy'])->name('client.delete');
+            // });
+
             // REQUEST
             Route::group(['prefix' => 'request'],
             function ()
@@ -167,6 +180,7 @@ Route::group(['middleware' => ['auth','twofactor','web','active.user']],function
                     Route::get('/show/{id}', [RequestVolumeController::class,'show'])->name('request-volume.show');
                     Route::post('/update/{id}', [RequestVolumeController::class,'update'])->name('request-volume.update');
                     Route::post('/delete/{id}', [RequestVolumeController::class,'destroy'])->name('request-volume.delete');
+                    Route::get('/get_num_pages/{request_type_id}', [RequestVolumeController::class,'getNumPages'])->name('request-volume.get_numpages');
                 });
 
                 // SLAS

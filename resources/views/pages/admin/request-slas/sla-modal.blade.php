@@ -36,7 +36,7 @@
                     </div>
                     <div class="form-group">
                         <label for="agreed_sla" class="col-form-label"><strong>Agreed SLA (hours):<span class="important">*</span></strong></label>
-                        <input type="text" class="form-control" name="agreed_sla" id="agreed_sla" placeholder="Enter Agreed SLA E.g 8">
+                        <input type="number" class="form-control" name="agreed_sla" id="agreed_sla" placeholder="Enter Agreed SLA E.g 8">
                         <label id="agreed_slaError" class="error"></label>
                     </div>
             </div>
