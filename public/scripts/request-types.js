@@ -126,10 +126,10 @@ const REQUEST_TYPE = (() => {
         $('#btn_save').empty();
         $('#btn_save').append('<i class="fa fa-spinner fa-spin"></i> Loading...');
         $('#btn_save').prop("disabled", true);
+        $('#requestTypeModalTitle').text('Update Request Type');
         toastr.info('Retrieving Request Type Data...');
         axios(`${APP_URL}/request/type/show/${id}`).then((response) => {
             _request_type_id = id;
-            $('#requestTypeModalTitle').text('Update Request Type');
             $("#edit_id").val(response.data.data.id);
             $("#name").val(response.data.data.name);
             $('#btn_save').empty();

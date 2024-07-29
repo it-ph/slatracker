@@ -125,10 +125,10 @@ const CLIENT = (() => {
         $('#btn_save').empty();
         $('#btn_save').append('<i class="fa fa-spinner fa-spin"></i> Loading...');
         $('#btn_save').prop("disabled", true);
+        $('#clientModalTitle').text('Update Client');
         toastr.info('Retrieving Client Data...');
         axios(`${APP_URL}/client/show/${id}`).then((response) => {
             _client_id = id;
-            $('#clientModalTitle').text('Update Client');
             $("#edit_id").val(response.data.data.id);
             $("#name").val(response.data.data.name);
             $("#sla_threshold").val(response.data.data.sla_threshold);

@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -41,9 +42,33 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function scopeClients($query)
+    public function scopeDevelopers($query)
     {
         return $query->where('client_id',auth()->user()->client_id);
+    }
+
+    public function scopeIsActive($query)
+    {
+        $now = Carbon::today()->toDateString();
+        return $query->whereRaw(
+            "last_login_at >= ? AND last_login_at <= ?",
+            [
+                $now." 00:00:00",
+                $now." 23:59:59"
+            ]
+        );
+    }
+
+    public function hasActiveJob($user_id)
+    {
+        $hasActiveJob = Job::query()
+            ->where('developer_id', $user_id)
+            ->where('status','In Progress')
+            ->count();
+
+        $hasActiveJob = $hasActiveJob ? true : false;
+
+        return $hasActiveJob;
     }
 
     public function theclient()
@@ -56,22 +81,16 @@ class User extends Authenticatable
         return $this->hasMany(Role::class,'user_id');
     }
 
+    public function thetasks()
+    {
+        return $this->hasMany(Job::class,'developer_id')->withTrashed();
+    }
+
+
     public function isStatusActive()
     {
         $isActive = $this->status == 'active'? true : false;
         return $isActive;
-    }
-
-    public function hasActiveTask()
-    {
-        $hasActiveTask = Task::query()
-            ->where('agent_id', $this->id)
-            ->where('status', 'In Progress')
-            ->count();
-
-        $hasActiveTask = $hasActiveTask ? true : false;
-
-        return $hasActiveTask;
     }
 
     /**
@@ -247,19 +266,5 @@ class User extends Authenticatable
         $this->two_factor_code = null;
         $this->two_factor_expires_at = null;
         $this->save();
-    }
-
-    public function is2FApassed()
-    {
-        $user = User::where('email', Auth::user()->email)->first();
-
-        if($user->two_factor_code == NULL && $user->two_factor_expires_at == NULL)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
     }
 }

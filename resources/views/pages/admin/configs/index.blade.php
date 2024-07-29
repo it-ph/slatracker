@@ -121,7 +121,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <button type="submit" id="btn_save" class="btn btn-primary"><i class="fa fa-save"></i> Update</button>
-                                    <button type="button" id="btn_cancel" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
+                                    <button type="button" id="btn_cancel" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
                                 </div>
                             </div>
                         </div>

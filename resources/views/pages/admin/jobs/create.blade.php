@@ -33,7 +33,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form id="adhocForm" method="POST">
+                    <form id="addJobForm" method="POST">
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
@@ -71,8 +71,8 @@
                                     <div class="col-sm-9">
                                         <select class="form-control select2" name="developer_id" id="developer_id"  style="width:100%;">
                                             <option value=""disabled selected>-- Select Developer -- </option>
-                                                @foreach ($developers as $developer )
-                                                    @if($developer)
+                                                @foreach ($developers as $developer)
+                                                    @if(!$developer->hasActiveJob($developer->id))
                                                         <option value="{{ $developer->id }}">{{ ucwords($developer->username) }}</option>
                                                     @endif
                                                 @endforeach
@@ -154,7 +154,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <button type="submit" id="btn_save" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
-                                    <button type="button" id="btn_cancel" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-close"></i> Reset</button>
+                                    <button type="button" id="btn_cancel" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
                                 </div>
                             </div>
                         </div>

@@ -46,12 +46,15 @@ class CredentialsHelper {
 
     public function get_developers()
     {
-        $developers = User::whereHas('theroles', function ($query) {
-            $query->where('name', 'Developer');
-        })
-        ->select('id','username','email','client_id','last_login_at','status')
-        ->orderBy('email','asc')
-        ->get();
+        $developers = User::query()
+            ->whereHas('theroles', function ($query) {
+                $query->where('name', 'Developer');
+            })
+            ->developers()
+            ->isactive()
+            ->select('id','username','email','client_id','last_login_at','status')
+            ->orderBy('email','asc')
+            ->get();
 
         return $developers;
     }

@@ -128,10 +128,10 @@ const REQUEST_SLA = (() => {
         $('#btn_save').empty();
         $('#btn_save').append('<i class="fa fa-spinner fa-spin"></i> Loading...');
         $('#btn_save').prop("disabled", true);
+        $('#requestSLAModalTitle').text('Update Request SLA');
         toastr.info('Retrieving Request SLA Data...');
         axios(`${APP_URL}/request/sla/show/${id}`).then((response) => {
             _request_sla_id = id;
-            $('#requestSLAModalTitle').text('Update Request SLA');
             $("#edit_id").val(response.data.data.id);
             $("#request_type_id").val(response.data.data.request_type_id).trigger("change");
             $("#request_volume_id").val(response.data.data.request_volume_id).trigger("change");

@@ -127,10 +127,10 @@ const REQUEST_VOLUME = (() => {
         $('#btn_save').empty();
         $('#btn_save').append('<i class="fa fa-spinner fa-spin"></i> Loading...');
         $('#btn_save').prop("disabled", true);
+        $('#requestVolumeModalTitle').text('Update Request Volume');
         toastr.info('Retrieving Request Volume Data...');
         axios(`${APP_URL}/request/volume/show/${id}`).then((response) => {
             _request_volume_id = id;
-            $('#requestVolumeModalTitle').text('Update Request Volume');
             $("#edit_id").val(response.data.data.id);
             $("#name").val(response.data.data.name);
             $('#btn_save').empty();

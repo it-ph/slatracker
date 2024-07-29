@@ -265,11 +265,6 @@ table.dataTable tfoot tr>.dtfc-fixed-right {
     background: #00599D;
 }
 
-.table-responsive,
-.dataTables_scrollBody {
-    overflow: visible !important;
-}
-
 .page-title-box {
     padding-bottom: 10px;
 }

@@ -126,6 +126,7 @@ const USER = (() => {
         $('#btn_save').empty();
         $('#btn_save').append('<i class="fa fa-spinner fa-spin"></i> Loading...');
         $('#btn_save').prop("disabled", true);
+        $('#userModalTitle').text('Update User');
         toastr.info('Retrieving User Data...');
         axios(`${APP_URL}/user/show/${id}`).then((response) => {
             _user_id = id;
@@ -136,7 +137,6 @@ const USER = (() => {
             });
             $('#role-ctr').val(roles);
             $('input[name="roles[]"]').val(roles);
-            $('#userModalTitle').text('Update User');
             $("#edit_id").val(response.data.data.id);
             $("#username").val(response.data.data.username);
             $("#email").val(response.data.data.email);
