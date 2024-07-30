@@ -117,6 +117,7 @@ const REQUEST_SLA = (() => {
     // show modal
     this_request_sla.showModal = () => {
         $('#requestSLAModal').modal('show');
+        $('#default-status').hide();
         $('#requestSLAModalTitle').text('Create New Request SLA');
         resetForm();
     }
@@ -125,6 +126,7 @@ const REQUEST_SLA = (() => {
     this_request_sla.show = (id) => {
         resetForm();
         $('#requestSLAModal').modal('show');
+        $('#default-status').show();
         $('#btn_save').empty();
         $('#btn_save').append('<i class="fa fa-spinner fa-spin"></i> Loading...');
         $('#btn_save').prop("disabled", true);
@@ -209,6 +211,7 @@ const REQUEST_SLA = (() => {
         $("#edit_id").val(null);
         $("#request_type_id").val(null).trigger("change");
         $("#request_volume_id").val(null).trigger("change");
+        $("#status_").val("active").trigger("change");
         $('.error').hide();
         $('.error').text('');
         $('#btn_save').empty();

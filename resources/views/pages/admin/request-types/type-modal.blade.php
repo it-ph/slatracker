@@ -15,6 +15,14 @@
                         <input type="text" class="form-control" name="name" id="name" placeholder="Enter type of request">
                         <label id="nameError" class="error"></label>
                     </div>
+                    <div class="form-group" id="default-status">
+                        <label for="status" class="col-form-label"><strong>Status:<span class="important">*</span></strong></label>
+                        <select class="form-select" name="status" id="status_">
+                            <option value="active">Active</option>
+                            <option value="inactive" >Inactive</option>
+                        </select>
+                        <label id="statusError" class="error" style="display:none"></label>
+                    </div>
             </div>
             <div class="modal-footer">
                 <button type="submit" id="btn_save" class="btn btn-primary waves-effect waves-light"><i class="fa fa-save"></i> Save</button>

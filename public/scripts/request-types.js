@@ -115,6 +115,7 @@ const REQUEST_TYPE = (() => {
     // show modal
     this_request_type.showModal = () => {
         $('#requestTypeModal').modal('show');
+        $('#default-status').hide();
         $('#requestTypeModalTitle').text('Create New Request Type');
         resetForm();
     }
@@ -123,6 +124,7 @@ const REQUEST_TYPE = (() => {
     this_request_type.show = (id) => {
         resetForm();
         $('#requestTypeModal').modal('show');
+        $('#default-status').show();
         $('#btn_save').empty();
         $('#btn_save').append('<i class="fa fa-spinner fa-spin"></i> Loading...');
         $('#btn_save').prop("disabled", true);
@@ -132,6 +134,7 @@ const REQUEST_TYPE = (() => {
             _request_type_id = id;
             $("#edit_id").val(response.data.data.id);
             $("#name").val(response.data.data.name);
+            $("#status_").val(response.data.data.status).trigger("change");
             $('#btn_save').empty();
             $('#btn_save').append('<i class="fa fa-save"></i> Update');
             $('#btn_save').prop("disabled", false);
@@ -204,6 +207,7 @@ const REQUEST_TYPE = (() => {
         $('#requestTypeForm')[0].reset();
         $("#edit_id").val(null);
         $("#name").empty();
+        $("#status_").val("active").trigger("change");
         $('.error').hide();
         $('.error').text('');
         $('#btn_save').empty();

@@ -115,6 +115,7 @@ const USER = (() => {
     // show modal
     this_user.showModal = () => {
         $('#userModal').modal('show');
+        $('#default-status').hide();
         $('#userModalTitle').text('Create User');
         resetForm();
     }
@@ -123,6 +124,7 @@ const USER = (() => {
     this_user.show = (id) => {
         resetForm();
         $('#userModal').modal('show');
+        $('#default-status').show();
         $('#btn_save').empty();
         $('#btn_save').append('<i class="fa fa-spinner fa-spin"></i> Loading...');
         $('#btn_save').prop("disabled", true);

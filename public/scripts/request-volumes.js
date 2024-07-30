@@ -116,6 +116,7 @@ const REQUEST_VOLUME = (() => {
     // show modal
     this_request_volume.showModal = () => {
         $('#requestVolumeModal').modal('show');
+        $('#default-status').hide();
         $('#requestVolumeModalTitle').text('Create New Request Volume');
         resetForm();
     }
@@ -124,6 +125,7 @@ const REQUEST_VOLUME = (() => {
     this_request_volume.show = (id) => {
         resetForm();
         $('#requestVolumeModal').modal('show');
+        $('#default-status').show();
         $('#btn_save').empty();
         $('#btn_save').append('<i class="fa fa-spinner fa-spin"></i> Loading...');
         $('#btn_save').prop("disabled", true);
@@ -133,6 +135,7 @@ const REQUEST_VOLUME = (() => {
             _request_volume_id = id;
             $("#edit_id").val(response.data.data.id);
             $("#name").val(response.data.data.name);
+            $("#status_").val(response.data.data.status).trigger("change");
             $('#btn_save').empty();
             $('#btn_save').append('<i class="fa fa-save"></i> Update');
             $('#btn_save').prop("disabled", false);
@@ -205,6 +208,7 @@ const REQUEST_VOLUME = (() => {
         $('#requestVolumeForm')[0].reset();
         $("#edit_id").val(null);
         $("#name").empty();
+        $("#status_").val("active").trigger("change");
         $('.error').hide();
         $('.error').text('');
         $('#btn_save').empty();

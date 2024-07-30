@@ -78,7 +78,7 @@
                         </div>
                         <label id="role-ctrError" class="error" style="display:none"></label>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="default-status">
                         <label for="status" class="col-form-label"><strong>Status:<span class="important">*</span></strong></label>
                         <select class="form-select" name="status" id="status_">
                             <option value="active">Active</option>
