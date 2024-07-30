@@ -73,6 +73,7 @@ const REQUEST_TYPE = (() => {
             response.data.data.forEach(val => {
                 table +=
                     `<tr>
+                        <td hidden>${val.id}</td>
                         <td>${val.name}</td>
                         <td>${val.created_by}</td>
                         <td>${val.created_at}</td>

@@ -129,7 +129,7 @@ Route::group(['middleware' => ['auth','twofactor','web','active.user']],function
                 Route::post('/delete/{id}', [JobController::class,'destroy'])->name('job.delete');
             });
 
-            // CLIENTS
+            // CLIENTS for ADMIN ONLY
             Route::get('/clients', [PageController::class, 'showClients'])->name('clients.index');
             Route::group(['prefix' => 'client'],
             function ()
@@ -141,18 +141,9 @@ Route::group(['middleware' => ['auth','twofactor','web','active.user']],function
                 Route::post('/delete/{id}', [ClientController::class,'destroy'])->name('client.delete');
             });
 
-            // CLIENTS
+            // CLIENTS for TL / MANAGER
             Route::get('/configurations', [PageController::class, 'showConfigurations'])->name('configurations.index');
             Route::post('client/updateEmailConfig', [ClientController::class,'updateEmailConfig'])->name('client.updateEmailConfig');
-            // Route::group(['prefix' => 'client'],
-            // function ()
-            // {
-            //     Route::get('/all', [ClientController::class,'index'])->name('client.index');
-            //     Route::post('/store', [ClientController::class,'store'])->name('client.store');
-            //     Route::get('/show/{id}', [ClientController::class,'show'])->name('client.show');
-            //     Route::post('/update/{id}', [ClientController::class,'update'])->name('client.update');
-            //     Route::post('/delete/{id}', [ClientController::class,'destroy'])->name('client.delete');
-            // });
 
             // REQUEST
             Route::group(['prefix' => 'request'],
@@ -180,7 +171,6 @@ Route::group(['middleware' => ['auth','twofactor','web','active.user']],function
                     Route::get('/show/{id}', [RequestVolumeController::class,'show'])->name('request-volume.show');
                     Route::post('/update/{id}', [RequestVolumeController::class,'update'])->name('request-volume.update');
                     Route::post('/delete/{id}', [RequestVolumeController::class,'destroy'])->name('request-volume.delete');
-                    Route::get('/get_num_pages/{request_type_id}', [RequestVolumeController::class,'getNumPages'])->name('request-volume.get_numpages');
                 });
 
                 // SLAS
@@ -191,46 +181,11 @@ Route::group(['middleware' => ['auth','twofactor','web','active.user']],function
                     Route::get('/all', [RequestSLAController::class,'index'])->name('request-sla.index');
                     Route::post('/store', [RequestSLAController::class,'store'])->name('request-sla.store');
                     Route::get('/show/{id}', [RequestSLAController::class,'show'])->name('request-sla.show');
+                    Route::get('/get/{typeId}/{volumeId}', [RequestSLAController::class,'get'])->name('request-sla.get');
                     Route::post('/update/{id}', [RequestSLAController::class,'update'])->name('request-sla.update');
                     Route::post('/delete/{id}', [RequestSLAController::class,'destroy'])->name('request-sla.delete');
                 });
             });
-
-            // // REQUEST TYPE
-            // Route::get('/request-types', [PageController::class, 'showRequestTypes'])->name('request-types.index');
-            // Route::group(['prefix' => 'request-type'],
-            // function ()
-            // {
-            //     Route::get('/all', [RequestTypeController::class,'index'])->name('request-type.index');
-            //     Route::post('/store', [RequestTypeController::class,'store'])->name('request-type.store');
-            //     Route::get('/show/{id}', [RequestTypeController::class,'show'])->name('request-type.show');
-            //     Route::post('/update/{id}', [RequestTypeController::class,'update'])->name('request-type.update');
-            //     Route::post('/delete/{id}', [RequestTypeController::class,'destroy'])->name('request-type.delete');
-            // });
-
-            // // REQUEST VOLUME
-            // Route::get('/request-volumes', [PageController::class, 'showRequestVolumes'])->name('request-volumes.index');
-            // Route::group(['prefix' => 'request-volume'],
-            // function ()
-            // {
-            //     Route::get('/all', [RequestVolumeController::class,'index'])->name('request-volume.index');
-            //     Route::post('/store', [RequestVolumeController::class,'store'])->name('request-volume.store');
-            //     Route::get('/show/{id}', [RequestVolumeController::class,'show'])->name('request-volume.show');
-            //     Route::post('/update/{id}', [RequestVolumeController::class,'update'])->name('request-volume.update');
-            //     Route::post('/delete/{id}', [RequestVolumeController::class,'destroy'])->name('request-volume.delete');
-            // });
-
-            // // REQUEST SLA
-            // Route::get('/request-slas', [PageController::class, 'showRequestSLAs'])->name('request-slas.index');
-            // Route::group(['prefix' => 'request-sla'],
-            // function ()
-            // {
-            //     Route::get('/all', [RequestSLAController::class,'index'])->name('request-sla.index');
-            //     Route::post('/store', [RequestSLAController::class,'store'])->name('request-sla.store');
-            //     Route::get('/show/{id}', [RequestSLAController::class,'show'])->name('request-sla.show');
-            //     Route::post('/update/{id}', [RequestSLAController::class,'update'])->name('request-sla.update');
-            //     Route::post('/delete/{id}', [RequestSLAController::class,'destroy'])->name('request-sla.delete');
-            // });
 
             Route::get('users', [PageController::class, 'showUsers'])->name('users.index');
             Route::group(['prefix' => 'user'],

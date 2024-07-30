@@ -104,4 +104,18 @@ class RequestSLAController extends GlobalVariableController
 
         return $this->returnResponse($result);
     }
+
+    public function get($typeId, $volumeId)
+    {
+        $sla = RequestSLA::query()
+            ->where('request_type_id', $typeId)
+            ->where('request_volume_id', $volumeId)
+            ->where('status','active')
+            ->select('id','request_type_id','request_volume_id','agreed_sla','status')
+            ->first();
+
+        // $sla = $sla ? $sla : 'not found';
+
+        return $sla;
+    }
 }

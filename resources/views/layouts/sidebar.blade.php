@@ -38,30 +38,30 @@
                     </li>
 
                     <li>
-                        <a href="{{ url('tasks/?status=all') }}" class="waves-effect" @if(\Request::has('status')) style="color:#fff" @endif>
-                            <i class="bx bx-loader" @if(\Request::has('status')) style="color:#fff" @endif></i>
-                            <span key="t-tasks-list">Pending Jobs</span>
+                        <a href="{{ url('pending-jobs') }}" class="waves-effect">
+                            <i class="bx bx-loader"></i>
+                            <span key="t-pending-jobs">Pending Jobs</span>
                         </a>
                     </li>
 
                     <li>
-                        <a href="{{ url('my-jobs/all') }}" class="waves-effect">
-                            <i class="bx bx-task" @if(\Request::routeIs('my-jobs.index')) style="color:#fff" @endif></i>
-                            <span key="t-jobs" @if(\Request::routeIs('my-jobs.index')) style="color:#fff" @endif>My Jobs</span>
+                        <a href="{{ url('my-jobs') }}" class="waves-effect">
+                            <i class="bx bx-task"></i>
+                            <span key="t-my-jobs">My Jobs</span>
                         </a>
                     </li>
 
                     <li>
-                        <a href="{{ url('my-jobs/all') }}" class="waves-effect">
-                            <i class="bx bxs-check-circle" @if(\Request::routeIs('my-jobs.index')) style="color:#fff" @endif></i>
-                            <span key="t-jobs" @if(\Request::routeIs('my-jobs.index')) style="color:#fff" @endif>Quality Check</span>
+                        <a href="{{ url('quality-check') }}" class="waves-effect">
+                            <i class="bx bxs-check-circle"></i>
+                            <span key="t-quality-check">Quality Check</span>
                         </a>
                     </li>
 
                     <li>
-                        <a href="{{ url('my-jobs/all') }}" class="waves-effect">
-                            <i class="bx bxs-data" @if(\Request::routeIs('my-jobs.index')) style="color:#fff" @endif></i>
-                            <span key="t-jobs" @if(\Request::routeIs('my-jobs.index')) style="color:#fff" @endif>All Jobs</span>
+                        <a href="{{ url('jobs') }}" class="waves-effect">
+                            <i class="bx bxs-data"></i>
+                            <span key="t-jobs">All Jobs</span>
                         </a>
                     </li>
 

@@ -34,6 +34,7 @@
                     <table id="tbl_request_types" class="table table-bordered table-striped table-sm nowrap w-100">
                         <thead>
                             <tr>
+                                <th hidden>ID</th>
                                 <th>Name</th>
                                 <th>Created By</th>
                                 <th>Created On</th>

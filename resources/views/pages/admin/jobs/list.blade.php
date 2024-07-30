@@ -6,20 +6,13 @@
     <!-- DataTables -->
     <link href="{{ asset('assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/libs/datatables/buttons.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/libs/datatables/fixedColumns.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <style>
-        .dataTables_scrollBody thead tr[role="row"]{
-            visibility: collapse !important;
-        }
-    </style>
 @endsection
 
 @section('content')
 
     @component('components.breadcrumb')
-        @slot('li_1') Jobs @endslot
-        @slot('title') Jobs @endslot
+        @slot('li_1') Job @endslot
+        @slot('title') All Jobs @endslot
     @endcomponent
 
     <div class="row">
@@ -33,54 +26,24 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col-md-12">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-primary waves-effect waves-light dropdown-toggle" data-bs-toggle="dropdown"
-                                    aria-expanded="false"><i class="fa fa-filter"></i> Filter <i class="mdi mdi-chevron-down"></i></button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="{{ route("tasks.index", ['status' => "all"]) }}">All Tasks</a>
-                                    <a class="dropdown-item" href="{{ route("tasks.index", ['status' => "In Progress"]) }}">In Progress</a>
-                                    <a class="dropdown-item" href="{{ route("tasks.index", ['status' => "On Hold"]) }}">On Hold</a>
-                                    <a class="dropdown-item" href="{{ route("tasks.index", ['status' => "Completed"]) }}">Completed</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <p id="status" style="display:none">@if(\Request::get('status')) {{ (\Request::get('status')) }} @else all @endif</p>
-                    <table id="tbl_task" class="table table-bordered table-striped nowrap w-100">
+                    <table id="tbl_jobs" class="table table-bordered table-striped table-sm nowrap w-100">
                         <thead>
                             <tr>
+                                <th>Job Name</th>
+                                <th>Type of Request</th>
+                                <th>Num Pages</th>
+                                <th>Special Request</th>
+                                <th>Created On</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Agreed SLA</th>
+                                <th>Time Taken</th>
+                                <th>SLA Missed</th>
+                                <th>Internal Quality</th>
+                                <th>External Quality</th>
+                                <th>Developer</th>
                                 <th>Status</th>
-                                <th>Employee Name</th>
-                                <th>Shift Date</th>
-                                <th>Date Received</th>
-                                <th>Cluster</th>
-                                <th>Client</th>
-                                <th>Client Activity</th>
-                                <th>Description</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th>Date Completed</th>
-                                <th>Actual Handling Time</th>
-                                <th>Volume</th>
-                                <th>Remarks</th>
-                            </tr>
-                            <tr>
-                                <th><input type="text" class="form-control"/></th>
-                                <th><input type="text" class="form-control"/></th>
-                                <th><input type="text" class="form-control"/></th>
-                                <th><input type="text" class="form-control"/></th>
-                                <th><input type="text" class="form-control"/></th>
-                                <th><input type="text" class="form-control"/></th>
-                                <th><input type="text" class="form-control"/></th>
-                                <th><input type="text" class="form-control"/></th>
-                                <th><input type="text" class="form-control"/></th>
-                                <th><input type="text" class="form-control"/></th>
-                                <th><input type="text" class="form-control"/></th>
-                                <th><input type="text" class="form-control"/></th>
-                                <th><input type="text" class="form-control"/></th>
-                                <th><input type="text" class="form-control"/></>
+                                <th width="5%" class="text-center">Action</th>
                             </tr>
                         </thead>
                     </table>
@@ -100,10 +63,8 @@
     <script src="{{ asset('assets/libs/datatables/dataTables.fixedColumns.min.js') }}"></script>
     <script src="{{ asset('assets/libs/jszip/jszip.min.js') }}"></script>
     <script src="{{ asset('assets/libs/pdfmake/pdfmake.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/select2/select2.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/select2/select2.js') }}"></script>
 @endsection
 
 @section('custom-js')
-    <script src="{{asset('scripts/tasklists.js')}}"></script>
+    <script src="{{asset('scripts/jobs.js')}}"></script>
 @endsection

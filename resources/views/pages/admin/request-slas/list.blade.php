@@ -35,6 +35,7 @@
                     <table id="tbl_request_slas" class="table table-bordered table-striped table-sm nowrap w-100">
                         <thead>
                             <tr>
+                                <th hidden>ID</th>
                                 <th>Request Type</th>
                                 <th class="text-center">Num Pages</th>
                                 <th class="text-center">Agreed SLA (hours)</th>

@@ -43,7 +43,9 @@ class JobController extends Controller
         try{
             if($request->edit_id === null)
             {
-                $job = Job::create($request->except('edit_id'));
+                $request['request_sla_id'] = $request->request_sla_id;
+                $request['client_id'] = auth()->user()->client_id;
+                $job = Job::create($request->except(['edit_id','agreed_sla']));
             }
             else
             {

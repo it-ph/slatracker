@@ -42,6 +42,13 @@ class PageController extends GlobalVariableController
         return view('pages.admin.jobs.create', compact('user','developers'));
     }
 
+    /** Jobs */
+    public function showJobs()
+    {
+        $user = $this->thecredentials();
+        return view('pages.admin.jobs.list', compact('user'));
+    }
+
     /** Users */
     public function showUsers(Request $request)
     {

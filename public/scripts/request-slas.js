@@ -73,6 +73,7 @@ const REQUEST_SLA = (() => {
             response.data.data.forEach(val => {
                 table +=
                     `<tr>
+                        <td hidden>${val.id}</td>
                         <td>${val.request_type}</td>
                         <td class="text-center">${val.num_pages}</td>
                         <td class="text-center">${val.agreed_sla}</td>
@@ -138,6 +139,7 @@ const REQUEST_SLA = (() => {
             $("#request_type_id").val(response.data.data.request_type_id).trigger("change");
             $("#request_volume_id").val(response.data.data.request_volume_id).trigger("change");
             $("#agreed_sla").val(response.data.data.agreed_sla);
+            $("#status_").val(response.data.data.status);
             $('#btn_save').empty();
             $('#btn_save').append('<i class="fa fa-save"></i> Update');
             $('#btn_save').prop("disabled", false);
