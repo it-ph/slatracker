@@ -5,6 +5,17 @@ namespace App\Http\Helpers;
 use Carbon\Carbon;
 
 class TaskHelper {
+    public function convertTime($hours)
+    {
+        $ss = ($hours * 3600);
+        $hh = floor($hours);
+        $ss -= $hh * 3600;
+        $mm = floor($ss / 60);
+        $ss -= $mm * 60;
+
+        return sprintf('%02d:%02d:%02d', $hh, $mm, $ss);
+    }
+
     public function getActualHandlingTime($task)
     {
         if($task->actual_handling_time)

@@ -64,7 +64,7 @@ const JOB = (() => {
 
     // load data
     this_job.load = () => {
-        axios(`${APP_URL}/job/all`).then(function(response) {
+        axios(`${APP_URL}/myjob/all`).then(function(response) {
             $('#tbl_jobs').DataTable().clear().draw();
             $('#tbl_jobs').DataTable().destroy();
             var table;
@@ -82,11 +82,8 @@ const JOB = (() => {
                         <td class="text-center">${val.agreed_sla}</td>
                         <td class="text-center">${val.time_taken}</td>
                         <td class="text-center">${val.sla_missed}</td>
-                        <td class="text-center">${val.internal_quality}</td>
-                        <td class="text-center">${val.external_quality}</td>
-                        <td>${val.developer}</td>
+                        <td class="text-center">${val.p_sla_miss}</td>
                         <td class="text-center">${val.status}</td>
-                        <td class="text-center">${val.action}</td>
                     </tr>`;
             });
             $('#tbl_jobs tbody').html(table)

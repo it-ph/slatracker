@@ -15,6 +15,11 @@ class Job extends Model
     protected $guarded = [];
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
+    public function scopeDevs($query)
+    {
+        return $query->where('developer_id', auth()->user()->id);
+    }
+
     public function theclient()
     {
         return $this->belongsTo(Client::class, 'client_id')->withTrashed();
@@ -25,6 +30,11 @@ class Job extends Model
         return $this->belongsTo(User::class, 'developer_id')->withTrashed();
     }
 
+    public function theauditor()
+    {
+        return $this->belongsTo(User::class, 'auditor_id')->withTrashed();
+    }
+
     public function therequesttype()
     {
         return $this->belongsTo(RequestType::class,'request_type_id')->withTrashed();
@@ -32,7 +42,7 @@ class Job extends Model
 
     public function therequestvolume()
     {
-        return $this->belongsTo(RequestVolume::class, 'num_pages_id')->withTrashed();
+        return $this->belongsTo(RequestVolume::class, 'request_volume_id')->withTrashed();
     }
 
     public function therequestsla()

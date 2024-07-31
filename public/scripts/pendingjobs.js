@@ -31,7 +31,7 @@ const JOB = (() => {
                 // Send a POST request
                 axios({
                     method: 'POST',
-                    url: `${APP_URL}/job/store`,
+                    url: `${APP_URL}/pendingjob/store`,
                     data: formdata
                 }).then((response) => {
                     console.log(response.data.status)
@@ -64,7 +64,7 @@ const JOB = (() => {
 
     // load data
     this_job.load = () => {
-        axios(`${APP_URL}/job/all`).then(function(response) {
+        axios(`${APP_URL}/pendingjob/all`).then(function(response) {
             $('#tbl_jobs').DataTable().clear().draw();
             $('#tbl_jobs').DataTable().destroy();
             var table;
@@ -78,15 +78,12 @@ const JOB = (() => {
                         <td class="text-center">${val.is_special_request}</td>
                         <td class="text-center">${val.created_at}</td>
                         <td class="text-center">${val.start_at}</td>
-                        <td class="text-center">${val.end_at}</td>
                         <td class="text-center">${val.agreed_sla}</td>
                         <td class="text-center">${val.time_taken}</td>
                         <td class="text-center">${val.sla_missed}</td>
-                        <td class="text-center">${val.internal_quality}</td>
-                        <td class="text-center">${val.external_quality}</td>
+                        <td class="text-center">${val.p_sla_miss}</td>
                         <td>${val.developer}</td>
                         <td class="text-center">${val.status}</td>
-                        <td class="text-center">${val.action}</td>
                     </tr>`;
             });
             $('#tbl_jobs tbody').html(table)

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Facades\App\Http\Helpers\TaskHelper;
 use App\Models\Job;
 
 class JobsServices {
@@ -17,9 +18,11 @@ class JobsServices {
         $jobs = Job::with([
             'therequesttype:id,name',
             'therequestvolume:id,name',
+            'therequestsla:id,agreed_sla',
             'thedeveloper:id,username',
         ])
-        ->select('id','name','request_type_id','request_volume_id','is_special_request','created_at','start_at','end_at','agreed_sla','time_taken','sla_missed','internal_quality','external_quality','developer_id','status')
+        ->select('id','name','request_type_id','request_volume_id','request_sla_id','is_special_request','created_at','start_at','end_at','time_taken','sla_missed','internal_quality','external_quality','developer_id','status')
+        ->orderBy('created_at','DESC')
         ->get();
 
         // // ADMIN
@@ -34,16 +37,16 @@ class JobsServices {
         // }
 
         foreach($jobs as $value) {
-            $name = $value->name;
+            $name = '<a href="" class="text-info">'. $value->name .'</a>';
             $request_type = $value->therequesttype ? $value->therequesttype->name : '-';
             $request_volume = $value->therequestvolume ? $value->therequestvolume->name : '-';
             $is_special_request = $value->is_special_request ? 'Yes' : 'No';
             $created_at = $value->created_at ? date('d-M-y h:i:s a', strtotime($value->created_at)) : '-';
             $start_at = $value->start_at ? date('d-M-y h:i:s a', strtotime($value->start_at)) : '-';
             $end_at = $value->end_at ? date('d-M-y h:i:s a', strtotime($value->end_at)) : '-';
-            $agreed_sla = $value->agreed_sla;
-            $time_taken = $value->time_taken;
-            $sla_missed = $value->sla_missed ? 'Yes' : 'No';
+            $agreed_sla = $value->therequestsla ? TaskHelper::convertTime($value->therequestsla->agreed_sla) : '-';
+            $time_taken = $value->time_taken ? $value->time_taken : '-';
+            $sla_missed = $value->sla_missed ? '<span class="text-danger">Yes</span>' : '<span class="text-success">No</span>';
             $internal_quality = $value->internal_quality ? $value->internal_quality : '-';
             $external_quality = $value->external_quality ? $value->external_quality : '-';
             $developer = $value->thedeveloper ? $value->thedeveloper->username : '-';
@@ -51,13 +54,17 @@ class JobsServices {
             $badge_status = $value->status;
             switch ($badge_status) {
                 case "not started":
-                    $badge = 'danger';
+                    $badge = 'secondary';
                     break;
                 case "in progress":
                     $badge = 'primary';
                     break;
                 case "quality check":
                     $badge = 'info';
+                    break;
+                    break;
+                case "bounced back":
+                    $badge = 'danger';
                     break;
                 case "closed":
                     $badge = 'success';
@@ -84,6 +91,222 @@ class JobsServices {
                 'external_quality' => $external_quality,
                 'developer' => $developer,
                 'status' => $status,
+                'action' => $action,
+            ];
+        }
+
+        return $datastorage;
+    }
+
+    // PENDING JOBS
+    public function loadPendingJobs()
+    {
+        // $user = User::with('theroles:id,user_id,name')->findOrFail(auth()->user()->id);
+        // $roles = [];
+        // foreach ($user->theroles as $role) {
+        //     array_push($roles, $role->name);
+        // }
+
+        $datastorage = [];
+        $jobs = Job::with([
+            'therequesttype:id,name',
+            'therequestvolume:id,name',
+            'therequestsla:id,agreed_sla',
+            'thedeveloper:id,username',
+        ])
+        ->select('id','name','request_type_id','request_volume_id','request_sla_id','is_special_request','created_at','start_at','time_taken','sla_missed','developer_id','status')
+        ->orderBy('created_at','DESC')
+        ->get();
+
+        // // ADMIN
+        // if(in_array('admin',$roles))
+        // {
+        //     $jobs = $jobs->get();
+        // }
+        // // TEAM LEAD, MANAGER
+        // else
+        // {
+        //     $jobs = $jobs->get();
+        // }
+
+        foreach($jobs as $value) {
+            $name = '<a href="" class="text-info">'. $value->name .'</a>';
+            $request_type = $value->therequesttype ? $value->therequesttype->name : '-';
+            $request_volume = $value->therequestvolume ? $value->therequestvolume->name : '-';
+            $is_special_request = $value->is_special_request ? 'Yes' : 'No';
+            $created_at = $value->created_at ? date('d-M-y h:i:s a', strtotime($value->created_at)) : '-';
+            $start_at = $value->start_at ? date('d-M-y h:i:s a', strtotime($value->start_at)) : '-';
+            $agreed_sla = $value->therequestsla ? TaskHelper::convertTime($value->therequestsla->agreed_sla) : '-';
+            $time_taken = $value->time_taken ? $value->time_taken : '-';
+            $sla_missed = $value->sla_missed ? '<span class="text-danger">Yes</span>' : '<span class="text-success">No</span>';
+            $p_sla_miss = $value->sla_missed ? '<span class="text-danger">Yes</span>' : '<span class="text-success">No</span>';
+            $developer = $value->thedeveloper ? $value->thedeveloper->username : '-';
+
+            $badge_status = $value->status;
+            switch ($badge_status) {
+                case "not started":
+                    $badge = 'secondary';
+                    break;
+                case "in progress":
+                    $badge = 'primary';
+                    break;
+                case "quality check":
+                    $badge = 'info';
+                    break;
+                    break;
+                case "bounced back":
+                    $badge = 'danger';
+                    break;
+                case "closed":
+                    $badge = 'success';
+                    break;
+            }
+
+            $status = '<span class="badge bg-'.$badge.'">'.ucwords($value->status).'</span>';
+
+            $datastorage[] = [
+                'id' => $value->id,
+                'name' => $name,
+                'request_type' => $request_type,
+                'request_volume' => $request_volume,
+                'is_special_request' => $is_special_request,
+                'created_at' => $created_at,
+                'start_at' => $start_at,
+                'agreed_sla' => $agreed_sla,
+                'time_taken' => $time_taken,
+                'sla_missed' => $sla_missed,
+                'p_sla_miss' => $p_sla_miss,
+                'developer' => $developer,
+                'status' => $status,
+            ];
+        }
+
+        return $datastorage;
+    }
+
+    // DEVELOPER
+    public function loadDevJobs()
+    {
+        $datastorage = [];
+        $jobs = Job::with([
+            'therequesttype:id,name',
+            'therequestvolume:id,name',
+            'therequestsla:id,agreed_sla',
+            'thedeveloper:id,username',
+        ])
+        ->select('id','name','request_type_id','request_volume_id','request_sla_id','is_special_request','created_at','start_at','end_at','time_taken','sla_missed','internal_quality','external_quality','developer_id','status')
+        ->devs()
+        ->orderBy('created_at','DESC')
+        ->get();
+
+        foreach($jobs as $value) {
+            $name = '<a href="" class="text-info">'. $value->name .'</a>';
+            $request_type = $value->therequesttype ? $value->therequesttype->name : '-';
+            $request_volume = $value->therequestvolume ? $value->therequestvolume->name : '-';
+            $is_special_request = $value->is_special_request ? 'Yes' : 'No';
+            $created_at = $value->created_at ? date('d-M-y h:i:s a', strtotime($value->created_at)) : '-';
+            $start_at = $value->start_at ? date('d-M-y h:i:s a', strtotime($value->start_at)) : '-';
+            $end_at = $value->end_at ? date('d-M-y h:i:s a', strtotime($value->end_at)) : '-';
+            $agreed_sla = $value->therequestsla ? TaskHelper::convertTime($value->therequestsla->agreed_sla) : '-';
+            $time_taken = $value->time_taken ? $value->time_taken : '-';
+            $sla_missed = $value->sla_missed ? '<span class="text-danger">Yes</span>' : '<span class="text-success">No</span>';
+            $p_sla_miss = $value->sla_missed ? '<span class="text-danger">Yes</span>' : '<span class="text-success">No</span>';
+
+            $badge_status = $value->status;
+            switch ($badge_status) {
+                case "not started":
+                    $badge = 'secondary';
+                    break;
+                case "in progress":
+                    $badge = 'primary';
+                    break;
+                case "quality check":
+                    $badge = 'info';
+                    break;
+                    break;
+                case "bounced back":
+                    $badge = 'danger';
+                    break;
+                case "closed":
+                    $badge = 'success';
+                    break;
+            }
+
+            $status = '<span class="badge bg-'.$badge.'">'.ucwords($value->status).'</span>';
+
+            $datastorage[] = [
+                'id' => $value->id,
+                'name' => $name,
+                'request_type' => $request_type,
+                'request_volume' => $request_volume,
+                'is_special_request' => $is_special_request,
+                'created_at' => $created_at,
+                'start_at' => $start_at,
+                'end_at' => $end_at,
+                'agreed_sla' => $agreed_sla,
+                'time_taken' => $time_taken,
+                'sla_missed' => $sla_missed,
+                'p_sla_miss' => $p_sla_miss,
+                'status' => $status,
+            ];
+        }
+
+        return $datastorage;
+    }
+
+    // AUDITOR
+    public function loadPendingQC()
+    {
+        $datastorage = [];
+        $jobs = Job::with([
+            'therequesttype:id,name',
+            'therequestvolume:id,name',
+            'therequestsla:id,agreed_sla',
+            'thedeveloper:id,username',
+            'theauditor:id,username',
+        ])
+        ->select('id','name','request_type_id','request_volume_id','request_sla_id','is_special_request','created_at','start_at','end_at','time_taken','sla_missed','developer_id','auditor_id','status')
+        // ->where('status','quality check')
+        ->orderBy('created_at','DESC')
+        ->get();
+
+        foreach($jobs as $value) {
+            $name = auth()->user()->id == $value->auditor_id ? '<a href="" class="text-info">'. $value->name .'</a>' : $value->name;
+            $request_type = $value->therequesttype ? $value->therequesttype->name : '-';
+            $request_volume = $value->therequestvolume ? $value->therequestvolume->name : '-';
+            $is_special_request = $value->is_special_request ? 'Yes' : 'No';
+            $created_at = $value->created_at ? date('d-M-y h:i:s a', strtotime($value->created_at)) : '-';
+            $agreed_sla = $value->therequestsla ? TaskHelper::convertTime($value->therequestsla->agreed_sla) : '-';
+            $time_taken = $value->time_taken ? $value->time_taken : '-';
+            $sla_missed = $value->sla_missed ? '<span class="text-danger">Yes</span>' : '<span class="text-success">No</span>';
+            $developer = $value->thedeveloper ? $value->thedeveloper->username : '-';
+            $qc_round = $value->qc_round ? $value->qc_round : '-';
+            $auditor = $value->theauditor ? $value->theauditor->username : '-';
+
+            if($value->auditor_id)
+            {
+                $action = auth()->user()->id == $value->auditor_id ?
+                    '<button type="button" class="btn btn-info btn-sm waves-effect waves-light" title="Release Job" onclick=JOB.show('.$value->id.')><i class="fa fa-share"></i></button>' : '-';
+            }
+            else
+            {
+                $action = '<button type="button" class="btn btn-primary btn-sm waves-effect waves-light" title="Pick Job" onclick=JOB.assignAuditor('.$value->id.')><i class="fa fa-check-circle"></i></button>';
+            }
+
+
+            $datastorage[] = [
+                'id' => $value->id,
+                'name' => $name,
+                'request_type' => $request_type,
+                'request_volume' => $request_volume,
+                'is_special_request' => $is_special_request,
+                'created_at' => $created_at,
+                'agreed_sla' => $agreed_sla,
+                'time_taken' => $time_taken,
+                'sla_missed' => $sla_missed,
+                'developer' => $developer,
+                'qc_round' => $qc_round,
+                'auditor' => $auditor,
                 'action' => $action,
             ];
         }

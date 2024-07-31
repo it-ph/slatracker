@@ -18,6 +18,52 @@ class JobController extends Controller
         $this->service = new JobsServices();
     }
 
+    /** PENDING JOBS */
+    public function pendingJob()
+    {
+        $result = $this->successResponse('Jobs loaded successfully!');
+        try
+        {
+            $result["data"] =  $this->service->loadPendingJobs();
+        } catch (\Throwable $th)
+        {
+            return $this->errorResponse($th);
+        }
+
+        return $this->returnResponse($result);
+    }
+
+    /** DEV */
+    public function myJob()
+    {
+        $result = $this->successResponse('Jobs loaded successfully!');
+        try
+        {
+            $result["data"] =  $this->service->loadDevJobs();
+        } catch (\Throwable $th)
+        {
+            return $this->errorResponse($th);
+        }
+
+        return $this->returnResponse($result);
+    }
+
+    /** AUDITOR */
+    public function qualityCheck()
+    {
+        $result = $this->successResponse('Jobs loaded successfully!');
+        try
+        {
+            $result["data"] =  $this->service->loadPendingQC();
+        } catch (\Throwable $th)
+        {
+            return $this->errorResponse($th);
+        }
+
+        return $this->returnResponse($result);
+    }
+
+
     /**
      * Display a listing of the resource.
      *

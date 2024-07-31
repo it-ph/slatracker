@@ -38,23 +38,23 @@
                     </li>
 
                     <li>
-                        <a href="{{ url('pending-jobs') }}" class="waves-effect">
+                        <a href="{{ url('pendingjobs') }}" class="waves-effect">
                             <i class="bx bx-loader"></i>
-                            <span key="t-pending-jobs">Pending Jobs</span>
+                            <span key="t-pendingjobs">Pending Jobs</span>
                         </a>
                     </li>
 
                     <li>
-                        <a href="{{ url('my-jobs') }}" class="waves-effect">
+                        <a href="{{ url('myjobs') }}" class="waves-effect">
                             <i class="bx bx-task"></i>
-                            <span key="t-my-jobs">My Jobs</span>
+                            <span key="t-myjobs">My Jobs</span>
                         </a>
                     </li>
 
                     <li>
-                        <a href="{{ url('quality-check') }}" class="waves-effect">
+                        <a href="{{ url('qualitycheck') }}" class="waves-effect">
                             <i class="bx bxs-check-circle"></i>
-                            <span key="t-quality-check">Quality Check</span>
+                            <span key="t-qualitycheck">Quality Check</span>
                         </a>
                     </li>
 

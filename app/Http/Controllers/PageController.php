@@ -43,10 +43,31 @@ class PageController extends GlobalVariableController
     }
 
     /** Jobs */
+    public function showPendingJobs()
+    {
+        $user = $this->thecredentials();
+        return view('pages.admin.jobs.pending', compact('user'));
+    }
+
+    /** Jobs */
     public function showJobs()
     {
         $user = $this->thecredentials();
-        return view('pages.admin.jobs.list', compact('user'));
+        return view('pages.admin.jobs.all', compact('user'));
+    }
+
+    /** My Jobs */
+    public function showMyJobs()
+    {
+        $user = $this->thecredentials();
+        return view('pages.dev.jobs.list', compact('user'));
+    }
+
+    /** Quality Check */
+    public function showPendingQC()
+    {
+        $user = $this->thecredentials();
+        return view('pages.auditor.jobs.list', compact('user'));
     }
 
     /** Users */

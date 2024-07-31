@@ -110,9 +110,34 @@ Route::group(['middleware' => ['auth','twofactor','web','active.user']],function
     // Route::resource('task', TasksController::class);
     // Route::get('tasks', [PageController::class, 'showAgentTaskLists'])->name('tasks.index');
 
-    /**
-     * START OF ADMIN, TL, MANAGER
-     */
+    // MY JOBS - DEV ACCESS
+    Route::get('/pendingjobs', [PageController::class, 'showPendingJobs'])->name('pendingjobs.index');
+    Route::group(['prefix' => 'pendingjob'],
+    function ()
+    {
+        Route::get('/all', [JobController::class,'pendingjob'])->name('pendingjob.index');
+        Route::get('/show/{id}', [JobController::class,'show'])->name('pendingjob.show');
+    });
+
+    // MY JOBS - DEV ACCESS
+    Route::get('/myjobs', [PageController::class, 'showMyJobs'])->name('myjobs.index');
+    Route::group(['prefix' => 'myjob'],
+    function ()
+    {
+        Route::get('/all', [JobController::class,'myJob'])->name('myjob.index');
+        Route::get('/show/{id}', [JobController::class,'show'])->name('myjob.show');
+    });
+
+    // QUALITY CHECK - AUDITOR ACCESS
+    Route::get('/qualitycheck', [PageController::class, 'showPendingQC'])->name('qualitycheck.index');
+    Route::group(['prefix' => 'pendingqc'],
+    function ()
+    {
+        Route::get('/all', [JobController::class,'qualityCheck'])->name('pendingqc.index');
+        Route::get('/show/{id}', [JobController::class,'show'])->name('pendingqc.show');
+    });
+
+    /** START OF ADMIN, TL, MANAGER */
 
     // Route::group(['middleware' => ['tlom.admin'],], function ()
     //     {
@@ -200,9 +225,7 @@ Route::group(['middleware' => ['auth','twofactor','web','active.user']],function
     //     }
     // );
 
-    /**
-     * END OF ADMIN, TL, OM
-     */
+    /** END OF ADMIN, TL, MANAGER */
 
 });
 /**

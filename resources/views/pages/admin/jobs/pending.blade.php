@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title') Jobs @endsection
+@section('title') Pending Jobs @endsection
 
 @section('css')
     <!-- DataTables -->
@@ -12,7 +12,7 @@
 
     @component('components.breadcrumb')
         @slot('li_1') Job @endslot
-        @slot('title') All Jobs @endslot
+        @slot('title') Pending Jobs @endslot
     @endcomponent
 
     <div class="row">
@@ -29,21 +29,18 @@
                     <table id="tbl_jobs" class="table table-bordered table-striped table-sm nowrap w-100">
                         <thead>
                             <tr>
-                                <th>Job Name</th>
-                                <th>Type of Request</th>
-                                <th>Num Pages</th>
-                                <th>Special Request</th>
-                                <th>Created On</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                <th>Agreed SLA</th>
-                                <th>Time Taken</th>
-                                <th>SLA Missed</th>
-                                <th>Internal Quality</th>
-                                <th>External Quality</th>
-                                <th>Developer</th>
-                                <th>Status</th>
-                                <th width="5%" class="text-center">Action</th>
+                                <th class="text-center">Job Name</th>
+                                <th class="text-center">Type of Request</th>
+                                <th class="text-center">Num Pages</th>
+                                <th class="text-center">Special Request</th>
+                                <th class="text-center">Created On</th>
+                                <th class="text-center">Start Time</th>
+                                <th class="text-center">Agreed SLA</th>
+                                <th class="text-center">Time Elapsed</th>
+                                <th class="text-center">SLA Missed</th>
+                                <th class="text-center">Potential SLA Miss</th>
+                                <th class="text-center">Developer</th>
+                                <th class="text-center">Status</th>
                             </tr>
                         </thead>
                     </table>
@@ -60,11 +57,10 @@
     <!-- Required datatable js -->
     <script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>
     <script src="{{ asset('assets/libs/datatables/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/datatables/dataTables.fixedColumns.min.js') }}"></script>
     <script src="{{ asset('assets/libs/jszip/jszip.min.js') }}"></script>
     <script src="{{ asset('assets/libs/pdfmake/pdfmake.min.js') }}"></script>
 @endsection
 
 @section('custom-js')
-    <script src="{{asset('scripts/jobs.js')}}"></script>
+    <script src="{{asset('scripts/pendingjobs.js')}}"></script>
 @endsection
