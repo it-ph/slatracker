@@ -63,7 +63,7 @@ class JobController extends Controller
             return view('errors.404');
         }
 
-        return view('pages.admin.jobs.show', compact('user','job'));
+        return view('pages.admin.jobs.view.index', compact('user','job'));
 
     }
 
@@ -91,7 +91,7 @@ class JobController extends Controller
             return view('errors.404');
         }
 
-        return view('pages.admin.jobs.showqc', compact('user','job'));
+        return view('pages.admin.jobs.qc.index', compact('user','job'));
 
     }
 

@@ -39,7 +39,7 @@
                             <div class="col-md-12">
                                 <div class="form-group row mb-2">
                                     <input type="hidden" name="edit_id" id="edit_id">
-                                    <label for="name" class="col-sm-3 col-form-label"><strong>Job Name <span class="important">*</span></strong></label>
+                                    <label for="name" class="col-sm-3 col-form-label fw-bold">Job Name <strong><span class="important">*</span></strong></label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" name="name" id="name" placeholder="Enter Job Name">
                                         <label id="nameError" class="error" style="display:none"></label>
@@ -47,7 +47,7 @@
                                 </div>
 
                                 <div class="form-group row mb-2">
-                                    <label for="site_id" class="col-sm-3 col-form-label"><strong>Site ID <span class="important">*</span></strong></label>
+                                    <label for="site_id" class="col-sm-3 col-form-label fw-bold">Site ID <strong><span class="important">*</span></strong></label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" name="site_id" id="site_id" placeholder="Enter Site ID">
                                         <label id="site_idError" class="error" style="display:none"></label>
@@ -55,7 +55,7 @@
                                 </div>
 
                                 <div class="form-group row mb-2">
-                                    <label for="platform" class="col-sm-3 col-form-label"><strong>Platform <span class="important">*</span></strong></label>
+                                    <label for="platform" class="col-sm-3 col-form-label fw-bold">Platform <strong><span class="important">*</span></strong></label>
                                     <div class="col-sm-9">
                                         <select class="form-control" name="platform" id="platform">
                                             <option value=""disabled selected>-- Select Platform -- </option>
@@ -67,7 +67,7 @@
                                 </div>
 
                                 <div class="form-group row mb-2">
-                                    <label for="developer_id" class="col-sm-3 col-form-label"><strong>Developer <span class="important">*</span></strong></label>
+                                    <label for="developer_id" class="col-sm-3 col-form-label fw-bold">Developer <strong><span class="important">*</span></strong></label>
                                     <div class="col-sm-9">
                                         <select class="form-control select2" name="developer_id" id="developer_id"  style="width:100%;">
                                             <option value=""disabled selected>-- Select Developer -- </option>
@@ -82,7 +82,7 @@
                                 </div>
 
                                 <div class="form-group row mb-2">
-                                    <label for="request_type_id" class="col-sm-3 col-form-label"><strong>Type of Request <span class="important">*</span></strong></label>
+                                    <label for="request_type_id" class="col-sm-3 col-form-label fw-bold">Type of Request <strong><span class="important">*</span></strong></label>
                                     <div class="col-sm-9">
                                         <select class="form-control select2 sla" name="request_type_id" id="request_type_id"  style="width:100%;">
                                             <option value=""disabled selected>-- Select Type of Request -- </option>
@@ -97,7 +97,7 @@
                                 </div>
 
                                 <div class="form-group row mb-2">
-                                    <label for="request_volume_id" class="col-sm-3 col-form-label"><strong>Num Pages <span class="important">*</span></strong></label>
+                                    <label for="request_volume_id" class="col-sm-3 col-form-label fw-bold">Num Pages <strong><span class="important">*</span></strong></label>
                                     <div class="col-sm-9">
                                         <select class="form-control select2 sla" name="request_volume_id" id="request_volume_id"  style="width:100%;">
                                             <option value=""disabled selected>-- Select Num Pages -- </option>
@@ -112,7 +112,7 @@
                                 </div>
 
                                 <div class="form-group row mb-2">
-                                    <label for="agreed_sla" class="col-sm-3 col-form-label"><strong>Agreed SLA <span class="important">*</span></strong></label>
+                                    <label for="agreed_sla" class="col-sm-3 col-form-label fw-bold">Agreed SLA <strong><span class="important">*</span></strong></label>
                                     <div class="col-sm-9">
                                         <input type="hidden" class="form-control" name="request_sla_id" id="request_sla_id">
                                         <input type="text" readonly class="form-control" name="agreed_sla" id="agreed_sla" placeholder="Based on selected Type of Request and Num Pages.">
@@ -121,7 +121,7 @@
                                 </div>
 
                                 <div class="form-group row mb-2">
-                                    <label for="salesforce_link" class="col-sm-3 col-form-label"><strong>Salesforce Link <span class="important">*</span></strong></label>
+                                    <label for="salesforce_link" class="col-sm-3 col-form-label fw-bold">Salesforce Link <strong><span class="important">*</span></strong></label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" name="salesforce_link" id="salesforce_link" placeholder="Enter Salesforce Link">
                                         <label id="salesforce_linkError" class="error" style="display:none"></label>
@@ -129,7 +129,7 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="is_special_request" class="col-sm-3 col-form-label"><strong>Special Request <span class="important">*</span></strong></label>
+                                    <label for="is_special_request" class="col-sm-3 col-form-label fw-bold">Special Request <strong><span class="important">*</span></strong></label>
                                     <div class="col-sm-9">
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="is_special_request" id="is_special_request_yes" value="1">
@@ -144,7 +144,7 @@
                                 </div>
 
                                 <div class="form-group row mb-2">
-                                    <label for="comments" class="col-sm-3 col-form-label"><strong>Comments for Special Request <span class="important">*</span></strong></label>
+                                    <label for="comments" class="col-sm-3 col-form-label fw-bold">Comments for Special Request <strong><span class="important">*</span></strong></label>
                                     <div class="col-sm-9">
                                         <textarea class="form-control" name="comments" id="comments" cols="30" rows="4" placeholder="Enter comments for special request."></textarea>
                                         <label id="commentsError" class="error" style="display:none"></label>
@@ -152,7 +152,7 @@
                                 </div>
 
                                 <div class="form-group row mb-2">
-                                    <label for="addon_comments" class="col-sm-3 col-form-label"><strong>Additional Comments <span class="important">*</span></strong></label>
+                                    <label for="addon_comments" class="col-sm-3 col-form-label fw-bold">Additional Comments <strong><span class="important">*</span></strong></label>
                                     <div class="col-sm-9">
                                         <textarea class="form-control" name="addon_comments" id="addon_comments" cols="30" rows="4" placeholder="Enter additional comments."></textarea>
                                         <label id="addon_commentsError" class="error" style="display:none"></label>

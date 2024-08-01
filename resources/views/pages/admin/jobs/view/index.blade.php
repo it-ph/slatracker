@@ -1,0 +1,57 @@
+@extends('layouts.master')
+
+@section('title') View Job @endsection
+
+@section('css')
+    <!-- DataTables -->
+    <link href="{{ asset('assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/datatables/buttons.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/datatables/fixedColumns.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <style>
+        .dataTables_scrollBody thead tr[role="row"]{
+            visibility: collapse !important;
+        }
+    </style>
+@endsection
+
+@section('content')
+
+    @component('components.breadcrumb_w_button')
+        @slot('li_1') View Job @endslot
+        @slot('title') View Job
+            @if(auth()->user()->id == $job['developer_id'] && $job['status'] == 'Not Started')
+                <button type="button" class="btn btn-primary btn-sm waves-effect waves-light" title="View Job" onclick="JOB.start({{ $job['id'] }})"><i class="fas fa-play"></i> Start</button>
+            @endif
+        @endslot
+    @endcomponent
+
+    <div class="row">
+        <div class="col-md-12">
+            @include('notifications.success')
+            @include('notifications.error')
+        </div>
+    </div>
+
+    @include('pages.admin.jobs.view.job-details')
+    @if(auth()->user()->id == $job['developer_id'] && in_array($job['status'],["In Progress","Bounced Back"]))
+        @include('pages.admin.jobs.view.submit-details')
+    @endif
+
+    
+@endsection
+
+@section('script')
+    <!-- Required datatable js -->
+    <script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/datatables/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/datatables/dataTables.fixedColumns.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/jszip/jszip.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/pdfmake/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/select2/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/select2/select2.js') }}"></script>
+@endsection
+
+@section('custom-js')
+    {{-- <script src="{{asset('scripts/create-job.js')}}"></script> --}}
+@endsection
