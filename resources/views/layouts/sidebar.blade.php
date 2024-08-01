@@ -75,7 +75,7 @@
                     <li>
                         <a href="{{ url('clients') }}" class="waves-effect">
                             <i class="bx bx-hive"></i>
-                            <span key="t-client">Clients</span>
+                            <span key="t-clients">Clients</span>
                         </a>
                     </li>
 
@@ -117,7 +117,7 @@
                             <li><a href="{{ url('request/types') }}" key="t-read-email">Request Type</a></li>
                             <li><a href="{{ url('request/volumes') }}" key="t-read-email">Request Volume</a></li>
                             <li><a href="{{ url('request/slas') }}" key="t-read-email">Request SLA</a></li>
-                            <li><a href="{{ url('configurations') }}" key="t-read-email">Email Configuration</a></li>
+                            <li><a href="{{ url('configuration') }}" key="t-read-email">Configuration</a></li>
                         </ul>
                     </li>
                 {{-- End of ADMIN / TL / OM --}}

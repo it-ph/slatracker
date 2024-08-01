@@ -12,7 +12,7 @@
 
     @component('components.breadcrumb')
         @slot('li_1') Manage @endslot
-        @slot('title') Client @endslot
+        @slot('title') Clients @endslot
     @endcomponent
 
     <div class="row">
@@ -35,6 +35,7 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
+                                <th>Work Shift</th>
                                 <th>Created By</th>
                                 <th>Created On</th>
                                 <th>Last Modified By</th>

@@ -20,8 +20,8 @@ class AddDetailsToTasksTable extends Migration
             $table->integer('qc_round')->after('is_special_request')->nullable();
             $table->integer('auditor_id')->after('is_special_request')->nullable();
             $table->string('time_taken')->after('is_special_request')->nullable();
-            $table->datetime('end_at')->nullable()->after('is_special_request')->nullable();
-            $table->datetime('start_at')->nullable()->after('is_special_request')->nullable();
+            $table->datetime('end_at')->after('is_special_request')->nullable();
+            $table->datetime('start_at')->after('is_special_request')->nullable();
             $table->integer('created_by')->after('created_at')->nullable();
         });
     }

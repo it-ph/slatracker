@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title') Email Configuration @endsection
+@section('title') Configuration @endsection
 
 @section('css')
     <!-- DataTables -->
@@ -19,7 +19,7 @@
 
     @component('components.breadcrumb')
         @slot('li_1') Manage @endslot
-        @slot('title') Email Configuration @endslot
+        @slot('title') Configuration @endslot
     @endcomponent
 
     <div class="row">
@@ -37,14 +37,30 @@
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="form-group row mb-2">
+                                {{-- <div class="form-group row mb-2"> --}}
                                     <input type="hidden" name="edit_id" id="edit_id" value="{{ $email_config['id'] }}">
                                     {{-- <label for="name" class="col-sm-3 col-form-label"><strong>Client Name <span class="important">*</span></strong></label> --}}
-                                    <div class="col-sm-9">
+                                    {{-- <div class="col-sm-9"> --}}
                                         <input type="hidden" class="form-control" name="name" id="name" placeholder="Enter Client Name">
                                         <label id="nameError" class="error" style="display:none"></label>
+                                    {{-- </div> --}}
+                                {{-- </div> --}}
+                                <div class="form-group row mb-2">
+                                    <label for="sla_threshold" class="col-sm-3 col-form-label mt-2"><strong>Work Shift <span class="important">*</span></strong></label>
+                                    <div class="col-sm-9">
+                                        <div class="form-group row">
+                                            <div class="col-sm-6 mt-2">
+                                                <input type="time" class="form-control" name="start" id="start" step="1">
+                                                <label id="startError" class="error" style="display:none"></label>
+                                            </div>
+                                            <div class="col-sm-6 mt-2">
+                                                <input type="time" class="form-control" name="end" id="end" step="1">
+                                                <label id="endError" class="error" style="display:none"></label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
                                 <div class="form-group row mb-2">
                                     <label for="sla_threshold" class="col-sm-3 col-form-label"><strong>SLA Threshold for Email Notifs (%) <span class="important">*</span></strong></label>
                                     <div class="col-sm-9">
@@ -144,5 +160,5 @@
 @endsection
 
 @section('custom-js')
-    <script src="{{asset('scripts/email-configs.js')}}"></script>
+    <script src="{{asset('scripts/configs.js')}}"></script>
 @endsection

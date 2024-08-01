@@ -68,6 +68,8 @@ const CLIENT = (() => {
         axios(`${APP_URL}/client/show/${id}`).then((response) => {
             _client_id = id;
             $("#name").val(response.data.data.name);
+            $("#start").val(response.data.data.start);
+            $("#end").val(response.data.data.end);
             $("#sla_threshold").val(response.data.data.sla_threshold);
             $("#sla_threshold_to").val(response.data.data.sla_threshold_to);
             $("#sla_threshold_cc").val(response.data.data.sla_threshold_cc);

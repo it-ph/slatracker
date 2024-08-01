@@ -15,6 +15,18 @@
                         <input type="text" class="form-control" name="name" id="name" placeholder="Enter Client Name">
                         <label id="nameError" class="error"></label>
                     </div>
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <label for="start" class="col-form-label"><strong>Start of Shift:<span class="important">*</span></strong></label>
+                            <input type="time" class="form-control" name="start" id="start" step="1">
+                            <label id="startError" class="error" style="display:none"></label>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="end" class="col-form-label"><strong>End of Shift:<span class="important">*</span></strong></label>
+                            <input type="time" class="form-control" name="end" id="end" step="1">
+                            <label id="endError" class="error" style="display:none"></label>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label for="sla_threshold" class="col-form-label"><strong>SLA Threshold for Email Notifs (%):<span class="important">*</span></strong></label>
                         <input type="text" class="form-control" name="sla_threshold" id="sla_threshold" min="0" max="100"  placeholder="Enter SLA Threshold E.g 70">

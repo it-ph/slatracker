@@ -31,6 +31,8 @@ class ClientStoreRequest extends FormRequest
     {
         return [
             'name' => ['required',Rule::unique('clients')->ignore($this->edit_id)],
+            'start' => ['required'],
+            'end' => ['required'],
             'sla_threshold' => ['required'],
             'sla_threshold_to' => ['required'],
             'sla_threshold_cc' => ['required'],
@@ -48,6 +50,8 @@ class ClientStoreRequest extends FormRequest
         return [
             'name.required' => 'Client is required.',
             'name.unique' => 'Client is already exists.',
+            'start.required' => 'Start of Shift is required.',
+            'end.required' => 'End of Shift is required.',
             'sla_threshold.required' => 'SLA Threshold is required.',
             'sla_threshold_to.required' => 'SLA Threshold Cross Email Recipients (TO) is required.',
             'sla_threshold_cc.required' => 'SLA Threshold Cross Email Recipients (CC) is required.',

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Job;
 use App\Models\Task;
 use App\Models\User;
 use App\Models\Client;
@@ -77,8 +78,8 @@ class PageController extends GlobalVariableController
         return view('pages.admin.users.list', compact('user'));
     }
 
-    /** Configurations */
-    public function showConfigurations()
+    /** Configuration */
+    public function showConfiguration()
     {
         $user = $this->thecredentials();
         $email_config = Client::query()

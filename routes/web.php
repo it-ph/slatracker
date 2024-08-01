@@ -80,35 +80,9 @@ Auth::routes();
 Route::group(['middleware' => ['auth','twofactor','web','active.user']],function () {
     Route::get('home', [PageController::class, 'showHome'])->name('home');
     Route::get('index', [PageController::class, 'showHome'])->name('index');
-    // Route::get('home', [HomeController::class, 'index'])->name('home');
-    // Route::get('index', [HomeController::class, 'index'])->name('index');
 
-    // // Users' Activities
-    // Route::get('activities', [ClientActivityController::class, 'showActivities'])->name('activities');
-
-    // // Agent Task: Start / Update / Stop
-    // Route::get('/my-tasks/{status?}', [PageController::class, 'showAgentTasks'])->name('my-tasks.index');
-    // Route::group(['prefix' => 'my-task'],
-    //         function ()
-    //     {
-    //         Route::get('/{status?}', [TasksController::class,'agentTask'])->name('my-task.index');
-    //         Route::post('/store', [TasksController::class,'store'])->name('my-task.store');
-    //         Route::get('/show/{id}', [TasksController::class,'show'])->name('my-task.show');
-    //         Route::post('/update/{id}', [TasksController::class,'update'])->name('my-task.update');
-    //         Route::post('/stop/{id}', [TasksController::class,'stopTask'])->name('my-task.stop');
-    //         Route::post('/pause/{id}', [TasksController::class,'pauseTask'])->name('my-task.pause');
-    //         Route::post('/resume/{id}', [TasksController::class,'resumeTask'])->name('my-task.resume');
-
-    //     });
-
-    // Route::put('task/start/{taskId}', [TasksController::class, 'startTask'])->name('task.start');
-    // Route::put('task/updateStatus/{taskId}', [TasksController::class, 'updateTaskStatus'])->name('task.status.update');
-    // // Route::put('task/pause/{taskId}', [TasksController::class, 'pauseTask'])->name('task.pause');
-    // Route::put('task/resume/{taskId}', [TasksController::class, 'resumeTask'])->name('task.resume');
-    // Route::put('task/stop/{taskId}', [TasksController::class, 'stopTask'])->name('task.stop');
-
-    // Route::resource('task', TasksController::class);
-    // Route::get('tasks', [PageController::class, 'showAgentTaskLists'])->name('tasks.index');
+    // VIEW JOB
+    Route::get('/viewjob/{id}', [JobController::class, 'view'])->name('job.view');
 
     // MY JOBS - DEV ACCESS
     Route::get('/pendingjobs', [PageController::class, 'showPendingJobs'])->name('pendingjobs.index');
@@ -125,11 +99,11 @@ Route::group(['middleware' => ['auth','twofactor','web','active.user']],function
     function ()
     {
         Route::get('/all', [JobController::class,'myJob'])->name('myjob.index');
-        Route::get('/show/{id}', [JobController::class,'show'])->name('myjob.show');
     });
 
     // QUALITY CHECK - AUDITOR ACCESS
     Route::get('/qualitycheck', [PageController::class, 'showPendingQC'])->name('qualitycheck.index');
+    Route::get('/qualitycheck/{id}', [JobController::class, 'viewQC'])->name('job.qc');
     Route::group(['prefix' => 'pendingqc'],
     function ()
     {
@@ -167,7 +141,7 @@ Route::group(['middleware' => ['auth','twofactor','web','active.user']],function
             });
 
             // CLIENTS for TL / MANAGER
-            Route::get('/configurations', [PageController::class, 'showConfigurations'])->name('configurations.index');
+            Route::get('/configuration', [PageController::class, 'showConfiguration'])->name('configuration.index');
             Route::post('client/updateEmailConfig', [ClientController::class,'updateEmailConfig'])->name('client.updateEmailConfig');
 
             // REQUEST

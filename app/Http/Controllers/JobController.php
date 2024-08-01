@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\JobsServices;
 use App\Traits\ResponseTraits;
 use App\Http\Requests\JobStoreRequest;
+use Facades\App\Http\Helpers\CredentialsHelper;
 
 class JobController extends Controller
 {
@@ -16,6 +17,11 @@ class JobController extends Controller
     {
         $this->model = new Job();
         $this->service = new JobsServices();
+    }
+
+    public function thecredentials()
+    {
+        return CredentialsHelper::get_set_credentials();
     }
 
     /** PENDING JOBS */
@@ -48,6 +54,19 @@ class JobController extends Controller
         return $this->returnResponse($result);
     }
 
+    public function view($id)
+    {
+        $user = $this->thecredentials();
+        $job = $this->service->show($id);
+
+        if(!$job){
+            return view('errors.404');
+        }
+
+        return view('pages.admin.jobs.show', compact('user','job'));
+
+    }
+
     /** AUDITOR */
     public function qualityCheck()
     {
@@ -61,6 +80,19 @@ class JobController extends Controller
         }
 
         return $this->returnResponse($result);
+    }
+    
+    public function viewQC($id)
+    {
+        $user = $this->thecredentials();
+        $job = $this->service->showQC($id);
+
+        if(!$job){
+            return view('errors.404');
+        }
+
+        return view('pages.admin.jobs.showqc', compact('user','job'));
+
     }
 
 
@@ -104,7 +136,7 @@ class JobController extends Controller
         return $this->returnResponse($result);
     }
 
-    public function show($id)
+    public function showJob($id)
     {
         $result = $this->successResponse('Job retrieved successfully!');
         try {

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Carbon\Carbon;
 use App\Models\Client;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,6 +19,7 @@ class ClientsServices
 
         foreach($clients as $value) {
             $name = $value->name;
+            $work_shift = Carbon::parse($value->start)->format('g:i:s a').' to '.Carbon::parse($value->end)->format('g:i:s a');
             $created_by = $value->thecreatedby ? $value->thecreatedby->username : '-';
             $created_at = $value->created_at ? date('d-M-y h:i:s a', strtotime($value->created_at)) : '-';
             $updated_by = $value->theupdatedby ? $value->theupdatedby->username : '-';
@@ -28,6 +30,7 @@ class ClientsServices
             $datastorage[] = [
                 'id' => $value->id,
                 'name' => $name,
+                'work_shift' => $work_shift,
                 'created_at' => $created_at,
                 'created_by' => $created_by,
                 'updated_at' => $updated_at,

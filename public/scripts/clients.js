@@ -74,6 +74,7 @@ const CLIENT = (() => {
                 table +=
                     `<tr>
                         <td>${val.name}</td>
+                        <td>${val.work_shift}</td>
                         <td>${val.created_by}</td>
                         <td>${val.created_at}</td>
                         <td>${val.updated_by}</td>
@@ -131,6 +132,8 @@ const CLIENT = (() => {
             _client_id = id;
             $("#edit_id").val(response.data.data.id);
             $("#name").val(response.data.data.name);
+            $("#start").val(response.data.data.start);
+            $("#end").val(response.data.data.end);
             $("#sla_threshold").val(response.data.data.sla_threshold);
             $("#sla_threshold_to").val(response.data.data.sla_threshold_to);
             $("#sla_threshold_cc").val(response.data.data.sla_threshold_cc);

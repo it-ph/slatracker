@@ -63,7 +63,7 @@ function getSLA(typeId, volumeId) {
             $("#request_sla_id").val(response.data.id);
             $("#agreed_sla").val(response.data.agreed_sla);
             $('#btn_save').empty();
-            $('#btn_save').append('<i class="fa fa-save"></i> Update');
+            $('#btn_save').append('<i class="fa fa-save"></i> Save');
             $('#btn_save').prop("disabled", false);
             $('#agreed_slaError').hide();
             $('#agreed_slaError').text('');
