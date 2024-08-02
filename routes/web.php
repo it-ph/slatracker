@@ -14,6 +14,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ReportController;;
+use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\RequestSLAController;
 use App\Http\Controllers\UserClientController;
@@ -91,6 +92,8 @@ Route::group(['middleware' => ['auth','twofactor','web','active.user']],function
     {
         Route::get('/all', [JobController::class,'myJob'])->name('myjob.index');
         Route::get('/start/{id}', [JobController::class,'startJob'])->name('myjob.start');
+        Route::post('/submitdetails', [JobController::class,'submitDetails'])->name('myjob.submit-details');
+        Route::post('/sendforqc', [JobController::class,'sendforqc'])->name('myjob.send-for-qc');
     });
 
     // QUALITY CHECK - AUDITOR ACCESS

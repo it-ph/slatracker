@@ -53,20 +53,20 @@ class JobsServices {
 
             $badge_status = $value->status;
             switch ($badge_status) {
-                case "not started":
+                case "Not Started":
                     $badge = 'secondary';
                     break;
-                case "in progress":
+                case "In Progress":
                     $badge = 'primary';
                     break;
-                case "quality check":
+                case "Quality Check":
                     $badge = 'info';
                     break;
                     break;
-                case "bounced back":
+                case "Bounced Back":
                     $badge = 'danger';
                     break;
-                case "closed":
+                case "Closed":
                     $badge = 'success';
                     break;
             }
@@ -145,20 +145,20 @@ class JobsServices {
 
             $badge_status = $value->status;
             switch ($badge_status) {
-                case "not started":
+                case "Not Started":
                     $badge = 'secondary';
                     break;
-                case "in progress":
+                case "In Progress":
                     $badge = 'primary';
                     break;
-                case "quality check":
+                case "Quality Check":
                     $badge = 'info';
                     break;
                     break;
-                case "bounced back":
+                case "Bounced Back":
                     $badge = 'danger';
                     break;
-                case "closed":
+                case "Closed":
                     $badge = 'success';
                     break;
             }
@@ -215,20 +215,20 @@ class JobsServices {
 
             $badge_status = $value->status;
             switch ($badge_status) {
-                case "not started":
+                case "Not Started":
                     $badge = 'secondary';
                     break;
-                case "in progress":
+                case "In Progress":
                     $badge = 'primary';
                     break;
-                case "quality check":
+                case "Quality Check":
                     $badge = 'info';
                     break;
                     break;
-                case "bounced back":
+                case "Bounced Back":
                     $badge = 'danger';
                     break;
-                case "closed":
+                case "Closed":
                     $badge = 'success';
                     break;
             }
@@ -348,6 +348,18 @@ class JobsServices {
         $end_at = $value->end_at ? date('d-M-y h:i:s A', strtotime($value->end_at)) : '-';
         $status = $value->status;
 
+        // additional details
+        $template_followed = $value->template_followed ? 'Yes' : 'No';;
+        $template_issue = $value->template_issue ? 'Yes' : 'No';;
+        $comments_template_issue = $value->comments_template_issue;
+        $auto_recommend = $value->auto_recommend ? 'Yes' : 'No';;
+        $comments_auto_recommend = $value->comments_auto_recommend;
+        $img_localstock = $value->img_localstock ? 'Yes' : 'No';;
+        $img_customer = $value->img_customer ? 'Yes' : 'No';;
+        $img_num = $value->img_num;
+        $shared_folder_location = $value->shared_folder_location;
+        $dev_comments = $value->dev_comments;
+
         $job = [
             'id' => $value->id,
             'name' => $name,
@@ -366,6 +378,18 @@ class JobsServices {
             'start_at' => $start_at,
             'end_at' => $end_at,
             'status' => $status,
+            
+            // additional details
+            'template_followed' => $template_followed,
+            'template_issue' => $template_issue,
+            'comments_template_issue' => $comments_template_issue,
+            'auto_recommend' => $auto_recommend,
+            'comments_auto_recommend' => $comments_auto_recommend,
+            'img_localstock' => $img_localstock,
+            'img_customer' => $img_customer,
+            'img_num' => $img_num,
+            'shared_folder_location' => $shared_folder_location,
+            'dev_comments' => $dev_comments,
         ];
 
         return $job;
@@ -404,6 +428,18 @@ class JobsServices {
         $end_at = $value->end_at ? date('d-M-y h:i:s A', strtotime($value->end_at)) : '-';
         $status = $value->status;
 
+        // additional details
+        $template_followed = $value->template_followed ? 'Yes' : 'No';;
+        $template_issue = $value->template_issue ? 'Yes' : 'No';;
+        $comments_template_issue = $value->comments_template_issue;
+        $auto_recommend = $value->auto_recommend ? 'Yes' : 'No';;
+        $comments_auto_recommend = $value->comments_auto_recommend;
+        $img_localstock = $value->img_localstock ? 'Yes' : 'No';;
+        $img_customer = $value->img_customer ? 'Yes' : 'No';;
+        $img_num = $value->img_num;
+        $shared_folder_location = $value->shared_folder_location;
+        $dev_comments = $value->dev_comments;
+
         $job = [
             'id' => $value->id,
             'name' => $name,
@@ -422,6 +458,18 @@ class JobsServices {
             'start_at' => $start_at,
             'end_at' => $end_at,
             'status' => $status,
+            
+            // additional details
+            'template_followed' => $template_followed,
+            'template_issue' => $template_issue,
+            'comments_template_issue' => $comments_template_issue,
+            'auto_recommend' => $auto_recommend,
+            'comments_auto_recommend' => $comments_auto_recommend,
+            'img_localstock' => $img_localstock,
+            'img_customer' => $img_customer,
+            'img_num' => $img_num,
+            'shared_folder_location' => $shared_folder_location,
+            'dev_comments' => $dev_comments,
         ];
 
         return $job;

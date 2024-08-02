@@ -33,14 +33,23 @@
         </div>
     </div>
 
+    {{-- view only --}}
     @include('pages.admin.jobs.view.job-details')
+
+    {{-- view w/ start if assigned dev and status Not Started --}}
     @if(auth()->user()->id == $job['developer_id'] && $job['status'] == 'Not Started')
         @include('pages.admin.jobs.view.start-modal')
     @endif
-    @if(auth()->user()->id == $job['developer_id'] && in_array($job['status'],["In Progress","Bounced Back"]))
+
+    {{-- view w/ submit details and wherein status In Progress --}}
+    @if(auth()->user()->id == $job['developer_id'] && $job['status'] == "In Progress" && $job['dev_comments'] == null)
         @include('pages.admin.jobs.view.submit-details')
     @endif
 
+    {{-- job w/ additional details --}}
+    @if(auth()->user()->id == $job['developer_id'] && $job['status'] == "In Progress" && $job['dev_comments'])
+        @include('pages.admin.jobs.view.qc-submission')
+    @endif
 
 @endsection
 

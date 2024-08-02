@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Services\JobsServices;
 use App\Traits\ResponseTraits;
 use App\Http\Requests\JobStoreRequest;
+use App\Http\Requests\JobSendForQCRequest;
+use App\Http\Requests\JobSubmitDetailsRequest;
 use Facades\App\Http\Helpers\CredentialsHelper;
 
 class JobController extends Controller
@@ -55,6 +57,18 @@ class JobController extends Controller
         return $this->returnResponse($result);
     }
 
+    public function view($id)
+    {
+        $user = $this->thecredentials();
+        $job = $this->service->show($id);
+
+        if(!$job){
+            return view('errors.404');
+        }
+
+        return view('pages.admin.jobs.view.index', compact('user','job'));
+    }
+
     public function startJob($id)
     {
         $result = $this->successResponse("Job started successfully!");
@@ -73,17 +87,33 @@ class JobController extends Controller
         return $this->returnResponse($result);
     }
 
-    public function view($id)
+    public function submitDetails(JobSubmitDetailsRequest $request)
     {
-        $user = $this->thecredentials();
-        $job = $this->service->show($id);
-
-        if(!$job){
-            return view('errors.404');
+        $result = $this->successResponse('Job details saved successfully!');
+        try {
+            Job::findOrfail($request->edit_id)->update($request->except('edit_id'));
+        } catch (\Throwable $th)
+        {
+            $result = $this->errorResponse($th);
         }
 
-        return view('pages.admin.jobs.view.index', compact('user','job'));
+        return $result;
+    }
 
+    public function sendForQC(JobSendForQCRequest $request)
+    {
+        $result = $this->successResponse('Job Sent for QC successfully!');
+        try {
+            Job::findOrfail($request->edit_id)->update([
+                'status' => 'Quality Check',
+                'dev_comments' => $request->dev_comments
+            ]);
+        } catch (\Throwable $th)
+        {
+            $result = $this->errorResponse($th);
+        }
+
+        return $result;
     }
 
     /** AUDITOR */
@@ -183,7 +213,7 @@ class JobController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\department  $department
+     * @param  \App\Models\Job  $job
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

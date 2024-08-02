@@ -49,4 +49,9 @@ class Job extends Model
     {
         return $this->belongsTo(RequestSLA::class,'request_sla_id')->withTrashed();
     }
+
+    public function theauditlogs()
+    {
+        return $this->hasMany(AuditLog::class,'job_id')->withTrashed();;
+    }
 }

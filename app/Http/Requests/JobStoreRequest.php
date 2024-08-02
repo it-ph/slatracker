@@ -47,7 +47,7 @@ class JobStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Job Name is require.',
+            'name.required' => 'Job Name is required.',
             'site_id.required' => 'Site ID is required.',
             'platform.required' => 'Platform is required.',
             'developer_id.required' => 'Developer is required.',

@@ -53,6 +53,12 @@
                             <td class="col-sm-2 fw-bold">SLA Missed</td>
                             <td class="col-sm-10">@if($job['sla_missed']) <span class="text-danger">Yes</span> @else <span class="text-success">No</span> @endif</td>
                         </tr>
+
+                        {{-- additional details --}}
+                        @if($job['dev_comments'])                    
+                            @include('pages.admin.jobs.view.additional-details')
+                        @endif
+
                         <tr>
                             <td class="col-sm-2 fw-bold">Start Time</td>
                             <td class="col-sm-10">{{ $job['start_at'] }}</td>
