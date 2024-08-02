@@ -21,7 +21,7 @@
         @slot('li_1') View Job @endslot
         @slot('title') View Job
             @if(auth()->user()->id == $job['developer_id'] && $job['status'] == 'Not Started')
-                <button type="button" class="btn btn-primary btn-sm waves-effect waves-light" title="View Job" onclick="JOB.start({{ $job['id'] }})"><i class="fas fa-play"></i> Start</button>
+                <button type="button" class="btn btn-primary btn-sm waves-effect waves-light" title="View Job" onclick="JOB.showModal()"><i class="fas fa-play"></i> Start</button>
             @endif
         @endslot
     @endcomponent
@@ -34,11 +34,14 @@
     </div>
 
     @include('pages.admin.jobs.view.job-details')
+    @if(auth()->user()->id == $job['developer_id'] && $job['status'] == 'Not Started')
+        @include('pages.admin.jobs.view.start-modal')
+    @endif
     @if(auth()->user()->id == $job['developer_id'] && in_array($job['status'],["In Progress","Bounced Back"]))
         @include('pages.admin.jobs.view.submit-details')
     @endif
 
-    
+
 @endsection
 
 @section('script')
@@ -53,5 +56,5 @@
 @endsection
 
 @section('custom-js')
-    {{-- <script src="{{asset('scripts/create-job.js')}}"></script> --}}
+    <script src="{{asset('scripts/viewjob.js')}}"></script>
 @endsection

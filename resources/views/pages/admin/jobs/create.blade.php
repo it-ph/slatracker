@@ -129,25 +129,25 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="is_special_request" class="col-sm-3 col-form-label fw-bold">Special Request <strong><span class="important">*</span></strong></label>
+                                    <label for="special_request" class="col-sm-3 col-form-label fw-bold">Special Request <strong><span class="important">*</span></strong></label>
                                     <div class="col-sm-9">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="is_special_request" id="is_special_request_yes" value="1">
-                                            <label class="form-check-label" for="is_special_request_yes">Yes</label>
+                                            <input class="form-check-input" type="radio" name="special_request" id="special_request_yes" value="1">
+                                            <label class="form-check-label" for="special_request_yes">Yes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="is_special_request" id="is_special_request_no" value="0">
-                                            <label class="form-check-label" for="is_special_request_no">No</label>
+                                            <input class="form-check-input" type="radio" name="special_request" id="special_request_no" value="0">
+                                            <label class="form-check-label" for="special_request_no">No</label>
                                         </div><br>
-                                        <label id="is_special_requestError" class="error" style="display:none"></label>
+                                        <label id="special_requestError" class="error" style="display:none"></label>
                                     </div>
                                 </div>
 
                                 <div class="form-group row mb-2">
-                                    <label for="comments" class="col-sm-3 col-form-label fw-bold">Comments for Special Request <strong><span class="important">*</span></strong></label>
+                                    <label for="comments_special_request" class="col-sm-3 col-form-label fw-bold">Comments for Special Request <strong><span class="important">*</span></strong></label>
                                     <div class="col-sm-9">
-                                        <textarea class="form-control" name="comments" id="comments" cols="30" rows="4" placeholder="Enter comments for special request."></textarea>
-                                        <label id="commentsError" class="error" style="display:none"></label>
+                                        <textarea class="form-control" name="comments_special_request" id="comments_special_request" cols="30" rows="4" placeholder="Enter comments for special request."></textarea>
+                                        <label id="comments_special_requestError" class="error" style="display:none"></label>
                                     </div>
                                 </div>
 

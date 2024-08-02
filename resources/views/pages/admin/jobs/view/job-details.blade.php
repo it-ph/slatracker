@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="col-md-12">
-                    <p class="fw-bold mb-1">Job Details</p>
+                    <p class="fw-bold mb-1 text-primary">Job Details</p>
                     <table class="table table-bordered table-sm nowrap w-100">
                         <tr>
                             <td class="col-sm-2 fw-bold">Job Name</td>
@@ -35,11 +35,11 @@
                         </tr>
                         <tr>
                             <td class="col-sm-2 fw-bold">Special Request</td>
-                            <td class="col-sm-10">{{ $job['is_special_request'] }}</td>
+                            <td class="col-sm-10">{{ $job['special_request'] }}</td>
                         </tr>
                         <tr>
                             <td class="col-sm-2 fw-bold">Comments for Special Request</td>
-                            <td class="col-sm-10">{{ $job['comments'] }}</td>
+                            <td class="col-sm-10">{{ $job['comments_special_request'] }}</td>
                         </tr>
                         <tr>
                             <td class="col-sm-2 fw-bold">Additional Comments</td>

@@ -53,6 +53,8 @@ $('#addJobForm').on('submit', function(e) {
 $('.sla').change(function() {
     var typeId = $("#request_type_id").val();
     var volumeId = $("#request_volume_id").val();
+    $("#request_sla_id").val(null);
+    $("#agreed_sla").val(null);
     typeId && volumeId ? getSLA(typeId, volumeId) : '';
 });
 

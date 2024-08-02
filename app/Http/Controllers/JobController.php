@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Job;
 use Illuminate\Http\Request;
 use App\Services\JobsServices;
@@ -54,6 +55,24 @@ class JobController extends Controller
         return $this->returnResponse($result);
     }
 
+    public function startJob($id)
+    {
+        $result = $this->successResponse("Job started successfully!");
+        try {
+            $task = Job::findOrfail($id);
+            $status = 'In Progress';
+
+            $task->update([
+                'status' => $status,
+                'start_at' => Carbon::now(),
+            ]);
+        } catch (\Throwable $th) {
+            $result = $this->errorResponse($th);
+        }
+
+        return $this->returnResponse($result);
+    }
+
     public function view($id)
     {
         $user = $this->thecredentials();
@@ -81,7 +100,7 @@ class JobController extends Controller
 
         return $this->returnResponse($result);
     }
-    
+
     public function viewQC($id)
     {
         $user = $this->thecredentials();
@@ -94,7 +113,6 @@ class JobController extends Controller
         return view('pages.admin.jobs.qc.index', compact('user','job'));
 
     }
-
 
     /**
      * Display a listing of the resource.
@@ -123,6 +141,7 @@ class JobController extends Controller
             {
                 $request['request_sla_id'] = $request->request_sla_id;
                 $request['client_id'] = auth()->user()->client_id;
+                $request['created_by'] = auth()->user()->id;
                 $job = Job::create($request->except(['edit_id','agreed_sla']));
             }
             else

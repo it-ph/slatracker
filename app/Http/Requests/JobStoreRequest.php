@@ -38,8 +38,8 @@ class JobStoreRequest extends FormRequest
             // 'request_sla_id' => ['required'],
             'agreed_sla' => ['required'],
             'salesforce_link' => ['required'],
-            'is_special_request' => ['required'],
-            'comments' => ['required'],
+            'special_request' => ['required'],
+            'comments_special_request' => ['required'],
             'addon_comments' => ['required'],
         ];
     }
@@ -56,8 +56,8 @@ class JobStoreRequest extends FormRequest
             // 'request_sla_id.required' => 'Request SLA is required.',
             'agreed_sla.required' => 'Agreed SLA is required. Request SLA not found.',
             'salesforce_link.required' => 'Salesforce Link is required.',
-            'is_special_request.required' => 'Special Request is required.',
-            'comments.required' => 'Comments for Special Request is required.',
+            'special_request.required' => 'Special Request is required.',
+            'comments_special_request.required' => 'Comments for Special Request is required.',
             'addon_comments.required' => 'Additional Comments is required.',
         ];
     }

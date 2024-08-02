@@ -13,7 +13,7 @@ class Job extends Model
 
     protected $table = 'tasks';
     protected $guarded = [];
-    protected $dates = ['created_at', 'updated_at', 'deleted_at'];
+    protected $dates = ['start_at','end_at','created_at', 'updated_at', 'deleted_at'];
 
     public function scopeDevs($query)
     {

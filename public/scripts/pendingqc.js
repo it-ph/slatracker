@@ -75,7 +75,7 @@ const JOB = (() => {
                         <td>${val.name}</td>
                         <td>${val.request_type}</td>
                         <td class="text-center">${val.request_volume}</td>
-                        <td class="text-center">${val.is_special_request}</td>
+                        <td class="text-center">${val.special_request}</td>
                         <td class="text-center">${val.created_at}</td>
                         <td class="text-center">${val.agreed_sla}</td>
                         <td class="text-center">${val.time_taken}</td>

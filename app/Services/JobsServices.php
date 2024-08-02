@@ -21,7 +21,7 @@ class JobsServices {
             'therequestsla:id,agreed_sla',
             'thedeveloper:id,username',
         ])
-        ->select('id','name','request_type_id','request_volume_id','request_sla_id','is_special_request','created_at','start_at','end_at','time_taken','sla_missed','internal_quality','external_quality','developer_id','status')
+        ->select('id','name','request_type_id','request_volume_id','request_sla_id','special_request','created_at','start_at','end_at','time_taken','sla_missed','internal_quality','external_quality','developer_id','status')
         ->orderBy('created_at','DESC')
         ->get();
 
@@ -40,7 +40,7 @@ class JobsServices {
             $name = '<a href="'.env('APP_URL').'/viewjob/'.$value->id.'" class="text-info">'. $value->name .'</a>';
             $request_type = $value->therequesttype ? $value->therequesttype->name : '-';
             $request_volume = $value->therequestvolume ? $value->therequestvolume->name : '-';
-            $is_special_request = $value->is_special_request ? 'Yes' : 'No';
+            $special_request = $value->special_request ? 'Yes' : 'No';
             $created_at = $value->created_at ? date('d-M-y h:i:s a', strtotime($value->created_at)) : '-';
             $start_at = $value->start_at ? date('d-M-y h:i:s a', strtotime($value->start_at)) : '-';
             $end_at = $value->end_at ? date('d-M-y h:i:s a', strtotime($value->end_at)) : '-';
@@ -71,7 +71,7 @@ class JobsServices {
                     break;
             }
 
-            $status = '<span class="badge bg-'.$badge.'">'.ucwords($value->status).'</span>';
+            $status = '<span class="badge bg-'.$badge.'">'.$value->status.'</span>';
             $action ='<button type="button" class="btn btn-info btn-sm waves-effect waves-light" title="View Job" onclick=JOB.show('.$value->id.')><i class="fas fa-eye"></i></button>
             <button type="button" class="btn btn-warning btn-sm waves-effect waves-light" title="Edit Job" onclick=JOB.show('.$value->id.')><i class="fas fa-pencil-alt"></i></button>';
 
@@ -80,7 +80,7 @@ class JobsServices {
                 'name' => $name,
                 'request_type' => $request_type,
                 'request_volume' => $request_volume,
-                'is_special_request' => $is_special_request,
+                'special_request' => $special_request,
                 'created_at' => $created_at,
                 'start_at' => $start_at,
                 'end_at' => $end_at,
@@ -114,7 +114,7 @@ class JobsServices {
             'therequestsla:id,agreed_sla',
             'thedeveloper:id,username',
         ])
-        ->select('id','name','request_type_id','request_volume_id','request_sla_id','is_special_request','created_at','start_at','time_taken','sla_missed','developer_id','status')
+        ->select('id','name','request_type_id','request_volume_id','request_sla_id','special_request','created_at','start_at','time_taken','sla_missed','developer_id','status')
         ->where('status','<>','closed')
         ->orderBy('created_at','DESC')
         ->get();
@@ -134,7 +134,7 @@ class JobsServices {
             $name = '<a href="'.env('APP_URL').'/viewjob/'.$value->id.'" class="text-info">'. $value->name .'</a>';
             $request_type = $value->therequesttype ? $value->therequesttype->name : '-';
             $request_volume = $value->therequestvolume ? $value->therequestvolume->name : '-';
-            $is_special_request = $value->is_special_request ? 'Yes' : 'No';
+            $special_request = $value->special_request ? 'Yes' : 'No';
             $created_at = $value->created_at ? date('d-M-y h:i:s a', strtotime($value->created_at)) : '-';
             $start_at = $value->start_at ? date('d-M-y h:i:s a', strtotime($value->start_at)) : '-';
             $agreed_sla = $value->therequestsla ? TaskHelper::convertTime($value->therequestsla->agreed_sla) : '-';
@@ -163,14 +163,14 @@ class JobsServices {
                     break;
             }
 
-            $status = '<span class="badge bg-'.$badge.'">'.ucwords($value->status).'</span>';
+            $status = '<span class="badge bg-'.$badge.'">'.$value->status.'</span>';
 
             $datastorage[] = [
                 'id' => $value->id,
                 'name' => $name,
                 'request_type' => $request_type,
                 'request_volume' => $request_volume,
-                'is_special_request' => $is_special_request,
+                'special_request' => $special_request,
                 'created_at' => $created_at,
                 'start_at' => $start_at,
                 'agreed_sla' => $agreed_sla,
@@ -195,7 +195,7 @@ class JobsServices {
             'therequestsla:id,agreed_sla',
             'thedeveloper:id,username',
         ])
-        ->select('id','name','request_type_id','request_volume_id','request_sla_id','is_special_request','created_at','start_at','end_at','time_taken','sla_missed','internal_quality','external_quality','developer_id','status')
+        ->select('id','name','request_type_id','request_volume_id','request_sla_id','special_request','created_at','start_at','end_at','time_taken','sla_missed','internal_quality','external_quality','developer_id','status')
         ->devs()
         ->orderBy('created_at','DESC')
         ->get();
@@ -204,7 +204,7 @@ class JobsServices {
             $name = '<a href="'.env('APP_URL').'/viewjob/'.$value->id.'" class="text-info">'. $value->name .'</a>';
             $request_type = $value->therequesttype ? $value->therequesttype->name : '-';
             $request_volume = $value->therequestvolume ? $value->therequestvolume->name : '-';
-            $is_special_request = $value->is_special_request ? 'Yes' : 'No';
+            $special_request = $value->special_request ? 'Yes' : 'No';
             $created_at = $value->created_at ? date('d-M-y h:i:s a', strtotime($value->created_at)) : '-';
             $start_at = $value->start_at ? date('d-M-y h:i:s a', strtotime($value->start_at)) : '-';
             $end_at = $value->end_at ? date('d-M-y h:i:s a', strtotime($value->end_at)) : '-';
@@ -233,14 +233,14 @@ class JobsServices {
                     break;
             }
 
-            $status = '<span class="badge bg-'.$badge.'">'.ucwords($value->status).'</span>';
+            $status = '<span class="badge bg-'.$badge.'">'.$value->status.'</span>';
 
             $datastorage[] = [
                 'id' => $value->id,
                 'name' => $name,
                 'request_type' => $request_type,
                 'request_volume' => $request_volume,
-                'is_special_request' => $is_special_request,
+                'special_request' => $special_request,
                 'created_at' => $created_at,
                 'start_at' => $start_at,
                 'end_at' => $end_at,
@@ -266,7 +266,7 @@ class JobsServices {
             'thedeveloper:id,username',
             'theauditor:id,username',
         ])
-        ->select('id','name','request_type_id','request_volume_id','request_sla_id','is_special_request','created_at','start_at','end_at','time_taken','sla_missed','developer_id','auditor_id','status')
+        ->select('id','name','request_type_id','request_volume_id','request_sla_id','special_request','created_at','start_at','end_at','time_taken','sla_missed','developer_id','status')
         // ->where('status','quality check')
         ->orderBy('created_at','DESC')
         ->get();
@@ -275,7 +275,7 @@ class JobsServices {
             $name = auth()->user()->id == $value->auditor_id ? '<a href="'.env('APP_URL').'/qualitycheck/'.$value->id.'" class="text-info">'. $value->name .'</a>' : $value->name;
             $request_type = $value->therequesttype ? $value->therequesttype->name : '-';
             $request_volume = $value->therequestvolume ? $value->therequestvolume->name : '-';
-            $is_special_request = $value->is_special_request ? 'Yes' : 'No';
+            $special_request = $value->special_request ? 'Yes' : 'No';
             $created_at = $value->created_at ? date('d-M-y h:i:s a', strtotime($value->created_at)) : '-';
             $agreed_sla = $value->therequestsla ? TaskHelper::convertTime($value->therequestsla->agreed_sla) : '-';
             $time_taken = $value->time_taken ? $value->time_taken : '-';
@@ -300,7 +300,7 @@ class JobsServices {
                 'name' => $name,
                 'request_type' => $request_type,
                 'request_volume' => $request_volume,
-                'is_special_request' => $is_special_request,
+                'special_request' => $special_request,
                 'created_at' => $created_at,
                 'agreed_sla' => $agreed_sla,
                 'time_taken' => $time_taken,
@@ -315,6 +315,7 @@ class JobsServices {
         return $datastorage;
     }
 
+    // VIEW JOB
     public function show($id)
     {
         $value = Job::with([
@@ -338,14 +339,14 @@ class JobsServices {
         $request_type = $value->therequesttype ? $value->therequesttype->name : '-';
         $request_volume = $value->therequestvolume ? $value->therequestvolume->name : '-';
         $salesforce_link = $value->salesforce_link;
-        $is_special_request = $value->is_special_request ? 'Yes' : 'No';
-        $comments = $value->comments;
+        $special_request = $value->special_request ? 'Yes' : 'No';
+        $comments_special_request = $value->comments_special_request;
         $addon_comments = $value->addon_comments;
         $agreed_sla = $value->therequestsla ? $value->therequestsla->agreed_sla : '-';
         $sla_missed = $value->sla_missed;
         $start_at = $value->start_at ? date('d-M-y h:i:s A', strtotime($value->start_at)) : '-';
         $end_at = $value->end_at ? date('d-M-y h:i:s A', strtotime($value->end_at)) : '-';
-        $status = ucwords($value->status);
+        $status = $value->status;
 
         $job = [
             'id' => $value->id,
@@ -357,8 +358,8 @@ class JobsServices {
             'request_type' => $request_type,
             'request_volume' => $request_volume,
             'salesforce_link' => $salesforce_link,
-            'is_special_request' => $is_special_request,
-            'comments' => $comments,
+            'special_request' => $special_request,
+            'comments_special_request' => $comments_special_request,
             'addon_comments' => $addon_comments,
             'agreed_sla' => $agreed_sla,
             'sla_missed' => $sla_missed,
@@ -370,6 +371,7 @@ class JobsServices {
         return $job;
     }
 
+    // QUALITY CHECK
     public function showQC($id)
     {
         $value = Job::with([
@@ -393,14 +395,14 @@ class JobsServices {
         $request_type = $value->therequesttype ? $value->therequesttype->name : '-';
         $request_volume = $value->therequestvolume ? $value->therequestvolume->name : '-';
         $salesforce_link = $value->salesforce_link;
-        $is_special_request = $value->is_special_request ? 'Yes' : 'No';
-        $comments = $value->comments;
+        $special_request = $value->special_request ? 'Yes' : 'No';
+        $comments_special_request = $value->comments_special_request;
         $addon_comments = $value->addon_comments;
         $agreed_sla = $value->therequestsla ? $value->therequestsla->agreed_sla : '-';
         $sla_missed = $value->sla_missed;
         $start_at = $value->start_at ? date('d-M-y h:i:s A', strtotime($value->start_at)) : '-';
         $end_at = $value->end_at ? date('d-M-y h:i:s A', strtotime($value->end_at)) : '-';
-        $status = ucwords($value->status);
+        $status = $value->status;
 
         $job = [
             'id' => $value->id,
@@ -412,8 +414,8 @@ class JobsServices {
             'request_type' => $request_type,
             'request_volume' => $request_volume,
             'salesforce_link' => $salesforce_link,
-            'is_special_request' => $is_special_request,
-            'comments' => $comments,
+            'special_request' => $special_request,
+            'comments_special_request' => $comments_special_request,
             'addon_comments' => $addon_comments,
             'agreed_sla' => $agreed_sla,
             'sla_missed' => $sla_missed,

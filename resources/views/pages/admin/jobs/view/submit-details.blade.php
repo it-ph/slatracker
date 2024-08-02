@@ -3,7 +3,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="col-md-12">
-                        <p class="fw-bold mb-1">Submit Details</p>
+                        <p class="fw-bold mb-1 text-primary">Submit Details</p>
                         <form id="addJobForm" method="POST">
                             @csrf
                             <div class="col-md-12">
@@ -127,8 +127,8 @@
                             <hr>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <button type="submit" id="btn_save" class="btn btn-primary"><i class="fa fa-save"></i> Submit</button>
-                                    <button type="button" id="btn_cancel" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                                    <button type="submit" id="btn_save" class="btn btn-primary waves-effect waves-light"><i class="fa fa-save"></i> Submit</button>
+                                    <button type="button" id="btn_cancel" class="btn btn-danger waves-effect waves-light" data-dismiss="modal"><i class="fa fa-times"></i> Reset</button>
                                 </div>
                             </div>
                         </form>

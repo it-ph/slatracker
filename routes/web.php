@@ -85,20 +85,12 @@ Route::group(['middleware' => ['auth','twofactor','web','active.user']],function
     Route::get('/viewjob/{id}', [JobController::class, 'view'])->name('job.view');
 
     // MY JOBS - DEV ACCESS
-    Route::get('/pendingjobs', [PageController::class, 'showPendingJobs'])->name('pendingjobs.index');
-    Route::group(['prefix' => 'pendingjob'],
-    function ()
-    {
-        Route::get('/all', [JobController::class,'pendingjob'])->name('pendingjob.index');
-        Route::get('/show/{id}', [JobController::class,'show'])->name('pendingjob.show');
-    });
-
-    // MY JOBS - DEV ACCESS
     Route::get('/myjobs', [PageController::class, 'showMyJobs'])->name('myjobs.index');
     Route::group(['prefix' => 'myjob'],
     function ()
     {
         Route::get('/all', [JobController::class,'myJob'])->name('myjob.index');
+        Route::get('/start/{id}', [JobController::class,'startJob'])->name('myjob.start');
     });
 
     // QUALITY CHECK - AUDITOR ACCESS
@@ -126,6 +118,15 @@ Route::group(['middleware' => ['auth','twofactor','web','active.user']],function
                 Route::get('/show/{id}', [JobController::class,'show'])->name('job.show');
                 Route::post('/update/{id}', [JobController::class,'update'])->name('job.update');
                 Route::post('/delete/{id}', [JobController::class,'destroy'])->name('job.delete');
+            });
+
+            // PENDING JOBS - TL / MANAGER ACCESS
+            Route::get('/pendingjobs', [PageController::class, 'showPendingJobs'])->name('pendingjobs.index');
+            Route::group(['prefix' => 'pendingjob'],
+            function ()
+            {
+                Route::get('/all', [JobController::class,'pendingjob'])->name('pendingjob.index');
+                Route::get('/show/{id}', [JobController::class,'show'])->name('pendingjob.show');
             });
 
             // CLIENTS for ADMIN ONLY
@@ -186,6 +187,7 @@ Route::group(['middleware' => ['auth','twofactor','web','active.user']],function
                 });
             });
 
+            // USERS
             Route::get('users', [PageController::class, 'showUsers'])->name('users.index');
             Route::group(['prefix' => 'user'],
             function ()
