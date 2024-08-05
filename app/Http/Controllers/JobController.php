@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Job;
+use App\Models\AuditLog;
 use Illuminate\Http\Request;
 use App\Services\JobsServices;
 use App\Traits\ResponseTraits;
@@ -104,9 +105,28 @@ class JobController extends Controller
     {
         $result = $this->successResponse('Job Sent for QC successfully!');
         try {
+            // update job status
             Job::findOrfail($request->edit_id)->update([
                 'status' => 'Quality Check',
                 'dev_comments' => $request->dev_comments
+            ]);
+
+            // get qc round
+            $audit_log = AuditLog::query()
+                ->where('job_id', $request->edit_id)
+                ->count();
+
+            // increment qc round
+            $qc_round = $audit_log + 1;
+
+            // create audit log
+            AuditLog::create([
+                'created_by' => auth()->user()->id,
+                'job_id' => $request->edit_id,
+                'preview_link' => $request->preview_link,
+                'self_qc' => $request->self_qc,
+                'dev_comments' => $request->dev_comments,
+                'qc_round' => $qc_round,
             ]);
         } catch (\Throwable $th)
         {

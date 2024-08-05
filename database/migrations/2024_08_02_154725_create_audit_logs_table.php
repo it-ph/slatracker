@@ -23,21 +23,21 @@ class CreateAuditLogsTable extends Migration
             $table->longText('dev_comments');
 
             // submit feedback
-            $table->string('time_taken');
-            $table->integer('qc_round');
-            $table->integer('auditor_id');
-            $table->string('qc_status');
-            $table->integer('for_rework');
-            $table->integer('num_times');
-            $table->integer('alignment_aesthetics');
-            $table->longText('c_alignment_aesthetics');
-            $table->integer('availability_formats');
-            $table->longText('c_availability_formats');
-            $table->integer('accuracy');
-            $table->longText('c_accuracy');
-            $table->integer('functionality');
-            $table->longText('c_functionality');
-            $table->longText('qc_comments');
+            $table->string('time_taken')->nullable();
+            $table->integer('qc_round')->nullable();
+            $table->integer('auditor_id')->nullable();
+            $table->string('qc_status')->nullable();
+            $table->integer('for_rework')->nullable();
+            $table->integer('num_times')->nullable();
+            $table->integer('alignment_aesthetics')->nullable();
+            $table->longText('c_alignment_aesthetics')->nullable();
+            $table->integer('availability_formats')->nullable();
+            $table->longText('c_availability_formats')->nullable();
+            $table->integer('accuracy')->nullable();
+            $table->longText('c_accuracy')->nullable();
+            $table->integer('functionality')->nullable();
+            $table->longText('c_functionality')->nullable();
+            $table->longText('qc_comments')->nullable();
 
             // dates
             $table->datetime('start_at')->nullable();
