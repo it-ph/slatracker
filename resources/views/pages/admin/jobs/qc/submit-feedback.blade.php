@@ -4,11 +4,11 @@
             <div class="card-body">
                 <div class="col-md-12">
                     <p class="fw-bold mb-1 text-primary">Submit Feedback</p>
-                    <form id="addJobForm" method="POST">
+                    <form id="submitFeedbackForm" method="POST">
                         @csrf
                         <div class="col-md-12">
                             <div class="form-group row mb-2">
-                                <input type="hidden" name="edit_id" id="edit_id" value="{{ $job['id'] }}">
+                                <input type="hidden" name="edit_id" id="edit_id" value="{{ $job['auditlog_id'] }}">
                                 <label for="qc_status" class="col-sm-3 col-form-label fw-bold">QC Status <strong><span class="important">*</span></strong></label>
                                 <div class="col-sm-9">
                                     <select class="form-control" name="qc_status" id="qc_status">

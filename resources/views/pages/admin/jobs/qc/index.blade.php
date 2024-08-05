@@ -31,9 +31,10 @@
 
     @include('pages.admin.jobs.qc.job-details')
 
-    @if(auth()->user()->id == $job['auditor'])
-    @include('pages.admin.jobs.qc.qc-details')
-    @include('pages.admin.jobs.qc.submit-feedback')
+    {{-- theauditor w/ null status --}}
+    @if(auth()->user()->id == $job['auditor'] && $job['qc_status'] == null)
+        @include('pages.admin.jobs.qc.qc-details')
+        @include('pages.admin.jobs.qc.submit-feedback')
     @endif
 @endsection
 

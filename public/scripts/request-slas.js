@@ -197,7 +197,7 @@ const REQUEST_SLA = (() => {
             confirmButtonText: 'Yes',
             cancelButtonText: 'No',
             confirmButtonClass: 'btn btn-primary btn-sm mt-2 mr-2',
-            cancelButtonClass: 'btn btn-secondary btn-sm ms-2 mt-2 mr-2',
+            cancelButtonClass: 'btn btn-danger btn-sm ms-2 mt-2 mr-2',
             buttonsStyling: false,
             allowOutsideClick: false
         }).then((result) => {

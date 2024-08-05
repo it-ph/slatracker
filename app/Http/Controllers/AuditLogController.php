@@ -19,92 +19,6 @@ class AuditLogController extends Controller
         $this->service = new AuditLogsServices();
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $result = $this->successResponse('Pending QC loaded successfully!');
-        try
-        {
-            $result["data"] =  $this->service->load();
-        } catch (\Throwable $th)
-        {
-            return $this->errorResponse($th);
-        }
-
-        return $this->returnResponse($result);
-    }
-
-    public function store(AuditLogStoreRequest $request)
-    {
-        $result = $this->successResponse('Audit Log created successfully!');
-        try{
-            if($request->edit_id === null)
-            {
-                $request['request_sla_id'] = $request->request_sla_id;
-                $request['client_id'] = auth()->user()->client_id;
-                $request['created_by'] = auth()->user()->id;
-                $audit_log = AuditLog::create($request->except(['edit_id','agreed_sla']));
-            }
-            else
-            {
-                $result = $this->update($request, $request->edit_id);
-            }
-        } catch (\Throwable $th) {
-            return $this->errorResponse($th);
-        }
-
-        return $this->returnResponse($result);
-    }
-
-    public function showJob($id)
-    {
-        $result = $this->successResponse('Audit Log retrieved successfully!');
-        try {
-            $result["data"] = AuditLog::findOrfail($id);
-        } catch (\Throwable $th) {
-            return $this->errorResponse($th);
-        }
-
-        return $this->returnResponse($result);
-    }
-
-    public function update($request, $id)
-    {
-        $result = $this->successResponse('Audit Log updated successfully!');
-        try {
-            AuditLog::findOrfail($id)->update($request->except('edit_id'));
-        } catch (\Throwable $th)
-        {
-            $result = $this->errorResponse($th);
-        }
-
-        return $result;
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\AuditLog  $audit_log
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $audit_log = AuditLog::findOrfail($id);
-        $result = $this->successResponse('Audit Log deleted successfully!');
-        try {
-            $audit_log->delete();
-        } catch (\Throwable $th)
-        {
-            return $this->errorResponse($th);
-        }
-
-        return $this->returnResponse($result);
-    }
-
     public function pickJob($id)
     {
         $result = $this->successResponse("Job picked successfully!");
@@ -113,6 +27,34 @@ class AuditLogController extends Controller
                 'auditor_id' => auth()->user()->id,
                 'start_at' => Carbon::now()
             ]);
+        } catch (\Throwable $th) {
+            $result = $this->errorResponse($th);
+        }
+
+        return $this->returnResponse($result);
+    }
+
+    public function releaseJob($id)
+    {
+        $result = $this->successResponse("Job released successfully!");
+        try {
+            $audit_log = AuditLog::findOrfail($id)->update([
+                'auditor_id' => null,
+                'start_at' => null
+            ]);
+        } catch (\Throwable $th) {
+            $result = $this->errorResponse($th);
+        }
+
+        return $this->returnResponse($result);
+    }
+
+    public function submitFeedback(AuditLogStoreRequest $request)
+    {
+        $result = $this->successResponse("Quality Check saved successfully!");
+        try {
+            $request['end_at'] = Carbon::now();
+            AuditLog::findOrfail($request->edit_id)->update($request->except('edit_id'));
         } catch (\Throwable $th) {
             $result = $this->errorResponse($th);
         }

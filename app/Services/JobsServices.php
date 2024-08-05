@@ -291,7 +291,7 @@ class JobsServices {
             if($value->auditor_id)
             {
                 $action = auth()->user()->id == $value->auditor_id ?
-                    '<button type="button" class="btn btn-info btn-sm waves-effect waves-light" id="btn_release_'.$value->id.'" title="Release Job" onclick=JOB.show('.$value->id.')><i class="fa fa-share"></i></button>' : '-';
+                    '<button type="button" class="btn btn-info btn-sm waves-effect waves-light" id="btn_release_'.$value->id.'" title="Release Job" onclick=JOB.release('.$value->id.')><i class="fa fa-share"></i></button>' : '-';
             }
             else
             {
@@ -446,14 +446,17 @@ class JobsServices {
         // qc details
         $audit_log = AuditLog::query()
             ->where('job_id', $value->id)
-            ->select('id','job_id','preview_link','self_qc','dev_comments','qc_round','auditor_id')
+            ->select('id','job_id','preview_link','self_qc','dev_comments','qc_round','auditor_id','qc_status')
             ->latest()
             ->first();
 
+        $auditlog_id = $audit_log ? $audit_log->id : null;
         $preview_link = $audit_log ? $audit_log->preview_link : '';
         $self_qc = $audit_log ? 'Yes' : 'No';
         $audit_dev_comments = $audit_log ? $audit_log->dev_comments : '';
-        $auditor = $audit_log->auditor_id;
+        $auditor = $audit_log ? $audit_log->auditor_id : '';
+        $qc_round = $audit_log ? $audit_log->qc_round : '';
+        $qc_status= $audit_log ? $audit_log->qc_status: null;
 
         $job = [
             'id' => $value->id,
@@ -487,10 +490,13 @@ class JobsServices {
             'dev_comments' => $dev_comments,
 
             // qc details
+            'auditlog_id' => $auditlog_id,
             'preview_link' => $preview_link,
             'self_qc' => $self_qc,
             'audit_dev_comments' => $audit_dev_comments,
             'auditor' => $auditor,
+            'qc_round' => $qc_round,
+            'qc_status' => $qc_status,
         ];
 
         return $job;

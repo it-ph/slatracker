@@ -56,6 +56,11 @@
     @yield('custom-js')
 
     <script>
+        history.scrollRestoration = "manual";
+        $(window).scrollTop(0);
+    </script>
+
+    <script>
         toastr.options = {
             "positionClass": "toast-bottom-right",
         }

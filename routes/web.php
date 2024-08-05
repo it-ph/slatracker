@@ -105,6 +105,8 @@ Route::group(['middleware' => ['auth','twofactor','web','active.user']],function
         Route::get('/all', [JobController::class,'qualityCheck'])->name('pendingqc.index');
         Route::get('/show/{id}', [JobController::class,'show'])->name('pendingqc.show');
         Route::get('/pick/{id}', [AuditLogController::class,'pickJob'])->name('pendingqc.pick');
+        Route::get('/release/{id}', [AuditLogController::class,'releaseJob'])->name('pendingqc.realease');
+        Route::post('/submitfeedback', [AuditLogController::class,'submitFeedback'])->name('pendingqc.submit-eedback');
     });
 
     /** START OF ADMIN, TL, MANAGER */
