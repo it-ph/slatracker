@@ -2,8 +2,9 @@
 
 namespace App\Services;
 
-use Facades\App\Http\Helpers\TaskHelper;
 use App\Models\Job;
+use App\Models\AuditLog;
+use Facades\App\Http\Helpers\TaskHelper;
 
 class JobsServices {
     public function load()
@@ -108,6 +109,7 @@ class JobsServices {
         // }
 
         $datastorage = [];
+
         $jobs = Job::with([
             'therequesttype:id,name',
             'therequestvolume:id,name',
@@ -131,7 +133,7 @@ class JobsServices {
         // }
 
         foreach($jobs as $value) {
-            $name = '<a href="'.env('APP_URL').'/viewjob/'.$value->id.'" class="text-info">'. $value->name .'</a>';
+            $name = '<a href="'.env('APP_URL').'/qualitycheck/'.$value->id.'" class="text-info">'. $value->name .'</a>';
             $request_type = $value->therequesttype ? $value->therequesttype->name : '-';
             $request_volume = $value->therequestvolume ? $value->therequestvolume->name : '-';
             $special_request = $value->special_request ? 'Yes' : 'No';
@@ -259,41 +261,42 @@ class JobsServices {
     public function loadPendingQC()
     {
         $datastorage = [];
-        $jobs = Job::with([
-            'therequesttype:id,name',
-            'therequestvolume:id,name',
-            'therequestsla:id,agreed_sla',
-            'thedeveloper:id,username',
-            'theauditor:id,username',
+
+
+        $pending_qcs = AuditLog::with([
+            'thejob:id,name,request_type_id,request_volume_id,request_sla_id,special_request,time_taken,sla_missed,developer_id',
+            'thejob.therequestsla:id,agreed_sla',
+            'thejob.therequesttype:id,name',
+            'thejob.therequestvolume:id,name',
+            'thejob.thedeveloper:id,username'
         ])
-        ->select('id','name','request_type_id','request_volume_id','request_sla_id','special_request','created_at','start_at','end_at','time_taken','sla_missed','developer_id','status')
-        // ->where('status','quality check')
+        ->select('id','job_id','qc_round','auditor_id','created_at')
+        ->where('end_at',null)
         ->orderBy('created_at','DESC')
         ->get();
 
-        foreach($jobs as $value) {
-            $name = auth()->user()->id == $value->auditor_id ? '<a href="'.env('APP_URL').'/qualitycheck/'.$value->id.'" class="text-info">'. $value->name .'</a>' : $value->name;
-            $request_type = $value->therequesttype ? $value->therequesttype->name : '-';
-            $request_volume = $value->therequestvolume ? $value->therequestvolume->name : '-';
-            $special_request = $value->special_request ? 'Yes' : 'No';
+        foreach($pending_qcs as $value) {
+            $name = auth()->user()->id == $value->auditor_id ? '<a href="'.env('APP_URL').'/qualitycheck/'.$value->job_id.'" class="text-info">'. $value->thejob->name .'</a>' : $value->thejob->name;
+            $request_type = $value->thejob->therequesttype ? $value->thejob->therequesttype->name : '-';
+            $request_volume = $value->thejob->therequestvolume ? $value->thejob->therequestvolume->name : '-';
+            $special_request = $value->thejob->special_request ? 'Yes' : 'No';
             $created_at = $value->created_at ? date('d-M-y h:i:s a', strtotime($value->created_at)) : '-';
-            $agreed_sla = $value->therequestsla ? TaskHelper::convertTime($value->therequestsla->agreed_sla) : '-';
-            $time_taken = $value->time_taken ? $value->time_taken : '-';
-            $sla_missed = $value->sla_missed ? '<span class="text-danger">Yes</span>' : '<span class="text-success">No</span>';
-            $developer = $value->thedeveloper ? $value->thedeveloper->username : '-';
+            $agreed_sla = $value->thejob->therequestsla ? TaskHelper::convertTime($value->thejob->therequestsla->agreed_sla) : '-';
+            $time_taken = $value->thejob->time_taken ? $value->thejob->time_taken : '-';
+            $sla_missed = $value->thejob->sla_missed ? '<span class="text-danger">Yes</span>' : '<span class="text-success">No</span>';
+            $developer = $value->thejob->thedeveloper ? $value->thejob->thedeveloper->username : '-';
             $qc_round = $value->qc_round ? $value->qc_round : '-';
             $auditor = $value->theauditor ? $value->theauditor->username : '-';
 
             if($value->auditor_id)
             {
                 $action = auth()->user()->id == $value->auditor_id ?
-                    '<button type="button" class="btn btn-info btn-sm waves-effect waves-light" title="Release Job" onclick=JOB.show('.$value->id.')><i class="fa fa-share"></i></button>' : '-';
+                    '<button type="button" class="btn btn-info btn-sm waves-effect waves-light" id="btn_release_'.$value->id.'" title="Release Job" onclick=JOB.show('.$value->id.')><i class="fa fa-share"></i></button>' : '-';
             }
             else
             {
-                $action = '<button type="button" class="btn btn-primary btn-sm waves-effect waves-light" title="Pick Job" onclick=JOB.assignAuditor('.$value->id.')><i class="fa fa-check-circle"></i></button>';
+                $action = '<button type="button" class="btn btn-primary btn-sm waves-effect waves-light" id="btn_pick_'.$value->id.'" title="Pick Job" onclick=JOB.pick('.$value->id.')><i class="fa fa-check-circle"></i></button>';
             }
-
 
             $datastorage[] = [
                 'id' => $value->id,
@@ -440,6 +443,18 @@ class JobsServices {
         $shared_folder_location = $value->shared_folder_location;
         $dev_comments = $value->dev_comments;
 
+        // qc details
+        $audit_log = AuditLog::query()
+            ->where('job_id', $value->id)
+            ->select('id','job_id','preview_link','self_qc','dev_comments','qc_round','auditor_id')
+            ->latest()
+            ->first();
+
+        $preview_link = $audit_log ? $audit_log->preview_link : '';
+        $self_qc = $audit_log ? 'Yes' : 'No';
+        $audit_dev_comments = $audit_log ? $audit_log->dev_comments : '';
+        $auditor = $audit_log->auditor_id;
+
         $job = [
             'id' => $value->id,
             'name' => $name,
@@ -470,6 +485,12 @@ class JobsServices {
             'img_num' => $img_num,
             'shared_folder_location' => $shared_folder_location,
             'dev_comments' => $dev_comments,
+
+            // qc details
+            'preview_link' => $preview_link,
+            'self_qc' => $self_qc,
+            'audit_dev_comments' => $audit_dev_comments,
+            'auditor' => $auditor,
         ];
 
         return $job;

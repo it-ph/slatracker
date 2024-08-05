@@ -118,5 +118,42 @@ const JOB = (() => {
         });
     }
 
+    // pick job
+    this_job.pick = (id) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, pick it!',
+            cancelButtonText: 'No, cancel!',
+            confirmButtonClass: 'btn btn-primary btn-sm mt-2 mr-2',
+            cancelButtonClass: 'btn btn-secondary btn-sm ms-2 mt-2 mr-2',
+            buttonsStyling: false,
+            allowOutsideClick: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $('#btn_pick_' + id).empty();
+                $('#btn_pick_' + id).append('<i class="fa fa-spinner fa-spin"></i>');
+                $('#btn_pick_' + id).prop("disabled", true);
+                axios({
+                        method: 'get',
+                        url: `${APP_URL}/pendingqc/pick/${id}`,
+                    })
+                    .then(function(response) {
+                        console.log(response.data.status)
+                        if (response.data.status === 'success') {
+                            JOB.load();
+                            toastr.success(response.data.message);
+                        } else {
+                            toastr.error(response.data.message);
+                        }
+                    }).catch(error => {
+                        toastr.error(null);
+                    });
+            }
+        });
+    }
+
     return this_job;
 })()

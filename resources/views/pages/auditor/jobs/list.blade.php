@@ -35,7 +35,7 @@
                                 <th class="text-center">Special Request</th>
                                 <th class="text-center">Created On</th>
                                 <th class="text-center">Agreed SLA</th>
-                                <th class="text-center">Time Elpased</th>
+                                <th class="text-center">Time Elapsed</th>
                                 <th class="text-center">SLA Missed</th>
                                 <th class="text-center">Developer</th>
                                 <th class="text-center">QC Round</th>

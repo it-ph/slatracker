@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\AuditLog;
 use Illuminate\Http\Request;
 use App\Traits\ResponseTraits;
@@ -99,6 +100,21 @@ class AuditLogController extends Controller
         } catch (\Throwable $th)
         {
             return $this->errorResponse($th);
+        }
+
+        return $this->returnResponse($result);
+    }
+
+    public function pickJob($id)
+    {
+        $result = $this->successResponse("Job picked successfully!");
+        try {
+            $audit_log = AuditLog::findOrfail($id)->update([
+                'auditor_id' => auth()->user()->id,
+                'start_at' => Carbon::now()
+            ]);
+        } catch (\Throwable $th) {
+            $result = $this->errorResponse($th);
         }
 
         return $this->returnResponse($result);

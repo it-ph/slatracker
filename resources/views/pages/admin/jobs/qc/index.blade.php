@@ -30,8 +30,11 @@
     </div>
 
     @include('pages.admin.jobs.qc.job-details')
+
+    @if(auth()->user()->id == $job['auditor'])
     @include('pages.admin.jobs.qc.qc-details')
     @include('pages.admin.jobs.qc.submit-feedback')
+    @endif
 @endsection
 
 @section('script')

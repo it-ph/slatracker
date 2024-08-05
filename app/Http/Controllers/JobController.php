@@ -74,10 +74,10 @@ class JobController extends Controller
     {
         $result = $this->successResponse("Job started successfully!");
         try {
-            $task = Job::findOrfail($id);
+            $job = Job::findOrfail($id);
             $status = 'In Progress';
 
-            $task->update([
+            $job->update([
                 'status' => $status,
                 'start_at' => Carbon::now(),
             ]);
@@ -161,7 +161,6 @@ class JobController extends Controller
         }
 
         return view('pages.admin.jobs.qc.index', compact('user','job'));
-
     }
 
     /**
