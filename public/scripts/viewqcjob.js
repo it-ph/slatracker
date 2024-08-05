@@ -132,13 +132,21 @@ const JOB = (() => {
         });
     });
 
+    // set call for rework
+    $('#qc_status').on('change', () => {
+        var qc_status = $('#qc_status').val();
+        var for_rework = qc_status == 'Pass' ? 0 : 1;
+        $("input[name=for_rework][value=" + for_rework + "]").prop('checked', true);
+    });
+
+
     // auto NA when the user clicks no
     $('.no').click((e) => {
         let name = $(e.target).attr('name');
         var na = $('input[name = "' + name + '"]:checked').val();
-        var c_name = 'comments_' + name;
+        var c_name = 'c_' + name;
         var value = na == 0 ? "NA" : null;
-        $('#comments_' + name).val(value);
+        $('#c_' + name).val(value);
     });
 
     // cancel

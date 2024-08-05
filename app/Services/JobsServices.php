@@ -378,7 +378,7 @@ class JobsServices {
             'start_at' => $start_at,
             'end_at' => $end_at,
             'status' => $status,
-            
+
             // additional details
             'template_followed' => $template_followed,
             'template_issue' => $template_issue,
@@ -458,7 +458,7 @@ class JobsServices {
             'start_at' => $start_at,
             'end_at' => $end_at,
             'status' => $status,
-            
+
             // additional details
             'template_followed' => $template_followed,
             'template_issue' => $template_issue,

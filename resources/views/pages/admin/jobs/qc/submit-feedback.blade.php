@@ -24,11 +24,11 @@
                                 <label for="for_rework" class="col-sm-3 col-form-label fw-bold">Call for Rework <strong><span class="important">*</span></strong></label>
                                 <div class="col-sm-9">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="for_rework" id="for_rework_yes" value="1">
+                                        <input class="form-check-input" type="radio" name="for_rework" id="for_rework_yes" value="1" onclick="javascript:return false;">
                                         <label class="form-check-label" for="for_rework_yes">Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="for_rework" id="for_rework_no" value="0">
+                                        <input class="form-check-input" type="radio" name="for_rework" id="for_rework_no" value="0" onclick="javascript:return false;">
                                         <label class="form-check-label" for="for_rework_no">No</label>
                                     </div><br>
                                     <label id="for_reworkError" class="error" style="display:none"></label>
@@ -51,7 +51,7 @@
                                         <label class="form-check-label" for="alignment_aesthetics_yes">Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="alignment_aesthetics" id="alignment_aesthetics_no" value="0">
+                                        <input class="form-check-input no" type="radio" name="alignment_aesthetics" id="alignment_aesthetics_no" value="0">
                                         <label class="form-check-label" for="alignment_aesthetics_no">No</label>
                                     </div><br>
                                     <label id="alignment_aestheticsError" class="error" style="display:none"></label>
@@ -74,7 +74,7 @@
                                         <label class="form-check-label" for="availability_formats_yes">Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="availability_formats" id="availability_formats_no" value="0">
+                                        <input class="form-check-input no" type="radio" name="availability_formats" id="availability_formats_no" value="0">
                                         <label class="form-check-label" for="availability_formats_no">No</label>
                                     </div><br>
                                     <label id="availability_formatsError" class="error" style="display:none"></label>
@@ -97,7 +97,7 @@
                                         <label class="form-check-label" for="accuracy_yes">Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="accuracy" id="accuracy_no" value="0">
+                                        <input class="form-check-input no" type="radio" name="accuracy" id="accuracy_no" value="0">
                                         <label class="form-check-label" for="accuracy_no">No</label>
                                     </div><br>
                                     <label id="accuracyError" class="error" style="display:none"></label>
@@ -120,7 +120,7 @@
                                         <label class="form-check-label" for="functionality_yes">Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="functionality" id="functionality_no" value="0">
+                                        <input class="form-check-input no" type="radio" name="functionality" id="functionality_no" value="0">
                                         <label class="form-check-label" for="functionality_no">No</label>
                                     </div><br>
                                     <label id="functionalityError" class="error" style="display:none"></label>

@@ -46,5 +46,5 @@
 @endsection
 
 @section('custom-js')
-    {{-- <script src="{{asset('scripts/create-job.js')}}"></script> --}}
+    <script src="{{asset('scripts/viewqcjob.js')}}"></script>
 @endsection

@@ -117,5 +117,6 @@ const JOB = (() => {
             toastr.error(null);
         });
     }
+
     return this_job;
 })()

@@ -31,7 +31,7 @@
                                         <label class="form-check-label" for="template_issue_yes">Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="template_issue" id="template_issue_no" value="0">
+                                        <input class="form-check-input no" type="radio" name="template_issue" id="template_issue_no" value="0">
                                         <label class="form-check-label" for="template_issue_no">No</label>
                                     </div><br>
                                     <label id="template_issueError" class="error" style="display:none"></label>
@@ -54,7 +54,7 @@
                                         <label class="form-check-label" for="auto_recommend_yes">Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="auto_recommend" id="auto_recommend_no" value="0">
+                                        <input class="form-check-input no" type="radio" name="auto_recommend" id="auto_recommend_no" value="0">
                                         <label class="form-check-label" for="auto_recommend_no">No</label>
                                     </div><br>
                                     <label id="auto_recommendError" class="error" style="display:none"></label>
