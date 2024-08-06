@@ -52,6 +52,6 @@ class Job extends Model
 
     public function theauditlogs()
     {
-        return $this->hasMany(AuditLog::class,'job_id')->withTrashed();;
+        return $this->hasMany(AuditLog::class,'job_id');
     }
 }

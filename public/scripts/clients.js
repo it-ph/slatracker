@@ -97,8 +97,12 @@ const CLIENT = (() => {
                 // buttons: [
                 //     'excel'
                 // ],
-                "pageLength": 10,
                 "pagingType": "full_numbers",
+                "pageLength": 20,
+                "lengthMenu": [
+                    [10, 20, 50, 100],
+                    [10, 20, 50, 100]
+                ],
                 "scrollX": true,
             });
 

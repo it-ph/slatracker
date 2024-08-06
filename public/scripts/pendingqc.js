@@ -101,8 +101,12 @@ const JOB = (() => {
                 // buttons: [
                 //     'excel'
                 // ],
-                "pageLength": 10,
                 "pagingType": "full_numbers",
+                "pageLength": 20,
+                "lengthMenu": [
+                    [10, 20, 50, 100],
+                    [10, 20, 50, 100]
+                ],
                 "order": [4, "desc"],
                 "columnDefs": [{ type: 'date', 'targets': [4] }],
                 "scrollX": true,

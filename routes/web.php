@@ -124,7 +124,11 @@ Route::group(['middleware' => ['auth','twofactor','web','active.user']],function
                 Route::get('/show/{id}', [JobController::class,'show'])->name('job.show');
                 Route::post('/update/{id}', [JobController::class,'update'])->name('job.update');
                 Route::post('/delete/{id}', [JobController::class,'destroy'])->name('job.delete');
+                Route::post('/externalquality', [JobController::class,'updateExternalQuality'])->name('job.update.externalquality');
             });
+
+            // QUALITY CHECK
+            Route::get('/viewqualitycheck/{id}', [AuditLogController::class, 'viewQC'])->name('view.qc');
 
             // PENDING JOBS - TL / MANAGER ACCESS
             Route::get('/pendingjobs', [PageController::class, 'showPendingJobs'])->name('pendingjobs.index');

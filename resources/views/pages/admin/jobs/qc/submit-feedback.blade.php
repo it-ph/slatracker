@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row to-hide">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
@@ -22,7 +22,7 @@
 
                             <div class="form-group row">
                                 <label for="for_rework" class="col-sm-3 col-form-label fw-bold">Call for Rework <strong><span class="important">*</span></strong></label>
-                                <div class="col-sm-9">
+                                <div class="col-sm-9 mt-1">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="for_rework" id="for_rework_yes" value="1" onclick="javascript:return false;">
                                         <label class="form-check-label" for="for_rework_yes">Yes</label>
@@ -45,7 +45,7 @@
 
                             <div class="form-group row">
                                 <label for="alignment_aesthetics" class="col-sm-3 col-form-label fw-bold">Alignment & Aesthetics <strong><span class="important">*</span></strong></label>
-                                <div class="col-sm-9">
+                                <div class="col-sm-9 mt-1">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="alignment_aesthetics" id="alignment_aesthetics_yes" value="1">
                                         <label class="form-check-label" for="alignment_aesthetics_yes">Yes</label>
@@ -68,7 +68,7 @@
 
                             <div class="form-group row">
                                 <label for="availability_formats" class="col-sm-3 col-form-label fw-bold">Availability and Formats <strong><span class="important">*</span></strong></label>
-                                <div class="col-sm-9">
+                                <div class="col-sm-9 mt-1">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="availability_formats" id="availability_formats_yes" value="1">
                                         <label class="form-check-label" for="availability_formats_yes">Yes</label>
@@ -91,7 +91,7 @@
 
                             <div class="form-group row">
                                 <label for="accuracy" class="col-sm-3 col-form-label fw-bold">Accuracy <strong><span class="important">*</span></strong></label>
-                                <div class="col-sm-9">
+                                <div class="col-sm-9 mt-1">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="accuracy" id="accuracy_yes" value="1">
                                         <label class="form-check-label" for="accuracy_yes">Yes</label>
@@ -114,7 +114,7 @@
 
                             <div class="form-group row">
                                 <label for="functionality" class="col-sm-3 col-form-label fw-bold">Functionality <strong><span class="important">*</span></strong></label>
-                                <div class="col-sm-9">
+                                <div class="col-sm-9 mt-1">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="functionality" id="functionality_yes" value="1">
                                         <label class="form-check-label" for="functionality_yes">Yes</label>

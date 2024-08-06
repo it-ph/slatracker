@@ -12,6 +12,8 @@ use App\Http\Requests\JobStoreRequest;
 use App\Http\Requests\JobSendForQCRequest;
 use App\Http\Requests\JobSubmitDetailsRequest;
 use Facades\App\Http\Helpers\CredentialsHelper;
+use App\Http\Requests\JobStoreExternalQualityRequest;
+use App\Http\Requests\JobUpdateExternalQualityRequest;
 
 class JobController extends Controller
 {
@@ -221,6 +223,22 @@ class JobController extends Controller
         $result = $this->successResponse('Job updated successfully!');
         try {
             Job::findOrfail($id)->update($request->except('edit_id'));
+        } catch (\Throwable $th)
+        {
+            $result = $this->errorResponse($th);
+        }
+
+        return $result;
+    }
+
+    public function updateExternalQuality(JobUpdateExternalQualityRequest $request)
+    {
+        $result = $this->successResponse('External Quality details saved successfully!');
+        try {
+            Job::findOrfail($request->edit_id)->update([
+                'external_quality' => $request->external_quality,
+                'c_external_quality' => $request->c_external_quality
+            ]);
         } catch (\Throwable $th)
         {
             $result = $this->errorResponse($th);

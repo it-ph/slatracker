@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row to-hide">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
@@ -17,7 +17,7 @@
                             </div>
                             <div class="form-group row">
                                 <label for="self_qc" class="col-sm-2 col-form-label fw-bold">Self QC Performed <strong><span class="important">*</span></strong></label>
-                                <div class="col-sm-10">
+                                <div class="col-sm-10 mt-1">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="self_qc" id="self_qc_yes" value="1">
                                         <label class="form-check-label" for="self_qc_yes">Yes</label>

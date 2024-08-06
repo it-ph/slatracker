@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title') Quality Check @endsection
+@section('title') View Quality Check @endsection
 
 @section('css')
     <!-- DataTables -->
@@ -19,7 +19,7 @@
 
     @component('components.breadcrumb')
         @slot('li_1') Job @endslot
-        @slot('title') Quality Check @endslot
+        @slot('title') View Quality Check @endslot
     @endcomponent
 
     <div class="row">
@@ -29,13 +29,10 @@
         </div>
     </div>
 
-    @include('pages.admin.jobs.qc.job-details')
+    @include('pages.admin.jobs.viewqc.job-details')
 
-    {{-- theauditor w/ null status --}}
-    @if(auth()->user()->id == $job['auditor'] && $job['status'] <> 'Closed')
-        @include('pages.admin.jobs.qc.qc-details')
-        @include('pages.admin.jobs.qc.submit-feedback')
-    @endif
+    @include('pages.admin.jobs.viewqc.qc-details')
+    @include('pages.admin.jobs.viewqc.qc-feedback')
 @endsection
 
 @section('script')

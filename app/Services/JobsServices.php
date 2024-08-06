@@ -48,8 +48,8 @@ class JobsServices {
             $agreed_sla = $value->therequestsla ? TaskHelper::convertTime($value->therequestsla->agreed_sla) : '-';
             $time_taken = $value->time_taken ? $value->time_taken : '-';
             $sla_missed = $value->sla_missed ? '<span class="text-danger">Yes</span>' : '<span class="text-success">No</span>';
-            $internal_quality = $value->internal_quality ? $value->internal_quality : '-';
-            $external_quality = $value->external_quality ? $value->external_quality : '-';
+            $internal_quality = $value->internal_quality ? '<span class="text-'.($value->internal_quality == 'Pass' ? "success" : "danger").'">'.$value->internal_quality.'</span>' : '-';
+            $external_quality = $value->external_quality ? '<span class="text-'.($value->external_quality == 'Pass' ? "success" : "danger").'">'.$value->external_quality.'</span>' : '-';
             $developer = $value->thedeveloper ? $value->thedeveloper->username : '-';
 
             $badge_status = $value->status;
@@ -73,8 +73,8 @@ class JobsServices {
             }
 
             $status = '<span class="badge bg-'.$badge.'">'.$value->status.'</span>';
-            $action ='<button type="button" class="btn btn-info btn-sm waves-effect waves-light" title="View Job" onclick=JOB.show('.$value->id.')><i class="fas fa-eye"></i></button>
-            <button type="button" class="btn btn-warning btn-sm waves-effect waves-light" title="Edit Job" onclick=JOB.show('.$value->id.')><i class="fas fa-pencil-alt"></i></button>';
+            $action ='<a href="'.env('APP_URL').'/viewjob/'.$value->id.'" class="btn btn-info btn-sm waves-effect waves-light" title="View Job"><i class="fas fa-eye"></i></a>
+                    <button type="button" class="btn btn-warning btn-sm waves-effect waves-light" title="Edit Job" onclick=JOB.show('.$value->id.')><i class="fas fa-pencil-alt"></i></button>';
 
             $datastorage[] = [
                 'id' => $value->id,
@@ -133,7 +133,7 @@ class JobsServices {
         // }
 
         foreach($jobs as $value) {
-            $name = '<a href="'.env('APP_URL').'/qualitycheck/'.$value->id.'" class="text-info">'. $value->name .'</a>';
+            $name = '<a href="'.env('APP_URL').'/viewjob/'.$value->id.'" class="text-info">'. $value->name .'</a>';
             $request_type = $value->therequesttype ? $value->therequesttype->name : '-';
             $request_volume = $value->therequestvolume ? $value->therequestvolume->name : '-';
             $special_request = $value->special_request ? 'Yes' : 'No';
@@ -326,6 +326,8 @@ class JobsServices {
             'therequestvolume:id,name',
             'therequestsla:id,agreed_sla',
             'thedeveloper:id,username',
+            'theauditlogs:id,job_id,auditor_id,qc_round,qc_status,start_at,end_at,self_qc',
+            'theauditlogs.theauditor:id,username'
         ])
         ->where('id',$id)
         ->first();
@@ -352,16 +354,42 @@ class JobsServices {
         $status = $value->status;
 
         // additional details
-        $template_followed = $value->template_followed ? 'Yes' : 'No';;
-        $template_issue = $value->template_issue ? 'Yes' : 'No';;
+        $template_followed = $value->template_followed ? 'Yes' : 'No';
+        $template_issue = $value->template_issue ? 'Yes' : 'No';
         $comments_template_issue = $value->comments_template_issue;
-        $auto_recommend = $value->auto_recommend ? 'Yes' : 'No';;
+        $auto_recommend = $value->auto_recommend ? 'Yes' : 'No';
         $comments_auto_recommend = $value->comments_auto_recommend;
-        $img_localstock = $value->img_localstock ? 'Yes' : 'No';;
-        $img_customer = $value->img_customer ? 'Yes' : 'No';;
+        $img_localstock = $value->img_localstock ? 'Yes' : 'No';
+        $img_customer = $value->img_customer ? 'Yes' : 'No';
         $img_num = $value->img_num;
         $shared_folder_location = $value->shared_folder_location;
         $dev_comments = $value->dev_comments;
+
+        // auditlogs
+        $logs = [];
+        $audit_logs = $value->theauditlogs ? $value->theauditlogs : '';
+        foreach($audit_logs as $log) {
+            $qc_round = $log->qc_round;
+            $auditor = $log->theauditor ? $log->theauditor->username : '-';
+            $qc_status = $log->qc_status ? $log->qc_status : '-';
+            $start_at = $log->start_at ? date('d-M-y h:i:s a', strtotime($log->start_at)) : '-';
+            $end_at = $log->end_at ? date('d-M-y h:i:s a', strtotime($log->end_at)) : '-';
+            $self_qc = $log->self_qc ? 'Yes' : 'No';
+
+            $logs[] = [
+                'audit_log_id' => $log->id,
+                'qc_round' => $qc_round,
+                'auditor' => $auditor,
+                'qc_status' => $qc_status,
+                'start_at' => $start_at,
+                'end_at' => $end_at,
+                'self_qc' => $self_qc,
+            ];
+        }
+
+        // external quality details
+        $external_quality = $value->external_quality;
+        $c_external_quality = $value->c_external_quality;
 
         $job = [
             'id' => $value->id,
@@ -393,6 +421,13 @@ class JobsServices {
             'img_num' => $img_num,
             'shared_folder_location' => $shared_folder_location,
             'dev_comments' => $dev_comments,
+
+            // auditlogs
+            'audit_logs' => $logs,
+
+            // external quality details
+            'external_quality' => $external_quality,
+            'c_external_quality' => $c_external_quality,
         ];
 
         return $job;
@@ -432,13 +467,13 @@ class JobsServices {
         $status = $value->status;
 
         // additional details
-        $template_followed = $value->template_followed ? 'Yes' : 'No';;
-        $template_issue = $value->template_issue ? 'Yes' : 'No';;
+        $template_followed = $value->template_followed ? 'Yes' : 'No';
+        $template_issue = $value->template_issue ? 'Yes' : 'No';
         $comments_template_issue = $value->comments_template_issue;
-        $auto_recommend = $value->auto_recommend ? 'Yes' : 'No';;
+        $auto_recommend = $value->auto_recommend ? 'Yes' : 'No';
         $comments_auto_recommend = $value->comments_auto_recommend;
-        $img_localstock = $value->img_localstock ? 'Yes' : 'No';;
-        $img_customer = $value->img_customer ? 'Yes' : 'No';;
+        $img_localstock = $value->img_localstock ? 'Yes' : 'No';
+        $img_customer = $value->img_customer ? 'Yes' : 'No';
         $img_num = $value->img_num;
         $shared_folder_location = $value->shared_folder_location;
         $dev_comments = $value->dev_comments;

@@ -44,8 +44,8 @@ class CreateTasksTable extends Migration
             $table->string('img_num')->default(0); // images used
             $table->string('shared_folder_location')->nullable();
             $table->longText('dev_comments')->nullable(); // developer comments
-            $table->string('external_quality')->nullable();
             $table->string('internal_quality')->nullable();
+            $table->string('external_quality')->nullable();
 
             // dates
             $table->datetime('start_at')->nullable();

@@ -55,10 +55,10 @@
 
     @yield('custom-js')
 
-    <script>
+    {{-- <script>
         history.scrollRestoration = "manual";
         $(window).scrollTop(0);
-    </script>
+    </script> --}}
 
     <script>
         toastr.options = {

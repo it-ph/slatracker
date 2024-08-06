@@ -7,6 +7,7 @@ use App\Models\AuditLog;
 use Illuminate\Http\Request;
 use App\Traits\ResponseTraits;
 use App\Services\AuditLogsServices;
+use Facades\App\Http\Helpers\CredentialsHelper;
 use App\Http\Requests\AuditLogStoreRequest;
 
 class AuditLogController extends Controller
@@ -17,6 +18,11 @@ class AuditLogController extends Controller
     {
         $this->model = new AuditLog();
         $this->service = new AuditLogsServices();
+    }
+
+    public function thecredentials()
+    {
+        return CredentialsHelper::get_set_credentials();
     }
 
     public function pickJob($id)
@@ -60,5 +66,17 @@ class AuditLogController extends Controller
         }
 
         return $this->returnResponse($result);
+    }
+
+    public function viewQC($id)
+    {
+        $user = $this->thecredentials();
+        $job = $this->service->showQC($id);
+
+        if(!$job){
+            return view('errors.404');
+        }
+
+        return view('pages.admin.jobs.viewqc.index', compact('user','job'));
     }
 }

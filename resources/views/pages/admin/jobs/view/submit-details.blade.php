@@ -10,7 +10,7 @@
                             <div class="form-group row">
                                 <input type="hidden" name="edit_id" id="edit_id" value="{{ $job['id'] }}">
                                 <label for="template_followed" class="col-sm-3 col-form-label fw-bold">Template Followed <strong><span class="important">*</span></strong></label>
-                                <div class="col-sm-9">
+                                <div class="col-sm-9 mt-1">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="template_followed" id="template_followed_yes" value="1">
                                         <label class="form-check-label" for="template_followed_yes">Yes</label>
@@ -25,7 +25,7 @@
 
                             <div class="form-group row">
                                 <label for="template_issue" class="col-sm-3 col-form-label fw-bold">Any Issue with Template <strong><span class="important">*</span></strong></label>
-                                <div class="col-sm-9">
+                                <div class="col-sm-9 mt-1">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="template_issue" id="template_issue_yes" value="1">
                                         <label class="form-check-label" for="template_issue_yes">Yes</label>
@@ -48,7 +48,7 @@
 
                             <div class="form-group row">
                                 <label for="auto_recommend" class="col-sm-3 col-form-label fw-bold">Automation Recommended <strong><span class="important">*</span></strong></label>
-                                <div class="col-sm-9">
+                                <div class="col-sm-9 mt-1">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="auto_recommend" id="auto_recommend_yes" value="1">
                                         <label class="form-check-label" for="auto_recommend_yes">Yes</label>
@@ -71,7 +71,7 @@
 
                             <div class="form-group row">
                                 <label for="img_localstock" class="col-sm-3 col-form-label fw-bold">Image(s) used from Localstock <strong><span class="important">*</span></strong></label>
-                                <div class="col-sm-9">
+                                <div class="col-sm-9 mt-1">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="img_localstock" id="img_localstock_yes" value="1">
                                         <label class="form-check-label" for="img_localstock_yes">Yes</label>
@@ -86,7 +86,7 @@
 
                             <div class="form-group row">
                                 <label for="img_customer" class="col-sm-3 col-form-label fw-bold">Image(s) provided by Customer <strong><span class="important">*</span></strong></label>
-                                <div class="col-sm-9">
+                                <div class="col-sm-9 mt-1">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="img_customer" id="img_customer_yes" value="1">
                                         <label class="form-check-label" for="img_customer_yes">Yes</label>

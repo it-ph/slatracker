@@ -130,7 +130,7 @@
 
                                 <div class="form-group row">
                                     <label for="special_request" class="col-sm-3 col-form-label fw-bold">Special Request <strong><span class="important">*</span></strong></label>
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-9 mt-1">
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="special_request" id="special_request_yes" value="1">
                                             <label class="form-check-label" for="special_request_yes">Yes</label>

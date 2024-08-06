@@ -33,22 +33,33 @@
         </div>
     </div>
 
-    {{-- view only --}}
+    {{-- qc history --}}
+    {{-- @if((in_array('admin',$user['roles']) || in_array('team lead',$user['roles']) || in_array('manager',$user['roles'])) && $job['status'] == 'Closed') --}}
+    @if($job['audit_logs'])
+        @include('pages.admin.jobs.view.qc-history')
+    @endif
+
+    {{-- job details --}}
     @include('pages.admin.jobs.view.job-details')
 
-    {{-- view w/ start if assigned dev and status Not Started --}}
+    {{-- start modal if assigned dev and status Not Started --}}
     @if(auth()->user()->id == $job['developer_id'] && $job['status'] == 'Not Started')
         @include('pages.admin.jobs.view.start-modal')
     @endif
 
-    {{-- view w/ submit details and wherein status In Progress --}}
+    {{-- submit details and wherein status In Progress --}}
     @if(auth()->user()->id == $job['developer_id'] && $job['status'] == "In Progress" && $job['dev_comments'] == null)
         @include('pages.admin.jobs.view.submit-details')
     @endif
 
-    {{-- job w/ additional details --}}
+    {{-- additional details --}}
     @if(auth()->user()->id == $job['developer_id'] && $job['status'] == "In Progress" && $job['dev_comments'])
         @include('pages.admin.jobs.view.qc-submission')
+    @endif
+
+    {{-- external quality --}}
+    @if((in_array('admin',$user['roles']) || in_array('team lead',$user['roles']) || in_array('manager',$user['roles'])) && $job['status'] == 'Closed')
+        @include('pages.admin.jobs.view.external-quality')
     @endif
 
 @endsection
