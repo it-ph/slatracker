@@ -42,6 +42,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function scopeClientUsers($query)
+    {
+        return $query->where('client_id',auth()->user()->client_id);
+    }
+
     public function scopeDevelopers($query)
     {
         return $query->where('client_id',auth()->user()->client_id);

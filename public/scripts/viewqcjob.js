@@ -32,10 +32,9 @@ const JOB = (() => {
                 }).then((response) => {
                     console.log(response.data.status)
                     if (response.data.status === 'success') {
-                        $('.to-hide').hide();
-                        window.scrollTo(0, 0);
+                        var log_id = $('#edit_id').val();
                         toastr.success(response.data.message);
-                        location.reload();
+                        location.href = `${APP_URL}/viewqualitycheck/${log_id}`
                     } else if (response.data.status === 'warning') {
                         Object.keys(response.data.error).forEach((key) => {
                             $(`#${[key]}Error`).show();

@@ -30,7 +30,7 @@ class UsersServices
         // TEAM LEAD, MANAGER
         else
         {
-            $users = $users->get();
+            $users = $users->clientusers()->get();
         }
 
         foreach($users as $value) {

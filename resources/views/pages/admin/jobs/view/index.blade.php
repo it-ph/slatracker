@@ -53,12 +53,12 @@
     @endif
 
     {{-- additional details --}}
-    @if(auth()->user()->id == $job['developer_id'] && $job['status'] == "In Progress" && $job['dev_comments'])
+    @if(auth()->user()->id == $job['developer_id'] && in_array($job['status'], ["In Progress","Bounced Back"]) && $job['dev_comments'])
         @include('pages.admin.jobs.view.qc-submission')
     @endif
 
     {{-- external quality --}}
-    @if((in_array('admin',$user['roles']) || in_array('team lead',$user['roles']) || in_array('manager',$user['roles'])) && $job['status'] == 'Closed')
+    @if((in_array('admin',$user['roles']) || in_array('team lead',$user['roles']) || in_array('manager',$user['roles'])) && $job['status'] == 'Closed' && $job['external_quality'] == null)
         @include('pages.admin.jobs.view.external-quality')
     @endif
 

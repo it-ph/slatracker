@@ -98,12 +98,11 @@ Route::group(['middleware' => ['auth','twofactor','web','active.user']],function
 
     // QUALITY CHECK - AUDITOR ACCESS
     Route::get('/qualitycheck', [PageController::class, 'showPendingQC'])->name('qualitycheck.index');
-    Route::get('/qualitycheck/{id}', [JobController::class, 'viewQC'])->name('job.qc');
+    Route::get('/qualitycheck/{id}', [AuditLogController::class, 'viewQC'])->name('job.qc');
     Route::group(['prefix' => 'pendingqc'],
     function ()
     {
-        Route::get('/all', [JobController::class,'qualityCheck'])->name('pendingqc.index');
-        Route::get('/show/{id}', [JobController::class,'show'])->name('pendingqc.show');
+        Route::get('/all', [AuditLogController::class,'qualityCheck'])->name('pendingqc.index');
         Route::get('/pick/{id}', [AuditLogController::class,'pickJob'])->name('pendingqc.pick');
         Route::get('/release/{id}', [AuditLogController::class,'releaseJob'])->name('pendingqc.realease');
         Route::post('/submitfeedback', [AuditLogController::class,'submitFeedback'])->name('pendingqc.submit-eedback');
@@ -128,7 +127,7 @@ Route::group(['middleware' => ['auth','twofactor','web','active.user']],function
             });
 
             // QUALITY CHECK
-            Route::get('/viewqualitycheck/{id}', [AuditLogController::class, 'viewQC'])->name('view.qc');
+            Route::get('/viewqualitycheck/{id}', [AuditLogController::class, 'viewQCLog'])->name('view.qc');
 
             // PENDING JOBS - TL / MANAGER ACCESS
             Route::get('/pendingjobs', [PageController::class, 'showPendingJobs'])->name('pendingjobs.index');

@@ -15,6 +15,11 @@ class AuditLog extends Model
     protected $guarded = [];
     protected $dates = ['start_at','end_at','created_at', 'updated_at', 'deleted_at'];
 
+    public function scopeClientQCs($query)
+    {
+        return $query->where('client_id', auth()->user()->client_id);
+    }
+
     public function thejob()
     {
         return $this->belongsTo(Job::class, 'job_id')->withTrashed();
@@ -23,6 +28,11 @@ class AuditLog extends Model
     public function theauditor()
     {
         return $this->belongsTo(User::class, 'auditor_id')->withTrashed();
+    }
+
+    public function theclient()
+    {
+        return $this->belongsTo(Client::class, 'client_id')->withTrashed();
     }
 
     public function thecreatedby()

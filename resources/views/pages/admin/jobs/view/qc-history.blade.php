@@ -14,21 +14,19 @@
                             <th class="text-center">Self QC Performed</th>
                             <th class="text-center">Action</th>
                         <tr>
-                        @if($job['audit_logs'])
                             @foreach ($job['audit_logs'] as $log)
                                 <tr>
                                     <td class="text-center">{{ $log['qc_round'] }}</td>
                                     <td class="text-center">{{ $log['auditor'] }}</td>
-                                    <td class="text-center"><span class="badge bg-<?php echo $log['qc_status'] == 'Pass' ? 'success' : 'danger'; ?>">{{ $log['qc_status'] }}</span></td>
-                                    <td class="text-center">{{ $log['start_at'] }}</td>
-                                    <td class="text-center">{{ $log['end_at'] }}</td>
+                                    <td class="text-center">@if($log['qc_status'] <> '-')<span class="badge bg-<?php echo $log['qc_status'] == 'Pass' ? 'success' : 'danger'; ?>">{{ $log['qc_status'] }}</span> @else - @endif</td>
+                                    <td class="text-center">{{ $log['qc_start_at'] }}</td>
+                                    <td class="text-center">{{ $log['qc_end_at'] }}</td>
                                     <td class="text-center">{{ $log['self_qc'] }}</td>
                                     <td class="text-center">
                                         <a href="{{ url('viewqualitycheck') }}/{{ $log['audit_log_id'] }}" class="btn btn-info btn-sm waves-effect waves-light" title="View Quality Check"><i class="fas fa-eye"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
-                        @endif
                     </table>
                 </div>
             </div>

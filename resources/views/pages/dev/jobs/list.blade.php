@@ -37,7 +37,7 @@
                                 <th class="text-center">Start Time</th>
                                 <th class="text-center">End Time</th>
                                 <th class="text-center">Agreed SLA</th>
-                                <th class="text-center">Time Elapsed</th>
+                                <th class="text-center">Time Taken</th>
                                 <th class="text-center">SLA Missed</th>
                                 <th class="text-center">Potential SLA Miss</th>
                                 <th class="text-center">Status</th>

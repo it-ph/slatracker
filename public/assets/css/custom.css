@@ -1,3 +1,7 @@
+body {
+    font-size: .723rem;
+}
+
 .navbar-header {
     background-color: #00599D !important;
 }
@@ -229,7 +233,7 @@ button.buttons-collection:hover {
 } */
 
 .dataTables_scrollBody {
-    margin-bottom: 20px !important;
+    margin-bottom: 10px !important;
 }
 
 

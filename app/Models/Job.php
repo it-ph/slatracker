@@ -15,6 +15,11 @@ class Job extends Model
     protected $guarded = [];
     protected $dates = ['start_at','end_at','created_at', 'updated_at', 'deleted_at'];
 
+    public function scopeClientJobs($query)
+    {
+        return $query->where('client_id', auth()->user()->client_id);
+    }
+
     public function scopeDevs($query)
     {
         return $query->where('developer_id', auth()->user()->id);
@@ -52,6 +57,7 @@ class Job extends Model
 
     public function theauditlogs()
     {
+        // return $this->hasMany(AuditLog::class,'job_id')->where('qc_status','<>',null);
         return $this->hasMany(AuditLog::class,'job_id');
     }
 }

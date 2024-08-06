@@ -10,7 +10,10 @@ class CredentialsHelper {
     /** Getter and Setter */
     public function setCredentials()
     {
-        $user = User::with('theroles:id,user_id,name')->findOrFail(auth()->user()->id);
+        $user = User::with([
+            'theroles:id,user_id,name',
+            'theclient:id,name'
+        ])->findOrFail(auth()->user()->id);
         $roles = [];
         foreach ($user->theroles as $role) {
             array_push($roles, $role->name);
@@ -26,6 +29,7 @@ class CredentialsHelper {
                 'username'  => ucwords($user->username,'.'),
                 'email'  => strtolower($user->email),
                 'roles'     => $roles,
+                'client'     => $user->theclient->name,
                 'theroles' => ucwords($theroles)
         ];
         $this->credentials = $userdata;

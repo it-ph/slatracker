@@ -110,7 +110,7 @@ class JobController extends Controller
             // update job status
             Job::findOrfail($request->edit_id)->update([
                 'status' => 'Quality Check',
-                'dev_comments' => $request->dev_comments
+                'dev_comments' => $request->dev_comments,
             ]);
 
             // get qc round
@@ -124,6 +124,7 @@ class JobController extends Controller
             // create audit log
             AuditLog::create([
                 'created_by' => auth()->user()->id,
+                'client_id' => auth()->user()->client_id,
                 'job_id' => $request->edit_id,
                 'preview_link' => $request->preview_link,
                 'self_qc' => $request->self_qc,
@@ -139,31 +140,31 @@ class JobController extends Controller
     }
 
     /** AUDITOR */
-    public function qualityCheck()
-    {
-        $result = $this->successResponse('Jobs loaded successfully!');
-        try
-        {
-            $result["data"] =  $this->service->loadPendingQC();
-        } catch (\Throwable $th)
-        {
-            return $this->errorResponse($th);
-        }
+    // public function qualityCheck()
+    // {
+    //     $result = $this->successResponse('Jobs loaded successfully!');
+    //     try
+    //     {
+    //         $result["data"] =  $this->service->loadPendingQC();
+    //     } catch (\Throwable $th)
+    //     {
+    //         return $this->errorResponse($th);
+    //     }
 
-        return $this->returnResponse($result);
-    }
+    //     return $this->returnResponse($result);
+    // }
 
-    public function viewQC($id)
-    {
-        $user = $this->thecredentials();
-        $job = $this->service->showQC($id);
+    // public function viewQC($id)
+    // {
+    //     $user = $this->thecredentials();
+    //     $job = $this->service->showQC($id);
 
-        if(!$job){
-            return view('errors.404');
-        }
+    //     if(!$job){
+    //         return view('errors.404');
+    //     }
 
-        return view('pages.admin.jobs.qc.index', compact('user','job'));
-    }
+    //     return view('pages.admin.jobs.qc.index', compact('user','job'));
+    // }
 
     /**
      * Display a listing of the resource.

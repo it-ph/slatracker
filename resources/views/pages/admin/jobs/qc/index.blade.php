@@ -32,7 +32,7 @@
     @include('pages.admin.jobs.qc.job-details')
 
     {{-- theauditor w/ null status --}}
-    @if(auth()->user()->id == $job['auditor'] && $job['status'] <> 'Closed')
+    @if(auth()->user()->id == $job['auditor_id'] && $job['qc_status'] == null)
         @include('pages.admin.jobs.qc.qc-details')
         @include('pages.admin.jobs.qc.submit-feedback')
     @endif
