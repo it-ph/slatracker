@@ -32,6 +32,8 @@ const JOB = (() => {
                 }).then((response) => {
                     console.log(response.data.status)
                     if (response.data.status === 'success') {
+                        $('.to-hide').hide();
+                        window.scrollTo(0, 0);
                         var log_id = $('#edit_id').val();
                         toastr.success(response.data.message);
                         location.href = `${APP_URL}/viewqualitycheck/${log_id}`

@@ -60,6 +60,7 @@ const JOB = (() => {
                 }).then((response) => {
                     console.log(response.data.status)
                     if (response.data.status === 'success') {
+                        $('.to-hide').hide();
                         toastr.success(response.data.message);
                         location.reload();
                     } else if (response.data.status === 'warning') {

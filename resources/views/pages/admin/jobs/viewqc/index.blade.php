@@ -32,7 +32,9 @@
     @include('pages.admin.jobs.viewqc.job-details')
 
     @include('pages.admin.jobs.viewqc.qc-details')
-    @include('pages.admin.jobs.viewqc.qc-feedback')
+    @if($job['qc_status'])
+        @include('pages.admin.jobs.viewqc.qc-feedback')
+    @endif
 @endsection
 
 @section('script')
