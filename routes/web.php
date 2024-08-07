@@ -138,6 +138,27 @@ Route::group(['middleware' => ['auth','twofactor','web','active.user']],function
                 Route::get('/show/{id}', [JobController::class,'show'])->name('pendingjob.show');
             });
 
+            // REALLOCATION
+            Route::group(['prefix' => 'reallocation'],
+            function ()
+            {
+                // JOB
+                Route::get('/job', [PageController::class, 'showReallocateJob'])->name('reallocate.job.index');
+                Route::group(['prefix' => 'jobs'],
+                function ()
+                {
+                    Route::get('/all', [ReallocationController::class,'pendingJobs'])->name('reallocate.pendingjobs');
+                });
+
+                // QC
+                Route::get('/qc', [PageController::class, 'showReallocateQC'])->name('reallocate.qc.index');
+                Route::group(['prefix' => 'qcs'],
+                function ()
+                {
+                    Route::get('/all', [ReallocationController::class,'pendingQCs'])->name('reallocate.pendingqcs');
+                });
+            });
+
             // CLIENTS for ADMIN ONLY
             Route::get('/clients', [PageController::class, 'showClients'])->name('clients.index');
             Route::group(['prefix' => 'client'],

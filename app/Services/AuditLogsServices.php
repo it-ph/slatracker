@@ -21,7 +21,7 @@ class AuditLogsServices {
     }
 
     // AUDITOR
-    public function loadPendingQC()
+    public function loadPendingQCs()
     {
         $datastorage = [];
 

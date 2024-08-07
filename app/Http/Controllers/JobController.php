@@ -12,7 +12,6 @@ use App\Http\Requests\JobStoreRequest;
 use App\Http\Requests\JobSendForQCRequest;
 use App\Http\Requests\JobSubmitDetailsRequest;
 use Facades\App\Http\Helpers\CredentialsHelper;
-use App\Http\Requests\JobStoreExternalQualityRequest;
 use App\Http\Requests\JobUpdateExternalQualityRequest;
 
 class JobController extends Controller

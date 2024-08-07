@@ -71,6 +71,20 @@ class PageController extends GlobalVariableController
         return view('pages.auditor.jobs.list', compact('user'));
     }
 
+    /** Reallocate Job */
+    public function showReallocateJob()
+    {
+        $user = $this->thecredentials();
+        return view('pages.admin.reallocation.job.list', compact('user'));
+    }
+
+    /** Reallocate QC */
+    public function showReallocateQC()
+    {
+        $user = $this->thecredentials();
+        return view('pages.admin.reallocation.qc.list', compact('user'));
+    }
+
     /** Users */
     public function showUsers(Request $request)
     {

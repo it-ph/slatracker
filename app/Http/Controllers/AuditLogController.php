@@ -32,7 +32,7 @@ class AuditLogController extends Controller
         $result = $this->successResponse('Jobs loaded successfully!');
         try
         {
-            $result["data"] =  $this->service->loadPendingQC();
+            $result["data"] =  $this->service->loadPendingQCs();
         } catch (\Throwable $th)
         {
             return $this->errorResponse($th);

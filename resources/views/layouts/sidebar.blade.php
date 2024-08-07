@@ -104,8 +104,8 @@
                             <span key="t-email">Reallocation</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
-                            <li><a href="{{ url('reports') }}" key="t-read-email">Reallocate Job</a></li>
-                            <li><a href="{{ url('reports') }}" key="t-read-email">Reallocate QC</a></li>
+                            <li><a href="{{ url('reallocation/job') }}" key="t-read-email">Reallocate Job</a></li>
+                            <li><a href="{{ url('reallocation/qc') }}" key="t-read-email">Reallocate QC</a></li>
                         </ul>
                     </li>
                     <li>
