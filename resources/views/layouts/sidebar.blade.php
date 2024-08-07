@@ -94,9 +94,9 @@
                                 <span key="t-email">Reports</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="{{ url('reports') }}" key="t-inbox">Job Logs</a></li>
-                                <li><a href="{{ url('reports') }}" key="t-read-email">Audit Logs</a></li>
-                                <li><a href="{{ url('reports') }}" key="t-read-email">Development Report</a></li>
+                                <li><a href="{{ url('reports/joblogs') }}" key="t-job">Job Logs</a></li>
+                                <li><a href="{{ url('reports/auditlogs') }}" key="t-audit">Audit Logs</a></li>
+                                <li><a href="{{ url('reports/development') }}" key="t-development">Development Report</a></li>
                             </ul>
                         </li>
 

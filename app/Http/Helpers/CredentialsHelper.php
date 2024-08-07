@@ -63,6 +63,20 @@ class CredentialsHelper {
         return $developers;
     }
 
+    public function get_devs()
+    {
+        $developers = User::query()
+            ->whereHas('theroles', function ($query) {
+                $query->where('name', 'Developer');
+            })
+            ->developers()
+            ->select('id','username','email','client_id','status')
+            ->orderBy('email','asc')
+            ->get();
+
+        return $developers;
+    }
+
     public function get_auditors()
     {
         $developers = User::query()

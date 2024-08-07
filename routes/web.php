@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\RequestType;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
@@ -15,16 +14,12 @@ use App\Http\Controllers\ExportController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ReportController;;
 use App\Http\Controllers\AuditLogController;
-use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\RequestSLAController;
-use App\Http\Controllers\UserClientController;
 use App\Http\Controllers\RequestTypeController;
 use App\Http\Controllers\ReallocationController;
 use App\Http\Controllers\RequestVolumeController;
 use App\Http\Controllers\Auth\TwoFactorController;
-use App\Http\Controllers\ClientActivityController;
 use App\Http\Controllers\ForgotPasswordController;
-use App\Http\Controllers\DashboardActivityController;
 
 // LOGIN
 Auth::routes(['register' => false]);
@@ -230,6 +225,15 @@ Route::group(['middleware' => ['auth','twofactor','web','active.user']],function
             Route::get('/show/{id}', [UserController::class,'show'])->name('user.show');
             Route::post('/update/{id}', [UserController::class,'update'])->name('user.update');
             Route::post('/delete/{id}', [UserController::class,'destroy'])->name('user.delete');
+        });
+
+        // REPORTS
+        Route::group(['prefix' => 'reports'],
+        function ()
+        {
+            Route::get('/joblogs', [PageController::class, 'showJobLogReports'])->name('reports.joblogs');
+            Route::get('/auditlogs', [PageController::class, 'showAuditLogReports'])->name('reports.auditlogs');
+            Route::get('/development', [PageController::class, 'showDevReports'])->name('reports.development');
         });
     });
 

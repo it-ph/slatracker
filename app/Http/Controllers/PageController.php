@@ -28,6 +28,11 @@ class PageController extends GlobalVariableController
         return CredentialsHelper::get_developers();
     }
 
+    public function thedevs()
+    {
+        return CredentialsHelper::get_devs();
+    }
+
     public function theauditors()
     {
         return CredentialsHelper::get_auditors();
@@ -97,6 +102,30 @@ class PageController extends GlobalVariableController
     {
         $user = $this->thecredentials();
         return view('pages.admin.users.list', compact('user'));
+    }
+
+    /** JobLogReports */
+    public function showJobLogReports(Request $request)
+    {
+        $user = $this->thecredentials();
+        $developers = $this->thedevs();
+        return view('pages.admin.reports.job-log.index', compact('user','developers'));
+    }
+
+    /** AuditLogReports */
+    public function showAuditLogReports(Request $request)
+    {
+        $user = $this->thecredentials();
+        $auditors = $this->theauditors();
+        return view('pages.admin.reports.audit-log.index', compact('user','auditors'));
+    }
+
+    /** DevReports */
+    public function showDevReports(Request $request)
+    {
+        $user = $this->thecredentials();
+        $developers = $this->thedevs();
+        return view('pages.admin.reports.dev.index', compact('user','developers'));
     }
 
     /** Configuration */
