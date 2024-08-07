@@ -13,7 +13,7 @@
                 {{-- Start of Developers --}}
                     <li>
                         <a href="{{ url('home') }}" class="waves-effect">
-                            <i class="bx bxs-bar-chart-alt-2"></i>
+                            <i class="fa fa-bar-chart"></i>
                             <span key="t-home">Dashboard</span>
                         </a>
                     </li>
@@ -32,63 +32,63 @@
                 {{-- Start of ADMIN / TL / MANAGER --}}
                     <li>
                         <a href="{{ url('job/create') }}" class="waves-effect">
-                            <i class="bx bxs-plus-circle"></i>
+                            <i class="fa fa-plus-circle"></i>
                             <span key="t-jobs">Add Job</span>
                         </a>
                     </li>
 
                     <li>
                         <a href="{{ url('pendingjobs') }}" class="waves-effect">
-                            <i class="bx bx-loader"></i>
+                            <i class="fa fa-spinner"></i>
                             <span key="t-pendingjobs">Pending Jobs</span>
                         </a>
                     </li>
 
                     <li>
                         <a href="{{ url('myjobs') }}" class="waves-effect">
-                            <i class="bx bx-task"></i>
+                            <i class="fa fa-tasks"></i>
                             <span key="t-myjobs">My Jobs</span>
                         </a>
                     </li>
 
                     <li>
                         <a href="{{ url('qualitycheck') }}" class="waves-effect">
-                            <i class="bx bxs-check-circle"></i>
+                            <i class="fa fa-check-circle"></i>
                             <span key="t-qualitycheck">Quality Check</span>
                         </a>
                     </li>
 
                     <li>
                         <a href="{{ url('jobs') }}" class="waves-effect">
-                            <i class="bx bxs-data"></i>
+                            <i class="fa fa-database"></i>
                             <span key="t-jobs">All Jobs</span>
                         </a>
                     </li>
 
                     <li>
                         <a href="{{ url('permissions') }}" class="waves-effect">
-                            <i class="bx bxs-calendar"></i>
+                            <i class="fa fa-calendar"></i>
                             <span key="t-users">Event Calendar</span>
                         </a>
                     </li>
 
                     <li>
                         <a href="{{ url('clients') }}" class="waves-effect">
-                            <i class="bx bx-hive"></i>
+                            <i class="fa fa-object-group"></i>
                             <span key="t-clients">Clients</span>
                         </a>
                     </li>
 
                     <li>
                         <a href="{{ url('users') }}" class="waves-effect">
-                            <i class="bx bxs-user-circle"></i>
+                            <i class="fa fa-users"></i>
                             <span key="t-users">Users</span>
                         </a>
                     </li>
 
                     <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="bx bxs-report"></i>
+                            <i class="fa fa-table"></i>
                             <span key="t-email">Reports</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
@@ -100,7 +100,7 @@
 
                     <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="bx bx-transfer-alt"></i>
+                            <i class="fa fa-handshake-o"></i>
                             <span key="t-email">Reallocation</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="false">
@@ -110,7 +110,7 @@
                     </li>
                     <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="bx bx-cog"></i>
+                            <i class="fa fa-cogs"></i>
                             <span key="t-settings">Miscellaneous</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="false">

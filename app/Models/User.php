@@ -52,6 +52,11 @@ class User extends Authenticatable
         return $query->where('client_id',auth()->user()->client_id);
     }
 
+    public function scopeAuditors($query)
+    {
+        return $query->where('client_id',auth()->user()->client_id);
+    }
+
     public function scopeIsActive($query)
     {
         $now = Carbon::today()->toDateString();
@@ -61,14 +66,15 @@ class User extends Authenticatable
                 $now." 00:00:00",
                 $now." 23:59:59"
             ]
-        );
+        )
+        ->where('status','Active');
     }
 
     public function hasActiveJob($user_id)
     {
         $hasActiveJob = Job::query()
             ->where('developer_id', $user_id)
-            ->where('status','In Progress')
+            ->where('status','In Progress','Bounced Back')
             ->count();
 
         $hasActiveJob = $hasActiveJob ? true : false;

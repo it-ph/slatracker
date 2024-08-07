@@ -2,10 +2,15 @@
 
 namespace App\Http\Requests;
 
+use App\Traits\ResponseTraits;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ReallocateQCRequest extends FormRequest
 {
+    use ResponseTraits;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -13,7 +18,7 @@ class ReallocateQCRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +29,20 @@ class ReallocateQCRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'auditor_id' => ['required'],
         ];
+    }
+
+    public function messages()
+    {
+        return [
+            'auditor_id.required' => 'Auditor is required.',
+        ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $response = $this->failedValidationResponse($validator->errors());
+        throw new HttpResponseException(response()->json($response, 200));
     }
 }

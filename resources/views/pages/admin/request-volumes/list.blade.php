@@ -9,10 +9,11 @@
 @endsection
 
 @section('content')
-
-    @component('components.breadcrumb')
-        @slot('li_1') Manage @endslot
-        @slot('title') Request Volumes @endslot
+    @component('components.breadcrumb_w_button')
+        @slot('li_1') Miscellaneous / Request Volumes @endslot
+        @slot('title') Request Volumes
+            <button type="button" class="btn btn-primary btn-sm waves-effect waves-light" onclick="REQUEST_VOLUME.showModal()"><i class="fas fa-plus"></i> Create</button>
+        @endslot
     @endcomponent
 
     <div class="row">
@@ -26,11 +27,6 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col-md-12">
-                            <button type="button" class="btn btn-primary btn-sm waves-effect waves-light" onclick="REQUEST_VOLUME.showModal()"><i class="fas fa-plus"></i> Create</button>
-                        </div>
-                    </div>
                     <table id="tbl_request_volumes" class="table table-bordered table-striped table-sm nowrap w-100">
                         <thead>
                             <tr>

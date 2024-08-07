@@ -7,8 +7,8 @@ use App\Models\User;
 use App\Models\AuditLog;
 use Facades\App\Http\Helpers\TaskHelper;
 
-class JobsServices {
-    private $roles;
+class JobsServices 
+{
     public function getRoles()
     {
         $user = User::with('theroles:id,user_id,name')->findOrFail(auth()->user()->id);
@@ -120,9 +120,8 @@ class JobsServices {
             'thedeveloper:id,username',
         ])
         ->select('id','name','request_type_id','request_volume_id','request_sla_id','special_request','created_at','start_at','time_taken','sla_missed','developer_id','status')
-        ->where('status','<>','closed')
+        ->where('status','<>','Closed')
         ->orderBy('created_at','DESC');
-
 
         $roles = $this->getRoles();
 
@@ -274,7 +273,6 @@ class JobsServices {
             'theauditlogs.theauditor:id,username'
         ])
         ->where('id',$id);
-        // ->first();
 
         $roles = $this->getRoles();
 

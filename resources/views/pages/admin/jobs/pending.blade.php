@@ -10,9 +10,11 @@
 
 @section('content')
 
-    @component('components.breadcrumb')
+    @component('components.breadcrumb_w_button')
         @slot('li_1') Job @endslot
-        @slot('title') Pending Jobs @endslot
+        @slot('title') Pending Jobs
+            <button type="button" class="btn btn-primary btn-sm waves-effect waves-light" title="View Job" onclick="JOB.showModal()"> View Workload</button>
+        @endslot
     @endcomponent
 
     <div class="row">

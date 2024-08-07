@@ -19,6 +19,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\RequestSLAController;
 use App\Http\Controllers\UserClientController;
 use App\Http\Controllers\RequestTypeController;
+use App\Http\Controllers\ReallocationController;
 use App\Http\Controllers\RequestVolumeController;
 use App\Http\Controllers\Auth\TwoFactorController;
 use App\Http\Controllers\ClientActivityController;
@@ -148,6 +149,8 @@ Route::group(['middleware' => ['auth','twofactor','web','active.user']],function
                 function ()
                 {
                     Route::get('/all', [ReallocationController::class,'pendingJobs'])->name('reallocate.pendingjobs');
+                    Route::get('/show/{id}', [ReallocationController::class,'showJob'])->name('reallocate.show.job');
+                Route::post('/update', [ReallocationController::class,'reallocateJob'])->name('reallocate.reallocate.job');
                 });
 
                 // QC
@@ -156,6 +159,8 @@ Route::group(['middleware' => ['auth','twofactor','web','active.user']],function
                 function ()
                 {
                     Route::get('/all', [ReallocationController::class,'pendingQCs'])->name('reallocate.pendingqcs');
+                    Route::get('/show/{id}', [ReallocationController::class,'showQC'])->name('reallocate.show.qc');
+                    Route::post('/update', [ReallocationController::class,'reallocateQC'])->name('reallocate.reallocate.qc');
                 });
             });
 

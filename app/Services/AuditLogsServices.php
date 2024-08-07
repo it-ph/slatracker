@@ -6,9 +6,8 @@ use App\Models\User;
 use App\Models\AuditLog;
 use Facades\App\Http\Helpers\TaskHelper;
 
-class AuditLogsServices {
-
-    private $roles;
+class AuditLogsServices 
+{
     public function getRoles()
     {
         $user = User::with('theroles:id,user_id,name')->findOrFail(auth()->user()->id);

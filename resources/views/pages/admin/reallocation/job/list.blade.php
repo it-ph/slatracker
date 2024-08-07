@@ -6,6 +6,7 @@
     <!-- DataTables -->
     <link href="{{ asset('assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/libs/datatables/buttons.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -34,13 +35,9 @@
                                 <th class="text-center">Num Pages</th>
                                 <th class="text-center">Special Request</th>
                                 <th class="text-center">Created On</th>
-                                <th class="text-center">Start Time</th>
-                                <th class="text-center">End Time</th>
                                 <th class="text-center">Agreed SLA</th>
-                                <th class="text-center">Time Elapsed</th>
                                 <th class="text-center">SLA Missed</th>
-                                <th class="text-center">Internal Quality</th>
-                                <th class="text-center">External Quality</th>
+                                <th class="text-center">Potential SLA Miss</th>
                                 <th class="text-center">Developer</th>
                                 <th class="text-center">Status</th>
                                 <th width="5%" class="text-center">Action</th>
@@ -54,6 +51,7 @@
             </div>
         </div>
     </div>
+    @include('pages.admin.reallocation.job.modal')
 @endsection
 
 @section('script')
@@ -62,6 +60,8 @@
     <script src="{{ asset('assets/libs/datatables/dataTables.buttons.min.js') }}"></script>
     <script src="{{ asset('assets/libs/jszip/jszip.min.js') }}"></script>
     <script src="{{ asset('assets/libs/pdfmake/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/select2/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/select2/select2.js') }}"></script>
 @endsection
 
 @section('custom-js')

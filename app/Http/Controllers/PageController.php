@@ -28,6 +28,11 @@ class PageController extends GlobalVariableController
         return CredentialsHelper::get_developers();
     }
 
+    public function theauditors()
+    {
+        return CredentialsHelper::get_auditors();
+    }
+
     /** Home */
     public function showHome()
     {
@@ -75,14 +80,16 @@ class PageController extends GlobalVariableController
     public function showReallocateJob()
     {
         $user = $this->thecredentials();
-        return view('pages.admin.reallocation.job.list', compact('user'));
+        $developers = $this->thedevelopers();
+        return view('pages.admin.reallocation.job.list', compact('user','developers'));
     }
 
     /** Reallocate QC */
     public function showReallocateQC()
     {
         $user = $this->thecredentials();
-        return view('pages.admin.reallocation.qc.list', compact('user'));
+        $auditors = $this->theauditors();
+        return view('pages.admin.reallocation.qc.list', compact('user','auditors'));
     }
 
     /** Users */

@@ -10,9 +10,11 @@
 
 @section('content')
 
-    @component('components.breadcrumb')
-        @slot('li_1') Manage @endslot
-        @slot('title') Request Types @endslot
+    @component('components.breadcrumb_w_button')
+        @slot('li_1') Miscellaneous / Request Types @endslot
+        @slot('title') Request Types
+            <button type="button" class="btn btn-primary btn-sm waves-effect waves-light" onclick="REQUEST_TYPE.showModal()"><i class="fas fa-plus"></i> Create</button>
+        @endslot
     @endcomponent
 
     <div class="row">
@@ -26,11 +28,6 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col-md-12">
-                            <button type="button" class="btn btn-primary btn-sm waves-effect waves-light" onclick="REQUEST_TYPE.showModal()"><i class="fas fa-plus"></i> Create</button>
-                        </div>
-                    </div>
                     <table id="tbl_request_types" class="table table-bordered table-striped table-sm nowrap w-100">
                         <thead>
                             <tr>

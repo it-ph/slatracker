@@ -18,7 +18,7 @@
 @section('content')
 
     @component('components.breadcrumb')
-        @slot('li_1') Manage @endslot
+        @slot('li_1') Miscellaneous @endslot
         @slot('title') Configuration @endslot
     @endcomponent
 
