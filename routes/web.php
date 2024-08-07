@@ -46,6 +46,10 @@ Route::get('unauthorized', function () {
     return view('errors.401');
 })->name('unauthorized');
 
+Route::get('404', function () {
+    return view('errors.404');
+})->name('404');
+
 Route::get('/clear-cache', function() {
     Artisan::call('cache:clear');
     return "Cache is cleared";
@@ -87,157 +91,162 @@ Route::group(['middleware' => ['auth','twofactor','web','active.user']],function
     Route::get('/viewjob/{id}', [JobController::class, 'view'])->name('job.view');
 
     // MY JOBS - DEV ACCESS
-    Route::get('/myjobs', [PageController::class, 'showMyJobs'])->name('myjobs.index');
-    Route::group(['prefix' => 'myjob'],
-    function ()
+    Route::group(['middleware' => ['role:admin,developer']], function ()
     {
-        Route::get('/all', [JobController::class,'myJob'])->name('myjob.index');
-        Route::get('/start/{id}', [JobController::class,'startJob'])->name('myjob.start');
-        Route::post('/submitdetails', [JobController::class,'submitDetails'])->name('myjob.submit-details');
-        Route::post('/sendforqc', [JobController::class,'sendforqc'])->name('myjob.send-for-qc');
+        Route::get('/myjobs', [PageController::class, 'showMyJobs'])->name('myjobs.index');
+        Route::group(['prefix' => 'myjob'],
+        function ()
+        {
+            Route::get('/all', [JobController::class,'myJob'])->name('myjob.index');
+            Route::get('/start/{id}', [JobController::class,'startJob'])->name('myjob.start');
+            Route::post('/submitdetails', [JobController::class,'submitDetails'])->name('myjob.submit-details');
+            Route::post('/sendforqc', [JobController::class,'sendforqc'])->name('myjob.send-for-qc');
+        });
     });
 
     // QUALITY CHECK - AUDITOR ACCESS
-    Route::get('/qualitycheck', [PageController::class, 'showPendingQC'])->name('qualitycheck.index');
-    Route::get('/qualitycheck/{id}', [AuditLogController::class, 'viewQC'])->name('job.qc');
-    Route::group(['prefix' => 'pendingqc'],
-    function ()
+    Route::group(['middleware' => ['role:admin,auditor']], function ()
     {
-        Route::get('/all', [AuditLogController::class,'qualityCheck'])->name('pendingqc.index');
-        Route::get('/pick/{id}', [AuditLogController::class,'pickJob'])->name('pendingqc.pick');
-        Route::get('/release/{id}', [AuditLogController::class,'releaseJob'])->name('pendingqc.realease');
-        Route::post('/submitfeedback', [AuditLogController::class,'submitFeedback'])->name('pendingqc.submit-eedback');
+        Route::get('/qualitycheck', [PageController::class, 'showPendingQC'])->name('qualitycheck.index');
+        Route::get('/qualitycheck/{id}', [AuditLogController::class, 'viewQC'])->name('job.qc');
+        Route::group(['prefix' => 'pendingqc'],
+        function ()
+        {
+            Route::get('/all', [AuditLogController::class,'qualityCheck'])->name('pendingqc.index');
+            Route::get('/pick/{id}', [AuditLogController::class,'pickJob'])->name('pendingqc.pick');
+            Route::get('/release/{id}', [AuditLogController::class,'releaseJob'])->name('pendingqc.realease');
+            Route::post('/submitfeedback', [AuditLogController::class,'submitFeedback'])->name('pendingqc.submit-eedback');
+        });
     });
 
-    /** START OF ADMIN, TL, MANAGER */
+    Route::group(['middleware' => ['role:admin,manager,team lead']], function ()
+    {
+        // JOBS
+        Route::get('/jobs', [PageController::class, 'showJobs'])->name('jobs.index');
+        Route::group(['prefix' => 'job'],
+        function ()
+        {
+            Route::get('/all', [JobController::class,'index'])->name('job.index');
+            Route::get('/create', [PageController::class,'addJob'])->name('job.create');
+            Route::post('/store', [JobController::class,'store'])->name('job.store');
+            Route::get('/show/{id}', [JobController::class,'show'])->name('job.show');
+            Route::get('/get_data/{id}', [JobController::class,'getData'])->name('job.get_data');
+            Route::post('/update/{id}', [JobController::class,'update'])->name('job.update');
+            Route::post('/delete/{id}', [JobController::class,'destroy'])->name('job.delete');
+            Route::post('/externalquality', [JobController::class,'updateExternalQuality'])->name('job.update.externalquality');
+        });
 
-    // Route::group(['middleware' => ['tlom.admin'],], function ()
-    //     {
-            // JOBS
-            Route::get('/jobs', [PageController::class, 'showJobs'])->name('jobs.index');
-            Route::group(['prefix' => 'job'],
+        // QUALITY CHECK
+        Route::get('/viewqualitycheck/{id}', [AuditLogController::class, 'viewQCLog'])->name('view.qc');
+
+        // PENDING JOBS - TL / MANAGER ACCESS
+        Route::get('/pendingjobs', [PageController::class, 'showPendingJobs'])->name('pendingjobs.index');
+        Route::group(['prefix' => 'pendingjob'],
+        function ()
+        {
+            Route::get('/all', [JobController::class,'pendingjob'])->name('pendingjob.index');
+            Route::get('/show/{id}', [JobController::class,'show'])->name('pendingjob.show');
+        });
+
+        // REALLOCATION
+        Route::group(['prefix' => 'reallocation'],
+        function ()
+        {
+            // JOB
+            Route::get('/job', [PageController::class, 'showReallocateJob'])->name('reallocate.job.index');
+            Route::group(['prefix' => 'jobs'],
             function ()
             {
-                Route::get('/all', [JobController::class,'index'])->name('job.index');
-                Route::get('/create', [PageController::class,'addJob'])->name('job.create');
-                Route::post('/store', [JobController::class,'store'])->name('job.store');
-                Route::get('/show/{id}', [JobController::class,'show'])->name('job.show');
-                Route::get('/get_data/{id}', [JobController::class,'getData'])->name('job.get_data');
-                Route::post('/update/{id}', [JobController::class,'update'])->name('job.update');
-                Route::post('/delete/{id}', [JobController::class,'destroy'])->name('job.delete');
-                Route::post('/externalquality', [JobController::class,'updateExternalQuality'])->name('job.update.externalquality');
+                Route::get('/all', [ReallocationController::class,'pendingJobs'])->name('reallocate.pendingjobs');
+                Route::get('/show/{id}', [ReallocationController::class,'showJob'])->name('reallocate.show.job');
+            Route::post('/update', [ReallocationController::class,'reallocateJob'])->name('reallocate.reallocate.job');
             });
 
-            // QUALITY CHECK
-            Route::get('/viewqualitycheck/{id}', [AuditLogController::class, 'viewQCLog'])->name('view.qc');
-
-            // PENDING JOBS - TL / MANAGER ACCESS
-            Route::get('/pendingjobs', [PageController::class, 'showPendingJobs'])->name('pendingjobs.index');
-            Route::group(['prefix' => 'pendingjob'],
+            // QC
+            Route::get('/qc', [PageController::class, 'showReallocateQC'])->name('reallocate.qc.index');
+            Route::group(['prefix' => 'qcs'],
             function ()
             {
-                Route::get('/all', [JobController::class,'pendingjob'])->name('pendingjob.index');
-                Route::get('/show/{id}', [JobController::class,'show'])->name('pendingjob.show');
+                Route::get('/all', [ReallocationController::class,'pendingQCs'])->name('reallocate.pendingqcs');
+                Route::get('/show/{id}', [ReallocationController::class,'showQC'])->name('reallocate.show.qc');
+                Route::post('/update', [ReallocationController::class,'reallocateQC'])->name('reallocate.reallocate.qc');
             });
+        });
 
-            // REALLOCATION
-            Route::group(['prefix' => 'reallocation'],
+        // CLIENTS for TL / MANAGER
+        Route::get('/configuration', [PageController::class, 'showConfiguration'])->name('configuration.index');
+        Route::get('config/show/{id}', [ClientController::class,'show'])->name('client.config.show');
+        Route::post('client/updateEmailConfig', [ClientController::class,'updateEmailConfig'])->name('client.updateEmailConfig');
+
+        // REQUEST
+        Route::group(['prefix' => 'request'],
+        function ()
+        {
+            // TYPES
+            Route::get('/types', [PageController::class, 'showRequestTypes'])->name('request-types.index');
+            Route::group(['prefix' => 'type'],
             function ()
             {
-                // JOB
-                Route::get('/job', [PageController::class, 'showReallocateJob'])->name('reallocate.job.index');
-                Route::group(['prefix' => 'jobs'],
-                function ()
-                {
-                    Route::get('/all', [ReallocationController::class,'pendingJobs'])->name('reallocate.pendingjobs');
-                    Route::get('/show/{id}', [ReallocationController::class,'showJob'])->name('reallocate.show.job');
-                Route::post('/update', [ReallocationController::class,'reallocateJob'])->name('reallocate.reallocate.job');
-                });
-
-                // QC
-                Route::get('/qc', [PageController::class, 'showReallocateQC'])->name('reallocate.qc.index');
-                Route::group(['prefix' => 'qcs'],
-                function ()
-                {
-                    Route::get('/all', [ReallocationController::class,'pendingQCs'])->name('reallocate.pendingqcs');
-                    Route::get('/show/{id}', [ReallocationController::class,'showQC'])->name('reallocate.show.qc');
-                    Route::post('/update', [ReallocationController::class,'reallocateQC'])->name('reallocate.reallocate.qc');
-                });
+                Route::get('/all', [RequestTypeController::class,'index'])->name('request-type.index');
+                Route::post('/store', [RequestTypeController::class,'store'])->name('request-type.store');
+                Route::get('/show/{id}', [RequestTypeController::class,'show'])->name('request-type.show');
+                Route::post('/update/{id}', [RequestTypeController::class,'update'])->name('request-type.update');
+                Route::post('/delete/{id}', [RequestTypeController::class,'destroy'])->name('request-type.delete');
             });
 
-            // CLIENTS for ADMIN ONLY
-            Route::get('/clients', [PageController::class, 'showClients'])->name('clients.index');
-            Route::group(['prefix' => 'client'],
+            // VOLUMES
+            Route::get('/volumes', [PageController::class, 'showRequestVolumes'])->name('request-volumes.index');
+            Route::group(['prefix' => 'volume'],
             function ()
             {
-                Route::get('/all', [ClientController::class,'index'])->name('client.index');
-                Route::post('/store', [ClientController::class,'store'])->name('client.store');
-                Route::get('/show/{id}', [ClientController::class,'show'])->name('client.show');
-                Route::post('/update/{id}', [ClientController::class,'update'])->name('client.update');
-                Route::post('/delete/{id}', [ClientController::class,'destroy'])->name('client.delete');
+                Route::get('/all', [RequestVolumeController::class,'index'])->name('request-volume.index');
+                Route::post('/store', [RequestVolumeController::class,'store'])->name('request-volume.store');
+                Route::get('/show/{id}', [RequestVolumeController::class,'show'])->name('request-volume.show');
+                Route::post('/update/{id}', [RequestVolumeController::class,'update'])->name('request-volume.update');
+                Route::post('/delete/{id}', [RequestVolumeController::class,'destroy'])->name('request-volume.delete');
             });
 
-            // CLIENTS for TL / MANAGER
-            Route::get('/configuration', [PageController::class, 'showConfiguration'])->name('configuration.index');
-            Route::post('client/updateEmailConfig', [ClientController::class,'updateEmailConfig'])->name('client.updateEmailConfig');
-
-            // REQUEST
-            Route::group(['prefix' => 'request'],
+            // SLAS
+            Route::get('/slas', [PageController::class, 'showRequestSLAs'])->name('request-slas.index');
+            Route::group(['prefix' => 'sla'],
             function ()
             {
-                // TYPES
-                Route::get('/types', [PageController::class, 'showRequestTypes'])->name('request-types.index');
-                Route::group(['prefix' => 'type'],
-                function ()
-                {
-                    Route::get('/all', [RequestTypeController::class,'index'])->name('request-type.index');
-                    Route::post('/store', [RequestTypeController::class,'store'])->name('request-type.store');
-                    Route::get('/show/{id}', [RequestTypeController::class,'show'])->name('request-type.show');
-                    Route::post('/update/{id}', [RequestTypeController::class,'update'])->name('request-type.update');
-                    Route::post('/delete/{id}', [RequestTypeController::class,'destroy'])->name('request-type.delete');
-                });
-
-                // VOLUMES
-                Route::get('/volumes', [PageController::class, 'showRequestVolumes'])->name('request-volumes.index');
-                Route::group(['prefix' => 'volume'],
-                function ()
-                {
-                    Route::get('/all', [RequestVolumeController::class,'index'])->name('request-volume.index');
-                    Route::post('/store', [RequestVolumeController::class,'store'])->name('request-volume.store');
-                    Route::get('/show/{id}', [RequestVolumeController::class,'show'])->name('request-volume.show');
-                    Route::post('/update/{id}', [RequestVolumeController::class,'update'])->name('request-volume.update');
-                    Route::post('/delete/{id}', [RequestVolumeController::class,'destroy'])->name('request-volume.delete');
-                });
-
-                // SLAS
-                Route::get('/slas', [PageController::class, 'showRequestSLAs'])->name('request-slas.index');
-                Route::group(['prefix' => 'sla'],
-                function ()
-                {
-                    Route::get('/all', [RequestSLAController::class,'index'])->name('request-sla.index');
-                    Route::post('/store', [RequestSLAController::class,'store'])->name('request-sla.store');
-                    Route::get('/show/{id}', [RequestSLAController::class,'show'])->name('request-sla.show');
-                    Route::get('/get/{typeId}/{volumeId}', [RequestSLAController::class,'get'])->name('request-sla.get');
-                    Route::post('/update/{id}', [RequestSLAController::class,'update'])->name('request-sla.update');
-                    Route::post('/delete/{id}', [RequestSLAController::class,'destroy'])->name('request-sla.delete');
-                });
+                Route::get('/all', [RequestSLAController::class,'index'])->name('request-sla.index');
+                Route::post('/store', [RequestSLAController::class,'store'])->name('request-sla.store');
+                Route::get('/show/{id}', [RequestSLAController::class,'show'])->name('request-sla.show');
+                Route::get('/get/{typeId}/{volumeId}', [RequestSLAController::class,'get'])->name('request-sla.get');
+                Route::post('/update/{id}', [RequestSLAController::class,'update'])->name('request-sla.update');
+                Route::post('/delete/{id}', [RequestSLAController::class,'destroy'])->name('request-sla.delete');
             });
+        });
 
-            // USERS
-            Route::get('users', [PageController::class, 'showUsers'])->name('users.index');
-            Route::group(['prefix' => 'user'],
-            function ()
-            {
-                Route::get('/all', [UserController::class,'index'])->name('user.index');
-                Route::post('/store', [UserController::class,'store'])->name('user.store');
-                Route::get('/show/{id}', [UserController::class,'show'])->name('user.show');
-                Route::post('/update/{id}', [UserController::class,'update'])->name('user.update');
-                Route::post('/delete/{id}', [UserController::class,'destroy'])->name('user.delete');
-            });
-    //     }
-    // );
+        // USERS
+        Route::get('users', [PageController::class, 'showUsers'])->name('users.index');
+        Route::group(['prefix' => 'user'],
+        function ()
+        {
+            Route::get('/all', [UserController::class,'index'])->name('user.index');
+            Route::post('/store', [UserController::class,'store'])->name('user.store');
+            Route::get('/show/{id}', [UserController::class,'show'])->name('user.show');
+            Route::post('/update/{id}', [UserController::class,'update'])->name('user.update');
+            Route::post('/delete/{id}', [UserController::class,'destroy'])->name('user.delete');
+        });
+    });
 
-    /** END OF ADMIN, TL, MANAGER */
+    // CLIENTS for ADMIN ONLY
+    Route::group(['middleware' => ['role:admin']], function ()
+    {
+        Route::get('/clients', [PageController::class, 'showClients'])->name('clients.index');
+        Route::group(['prefix' => 'client'],
+        function ()
+        {
+            Route::get('/all', [ClientController::class,'index'])->name('client.index');
+            Route::post('/store', [ClientController::class,'store'])->name('client.store');
+            Route::get('/show/{id}', [ClientController::class,'show'])->name('client.show');
+            Route::post('/update/{id}', [ClientController::class,'update'])->name('client.update');
+            Route::post('/delete/{id}', [ClientController::class,'destroy'])->name('client.delete');
+        });
+    });
 
 });
 /**

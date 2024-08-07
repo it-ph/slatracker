@@ -146,33 +146,6 @@ class JobController extends GlobalVariableController
         return $result;
     }
 
-    /** AUDITOR */
-    // public function qualityCheck()
-    // {
-    //     $result = $this->successResponse('Jobs loaded successfully!');
-    //     try
-    //     {
-    //         $result["data"] =  $this->service->loadPendingQC();
-    //     } catch (\Throwable $th)
-    //     {
-    //         return $this->errorResponse($th);
-    //     }
-
-    //     return $this->returnResponse($result);
-    // }
-
-    // public function viewQC($id)
-    // {
-    //     $user = $this->thecredentials();
-    //     $job = $this->service->showQC($id);
-
-    //     if(!$job){
-    //         return view('errors.404');
-    //     }
-
-    //     return view('pages.admin.jobs.qc.index', compact('user','job'));
-    // }
-
     /**
      * Display a listing of the resource.
      *
@@ -226,10 +199,16 @@ class JobController extends GlobalVariableController
         return $this->returnResponse($result);
     }
 
+    // edit
     public function show($id)
     {
         $user = $this->thecredentials();
         $developers = $this->thedevelopers();
+
+        $job = $this->service->show($id);
+        if(!$job){
+            return view('errors.404');
+        }
 
         return view('pages.admin.jobs.edit', compact('user','developers','id'));
     }
@@ -244,7 +223,6 @@ class JobController extends GlobalVariableController
         }
 
         return $this->returnResponse($result);
-
     }
 
     public function update($request, $id)

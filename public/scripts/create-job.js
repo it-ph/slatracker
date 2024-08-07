@@ -59,6 +59,7 @@ $('.sla').change(function() {
 });
 
 function getSLA(typeId, volumeId) {
+    $("#agreed_sla").val('Please wait...');
     axios(`${APP_URL}/request/sla/get/${typeId}/${volumeId}`).then((response) => {
         if (response.data) {
             console.log(response.data);

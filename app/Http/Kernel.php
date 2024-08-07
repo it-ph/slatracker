@@ -68,11 +68,8 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'active.user' => \App\Http\Middleware\ActiveUser::class,
-        'admin' => \App\Http\Middleware\AdminOnly::class,
-        'tl.admin' => \App\Http\Middleware\TeamLeaderOrAdmin::class,
-        'om.admin' => \App\Http\Middleware\OperationsManagerOrAdmin::class,
-        'tlom.admin' => \App\Http\Middleware\TLOMOrAdmin::class,
         'verify.access' => \App\Http\Middleware\VerifyAccess::class,
         'twofactor' => \App\Http\Middleware\TwoFactor::class,
+        'role' => \App\Http\Middleware\Role::class,
     ];
 }

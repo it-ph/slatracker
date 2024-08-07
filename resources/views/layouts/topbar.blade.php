@@ -103,8 +103,8 @@
                             <div class="text-center">
                                 <h5 class="name font-weight-bold mb-1">{{ $user['username'] }}</h5>
                                 <p class="email text-muted mb-2">{{ $user['email'] }}</p>
-                                <p class="email text-muted mb-1">{{ $user['theroles'] }}</p>
                                 <h6 class="email text-muted mb-1"><strong>{{ $user['client'] }}</strong></h6>
+                                <p class="email text-muted mb-1">{{ $user['theroles'] }}</p>
                             </div>
                         @endauth
                     </div>
