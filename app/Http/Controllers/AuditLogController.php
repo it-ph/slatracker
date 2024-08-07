@@ -97,11 +97,13 @@ class AuditLogController extends Controller
             $qc_status = $request->qc_status;
             $status = $qc_status == 'Pass' ? 'Closed' : 'Bounced Back';
             $end_at = $status == 'Closed' ? $request['end_at'] : null;
+            $qc_rounds = $status == 'Closed' ? $audit_log->qc_round : null;
             $internal_quality = $job->internal_quality ? $job->internal_quality : $qc_status;
 
             $job->update([
                 'status' => $status,
                 'end_at' => $end_at,
+                'qc_rounds' => $qc_rounds,
                 'internal_quality' => $internal_quality
             ]);
 

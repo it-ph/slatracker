@@ -56,15 +56,15 @@ body {
 
 .btn-warning {
     color: #fff;
-    background-color: #F1B44C !important;
-    border-color: #F1B44C !important;
-    box-shadow: 0 0.125rem 0.25rem 0 rgba(241, 180, 76, 0.4);
+    background-color: #FFC600 !important;
+    border-color: #FFC600 !important;
+    box-shadow: 0 0.125rem 0.25rem 0 rgba(255, 198, 0, .4);
 }
 
 .btn-warning:hover {
     color: #fff;
-    background-color: #F1B44C !important;
-    border-color: #F1B44C !important;
+    background-color: #FFC600 !important;
+    border-color: #FFC600 !important;
     transform: translateY(-3px);
 }
 
@@ -222,14 +222,14 @@ button.buttons-pdf:hover {
 
 
 /* button.buttons-collection {
-    background-color: #F1B44C;
+    background-color: #FFC600;
     color: #fff;
-    border-color: #F1B44C;
+    border-color: #FFC600;
 }
 
 button.buttons-collection:hover {
-    background-color: #F1B44C !important;
-    border-color: #F1B44C !important;
+    background-color: #FFC600 !important;
+    border-color: #FFC600 !important;
 } */
 
 .dataTables_scrollBody {

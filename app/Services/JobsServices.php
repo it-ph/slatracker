@@ -82,8 +82,8 @@ class JobsServices
             }
 
             $status = '<span class="badge bg-'.$badge.'">'.$value->status.'</span>';
-            $action ='<a href="'.env('APP_URL').'/viewjob/'.$value->id.'" class="btn btn-info btn-sm waves-effect waves-light" title="View Job"><i class="fas fa-eye"></i></a>
-                    <button type="button" class="btn btn-warning btn-sm waves-effect waves-light" title="Edit Job" onclick=JOB.show('.$value->id.')><i class="fas fa-pencil-alt"></i></button>';
+            $action ='<a href="'.env('APP_URL').'/viewjob/'.$value->id.'" class="btn btn-primary btn-sm waves-effect waves-light" title="View Job"><i class="fas fa-eye"></i></a>
+                    <a href="'.env('APP_URL').'/job/show/'.$value->id.'" class="btn btn-warning btn-sm waves-effect waves-light" title="Edit Job"><i class="fas fa-pencil-alt"></i></a>';
 
             $datastorage[] = [
                 'id' => $value->id,
@@ -297,8 +297,11 @@ class JobsServices
         $developer = $value->thedeveloper ? $value->thedeveloper->username : '-';
         $developer_id = $value->thedeveloper ? $value->developer_id : '-';
         $request_type = $value->therequesttype ? $value->therequesttype->name : '-';
+        $request_type_id = $value->therequesttype ? $value->therequesttype->id : '-';
         $request_volume = $value->therequestvolume ? $value->therequestvolume->name : '-';
+        $request_volume_id = $value->therequestvolume ? $value->therequestvolume->id : '-';
         $salesforce_link = $value->salesforce_link;
+        $special_request_raw = $value->special_request;
         $special_request = $value->special_request ? 'Yes' : 'No';
         $comments_special_request = $value->comments_special_request;
         $addon_comments = $value->addon_comments;
@@ -354,8 +357,11 @@ class JobsServices
             'developer' => $developer,
             'developer_id' => $developer_id,
             'request_type' => $request_type,
+            'request_type_id' => $request_type_id,
             'request_volume' => $request_volume,
+            'request_volume_id' => $request_volume_id,
             'salesforce_link' => $salesforce_link,
+            'special_request_raw' => $special_request_raw,
             'special_request' => $special_request,
             'comments_special_request' => $comments_special_request,
             'addon_comments' => $addon_comments,

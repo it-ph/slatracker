@@ -12,14 +12,16 @@ use App\Http\Requests\JobStoreRequest;
 use App\Http\Requests\JobSendForQCRequest;
 use App\Http\Requests\JobSubmitDetailsRequest;
 use Facades\App\Http\Helpers\CredentialsHelper;
+use App\Http\Controllers\GlobalVariableController;
 use App\Http\Requests\JobUpdateExternalQualityRequest;
 
-class JobController extends Controller
+class JobController extends GlobalVariableController
 {
     use ResponseTraits;
 
     public function __construct()
     {
+        parent::__construct();
         $this->model = new Job();
         $this->service = new JobsServices();
     }
@@ -28,6 +30,12 @@ class JobController extends Controller
     {
         return CredentialsHelper::get_set_credentials();
     }
+        
+    public function thedevelopers()
+    {
+        return CredentialsHelper::get_developers();
+    }
+
 
     /** PENDING JOBS */
     public function pendingJob()
@@ -218,11 +226,32 @@ class JobController extends Controller
         return $this->returnResponse($result);
     }
 
+    public function show($id)
+    {
+        $user = $this->thecredentials();
+        $developers = $this->thedevelopers();
+
+        return view('pages.admin.jobs.edit', compact('user','developers','id'));
+    }
+
+    public function getData($id)
+    {
+        $result = $this->successResponse('Job retrieved successfully!');
+        try {
+            $result["data"] = $this->service->show($id);
+        } catch (\Throwable $th) {
+            return $this->errorResponse($th);
+        }
+
+        return $this->returnResponse($result);
+
+    }
+
     public function update($request, $id)
     {
         $result = $this->successResponse('Job updated successfully!');
         try {
-            Job::findOrfail($id)->update($request->except('edit_id'));
+            Job::findOrfail($id)->update($request->except(['edit_id','agreed_sla']));
         } catch (\Throwable $th)
         {
             $result = $this->errorResponse($th);

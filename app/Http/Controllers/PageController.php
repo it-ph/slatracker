@@ -48,7 +48,7 @@ class PageController extends GlobalVariableController
         return view('pages.admin.jobs.create', compact('user','developers'));
     }
 
-    /** Jobs */
+    /** Pending Jobs */
     public function showPendingJobs()
     {
         $user = $this->thecredentials();

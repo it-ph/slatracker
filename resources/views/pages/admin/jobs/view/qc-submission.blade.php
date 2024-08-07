@@ -11,7 +11,7 @@
                                 <input type="hidden" name="edit_id" id="edit_id" value="{{ $job['id'] }}">
                                 <label for="preview_link" class="col-sm-2 col-form-label fw-bold">Preview Link <strong><span class="important">*</span></strong></label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="preview_link" id="preview_link" placeholder="Enter preview link">
+                                    <input type="text" class="form-control" name="preview_link" id="preview_link" placeholder="Enter preview link" value="">
                                     <label id="preview_linkError" class="error" style="display:none"></label>
                                 </div>
                             </div>

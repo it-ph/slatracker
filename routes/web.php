@@ -122,6 +122,7 @@ Route::group(['middleware' => ['auth','twofactor','web','active.user']],function
                 Route::get('/create', [PageController::class,'addJob'])->name('job.create');
                 Route::post('/store', [JobController::class,'store'])->name('job.store');
                 Route::get('/show/{id}', [JobController::class,'show'])->name('job.show');
+                Route::get('/get_data/{id}', [JobController::class,'getData'])->name('job.get_data');
                 Route::post('/update/{id}', [JobController::class,'update'])->name('job.update');
                 Route::post('/delete/{id}', [JobController::class,'destroy'])->name('job.delete');
                 Route::post('/externalquality', [JobController::class,'updateExternalQuality'])->name('job.update.externalquality');

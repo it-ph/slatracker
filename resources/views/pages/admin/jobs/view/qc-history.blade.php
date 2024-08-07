@@ -23,7 +23,7 @@
                                     <td class="text-center">{{ $log['qc_end_at'] }}</td>
                                     <td class="text-center">{{ $log['self_qc'] }}</td>
                                     <td class="text-center">
-                                        <a href="{{ url('viewqualitycheck') }}/{{ $log['audit_log_id'] }}" class="btn btn-info btn-sm waves-effect waves-light" title="View Quality Check"><i class="fas fa-eye"></i></a>
+                                        <a href="{{ url('viewqualitycheck') }}/{{ $log['audit_log_id'] }}" class="btn btn-primary btn-sm waves-effect waves-light" title="View Quality Check"><i class="fas fa-eye"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
