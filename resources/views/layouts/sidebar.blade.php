@@ -80,14 +80,17 @@
                     @endif
 
                     {{-- ADMIN / TEAM LEAD / MANAGER --}}
-                    @if(in_array('admin',$user['roles']) || in_array('manager',$user['roles']) || in_array('team lead',$user['roles']))
+                    @if(in_array('admin',$user['roles']) || in_array('manager',$user['roles']))
                         <li>
                             <a href="{{ url('users') }}" class="waves-effect">
                                 <i class="fa fa-users"></i>
                                 <span key="t-users">Users</span>
                             </a>
                         </li>
+                    @endif
 
+                    {{-- ADMIN / TEAM LEAD / MANAGER --}}
+                    @if(in_array('admin',$user['roles']) || in_array('manager',$user['roles']) || in_array('team lead',$user['roles']))
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class="fa fa-table"></i>

@@ -8,6 +8,8 @@
     <link href="{{ asset('assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/libs/datatables/buttons.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/libs/datatables/fixedColumns.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/daterangepicker/daterangepicker.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -17,198 +19,289 @@
         @slot('title') Dashboard @endslot
     @endcomponent
 
-    {{-- <div class="row m-2"> --}}
-        <div class="col-lg-12">
-            <div class="card overflow-hidden">
-                <div class="bg-primary bg-soft">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="text-white m-3">
-                                <h5 class="text-white">Welcome Back, {{ ucwords(Auth::user()->username,'.') }}!</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="card mini-stats-wid">
-                        <div class="card-body">
-                            <div class="media">
-                                <div class="media-body">
-                                    {{-- <a href="{{ route("my-tasks.index", ['status' => "In Progress"]) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View In Progress Tasks">
-                                        <p class="text-muted fw-medium">In Progress</p>
-                                        <h4 class="mb-0">{{ number_format($in_progress) }}</h4>
-                                    </a> --}}
-                                </div>
-
-                                <div class="avatar-sm rounded-circle bg-success align-self-center mini-stat-icon">
-                                    <span class="avatar-title rounded-circle bg-success">
-                                        <i class="bx bx-task font-size-24"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card mini-stats-wid">
-                        <div class="card-body">
-                            <div class="media">
-                                <div class="media-body">
-                                    {{-- <a href="{{ route("my-tasks.index", ['status' => "On Hold"]) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View On Hold Tasks">
-                                        <p class="text-muted fw-medium">On Hold</p>
-                                        <h4 class="mb-0">{{ number_format($on_hold) }}</h4>
-                                    </a> --}}
-                                </div>
-
-                                <div class="avatar-sm rounded-circle bg-warning align-self-center mini-stat-icon">
-                                    <span class="avatar-title rounded-circle bg-warning">
-                                        <i class="bx bx-task font-size-24"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card mini-stats-wid">
-                        <div class="card-body">
-                            <div class="media">
-                                <div class="media-body">
-                                    {{-- <a href="{{ route("my-tasks.index", ['status' => "Completed"]) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Completed Tasks">
-                                        <p class="text-muted fw-medium">Completed</p>
-                                        <h4 class="mb-0">{{ number_format($completed) }}</h4>
-                                    </a> --}}
-                                </div>
-
-                                <div class="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon">
-                                    <span class="avatar-title rounded-circle bg-primary">
-                                        <i class="bx bx-task font-size-24"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card mini-stats-wid">
-                        <div class="card-body">
-                            <div class="media">
-                                <div class="media-body">
-                                    {{-- <a href="{{ route("my-tasks.index", ['status' => "all"]) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View All Tasks">
-                                        <p class="text-muted fw-medium">Total Tasks</p>
-                                        <h4 class="mb-0">{{ number_format($all) }}</h4>
-                                    </a> --}}
-                                </div>
-
-                                <div class="avatar-sm rounded-circle bg-secondary align-self-center mini-stat-icon">
-                                    <span class="avatar-title rounded-circle bg-secondary">
-                                        <i class="bx bx-task font-size-24"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- end row -->
-        </div>
-    {{-- </div> --}}
-    <!-- end row -->
-
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title mb-4">My Latest Tasks</h4>
-                    <div class="table-responsive">
-                        <table id="datatable" class="table table-bordered nowrap w-100">
-                            <thead>
-                                <tr>
-                                    <th>Status</th>
-                                    <th>Employee Name</th>
-                                    <th>Shift Date</th>
-                                    <th>Date Received</th>
-                                    <th>Cluster</th>
-                                    <th>Client</th>
-                                    <th>Activity</th>
-                                    <th>Description</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
-                                    <th>Date Completed</th>
-                                    <th>Actual Handling Time</th>
-                                    <th>Volume</th>
-                                    <th>Remarks</th>
-                                </tr>
-                            </thead>
-                            {{-- <tbody>
-                                @foreach ($tasks as $task)
-                                    <tr>
-                                        <td>
-                                            @if($task->status == "In Progress")
-                                                <span class="text-success"><strong>{{ $task->status }}</strong></span>
-                                            @elseif($task->status == "On Hold")
-                                                <span class="text-warning"><strong>{{ $task->status }}</strong></span>
-                                            @elseif($task->status == "Completed")
-                                                <span class="text-primary"><strong>{{ $task->status }}</strong></span>
+                    <form action="" method="POST">
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-3 mb-2">
+                                <label for="datefilter"><strong>Date Range</strong></label>
+                                <div id="datefilter" class="form-control datefilter">
+                                    <span></span>
+                                </div>
+                                <input type="hidden" class="form-control" name="daterange" id="daterange">
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <label for="platform"><strong>Platform</strong></label>
+                                <select class="form-control select2" name="platform" id="platform"  style="width:100%;">
+                                    <option value="all" selected>All</option>
+                                    <option value="Duda">Duda</option>
+                                    <option value="Wordpress">Wordpress</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <label for="request_type_id"><strong>Request Type</strong></label>
+                                <select class="form-control select2" name="request_type_id" id="request_type_id"  style="width:100%;">
+                                    <option value="all" selected>All</option>
+                                        @foreach ($request_types as $request_type)
+                                            @if($request_type)
+                                                <option value="{{ $request_type->id }}">{{ ucwords($request_type->name) }}</option>
                                             @endif
-                                        </td>
-                                        <td>@isset($task->theagent){{ $task->theagent->fullname }} {{ $task->theagent->last_name }}@endisset</td>
-                                        <td>{{ date('m/d/Y', strtotime($task->shift_date)) }}</td>
-                                        <td>{{ date('m/d/Y', strtotime($task->date_received)) }}</td>
-                                        <td>{{ $task->thecluster->name }}</td>
-                                        <td>{{ $task->theclient->name }}</td>
-                                        <td>{{ $task->theclientactivity->name }}</td>
-                                        <td>{{ $task->description }}</td>
-                                        <td>@isset($task->start_date){{ date('m/d/Y h:i:s A', strtotime($task->start_date)) }}@endisset</td>
-                                        <td>@isset($task->end_date){{ date('m/d/Y h:i:s A', strtotime($task->end_date)) }} @else - @endisset</td>
-                                        <td>@isset($task->end_date){{ date('m/d/Y', strtotime($task->end_date)) }} @else - @endisset</td>
-                                        <td>
-                                            START OF ACTUAL HANDLING TIME
-                                            <php
-                                                $now = \Carbon\Carbon::now();
-                                                $actual_handling_timer = $task->start_date->diff($now)->format('%D:%H:%I:%S');
-
-                                                TASK ON HOLD-COMPLETED W/ ACTUAL HANDLING TIME
-                                                if($task->actual_handling_time)
-                                                {
-                                                    if($task->status == "In Progress")
-                                                    {
-                                                        $get_aht = $TaskHelper->getActualHandlingTime($task);
-                                                        $actual_handling_time = $get_aht['actual_handling_time'];
-                                                    }
-                                                    else
-                                                    {
-                                                        $actual_handling_time = $task->actual_handling_time;
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    $actual_handling_time = $actual_handling_timer;
-                                                }
-
-                                            >
-                                            {{ $actual_handling_time }}
-                                            END OF ACTUAL HANDLING TIME
-                                        </td>
-                                        <td>{{ $task->volume }}</td>
-                                        <td>{{ $task->remarks }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody> --}}
-                        </table>
-                    </div>
-                    <!-- end table-responsive -->
+                                        @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <label for="developer_id"><strong>Developer</strong></label>
+                                <select class="form-control select2" name="developer_id" id="developer_id"  style="width:100%;">
+                                    <option value="all" selected>All</option>
+                                        @foreach ($developers as $developer)
+                                            <option value="{{ $developer->id }}">{{ ucwords($developer->username) }}</option>
+                                        @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <!-- end row -->
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card mini-stats-wid">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="media-body">
+                                {{-- <a href="{{ route("my-tasks.index", ['status' => "In Progress"]) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View In Progress Tasks">
+                                    <p class="text-muted fw-medium">In Progress</p>
+                                    <h4 class="mb-0">{{ number_format($in_progress) }}</h4>
+                                </a> --}}
+                            </div>
+
+                            <div class="avatar-sm rounded-circle bg-success align-self-center mini-stat-icon">
+                                <span class="avatar-title rounded-circle bg-success">
+                                    <i class="bx bx-task font-size-24"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mini-stats-wid">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="media-body">
+                                {{-- <a href="{{ route("my-tasks.index", ['status' => "On Hold"]) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View On Hold Tasks">
+                                    <p class="text-muted fw-medium">On Hold</p>
+                                    <h4 class="mb-0">{{ number_format($on_hold) }}</h4>
+                                </a> --}}
+                            </div>
+
+                            <div class="avatar-sm rounded-circle bg-warning align-self-center mini-stat-icon">
+                                <span class="avatar-title rounded-circle bg-warning">
+                                    <i class="bx bx-task font-size-24"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mini-stats-wid">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="media-body">
+                                {{-- <a href="{{ route("my-tasks.index", ['status' => "Completed"]) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View Completed Tasks">
+                                    <p class="text-muted fw-medium">Completed</p>
+                                    <h4 class="mb-0">{{ number_format($completed) }}</h4>
+                                </a> --}}
+                            </div>
+
+                            <div class="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon">
+                                <span class="avatar-title rounded-circle bg-primary">
+                                    <i class="bx bx-task font-size-24"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mini-stats-wid">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="media-body">
+                                {{-- <a href="{{ route("my-tasks.index", ['status' => "all"]) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="View All Tasks">
+                                    <p class="text-muted fw-medium">Total Tasks</p>
+                                    <h4 class="mb-0">{{ number_format($all) }}</h4>
+                                </a> --}}
+                            </div>
+
+                            <div class="avatar-sm rounded-circle bg-secondary align-self-center mini-stat-icon">
+                                <span class="avatar-title rounded-circle bg-secondary">
+                                    <i class="bx bx-task font-size-24"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-4">
+            <div class="card">
+                <div class="card-body">
+                    <span class="card-title text-center mb-2">Jobs Closed By Request Type</span>
+                    <div id="donut_chart" class="apex-charts" dir="ltr"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title text-center mb-2">SLA Summary</h6>
+                    <div id="donut_chart" class="apex-charts" dir="ltr"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title text-center mb-2">QC Rounds</h6>
+                    <div id="donut_chart" class="apex-charts" dir="ltr"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-body">
+
+                    <h4 class="card-title mb-4">Line Chart</h4>
+
+                    <div class="row text-center">
+                        <div class="col-4">
+                            <h5 class="mb-0">86541</h5>
+                            <p class="text-muted text-truncate">Activated</p>
+                        </div>
+                        <div class="col-4">
+                            <h5 class="mb-0">2541</h5>
+                            <p class="text-muted text-truncate">Pending</p>
+                        </div>
+                        <div class="col-4">
+                            <h5 class="mb-0">102030</h5>
+                            <p class="text-muted text-truncate">Deactivated</p>
+                        </div>
+                    </div>
+
+                    <canvas id="lineChart" height="300"></canvas>
+
+                </div>
+            </div>
+        </div> <!-- end col -->
+
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-body">
+
+                    <h4 class="card-title mb-4">Bar Chart</h4>
+
+                    <div class="row text-center">
+                        <div class="col-4">
+                            <h5 class="mb-0">2541</h5>
+                            <p class="text-muted text-truncate">Activated</p>
+                        </div>
+                        <div class="col-4">
+                            <h5 class="mb-0">84845</h5>
+                            <p class="text-muted text-truncate">Pending</p>
+                        </div>
+                        <div class="col-4">
+                            <h5 class="mb-0">12001</h5>
+                            <p class="text-muted text-truncate">Deactivated</p>
+                        </div>
+                    </div>
+
+                    <canvas id="bar" height="300"></canvas>
+
+                </div>
+            </div>
+        </div> <!-- end col -->
+    </div> <!-- end row -->
+
+
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-body">
+
+                    <h4 class="card-title mb-4">Pie Chart</h4>
+
+                    <div class="row text-center">
+                        <div class="col-4">
+                            <h5 class="mb-0">2536</h5>
+                            <p class="text-muted text-truncate">Activated</p>
+                        </div>
+                        <div class="col-4">
+                            <h5 class="mb-0">69421</h5>
+                            <p class="text-muted text-truncate">Pending</p>
+                        </div>
+                        <div class="col-4">
+                            <h5 class="mb-0">89854</h5>
+                            <p class="text-muted text-truncate">Deactivated</p>
+                        </div>
+                    </div>
+
+                    <canvas id="pie" height="260"></canvas>
+
+                </div>
+            </div>
+        </div> <!-- end col -->
+
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-body">
+
+                    <h4 class="card-title mb-4">Donut Chart</h4>
+
+                    <div class="row text-center">
+                        <div class="col-4">
+                            <h5 class="mb-0">9595</h5>
+                            <p class="text-muted text-truncate">Activated</p>
+                        </div>
+                        <div class="col-4">
+                            <h5 class="mb-0">36524</h5>
+                            <p class="text-muted text-truncate">Pending</p>
+                        </div>
+                        <div class="col-4">
+                            <h5 class="mb-0">62541</h5>
+                            <p class="text-muted text-truncate">Deactivated</p>
+                        </div>
+                    </div>
+
+                    <canvas id="doughnut" height="260"></canvas>
+
+                </div>
+            </div>
+        </div> <!-- end col -->
+    </div> <!-- end row -->
 @endsection
 @section('script')
+    <!-- apexcharts -->
+    <script src="{{ URL::asset('/assets/libs/apexcharts/apexcharts.min.js') }}"></script>
+    <!-- dashboard init -->
+    <script src="{{ URL::asset('/assets/js/pages/apexcharts.init.js') }}"></script>
+
+    <!-- Chart JS -->
+    <script src="{{ URL::asset('/assets/libs/chart-js/chart-js.min.js') }}"></script>
+    <script src="{{ URL::asset('/assets/js/pages/chartjs.init.js') }}"></script>
+
     <!-- Required datatable js -->
     <script src="{{ asset('assets/libs/datatables/datatables.min.js') }}"></script>
     <script src="{{ asset('assets/libs/datatables/dataTables.buttons.min.js') }}"></script>
@@ -216,32 +309,42 @@
     <script src="{{ asset('assets/libs/jszip/jszip.min.js') }}"></script>
     <script src="{{ asset('assets/libs/pdfmake/pdfmake.min.js') }}"></script>
 
-    <script>
-        $(document).ready(function() {
-                $('#datatable').DataTable({
-                    language: {
-                        // search: '_INPUT_',
-                        // searchPlaceholder: 'Search',
-                        oPaginate: {
-                            sNext: '<i class="fa fa-forward"></i>',
-                            sPrevious: '<i class="fa fa-backward"></i>',
-                            sFirst: '<i class="fa fa-step-backward"></i>',
-                            sLast: '<i class="fa fa-step-forward"></i>'
-                        },
-                    },
-                    dom: 'Bfrtip',
-                    buttons: [
-                        'excel'
-                    ],
-                    "pageLength": 10,
-                    "pagingType": "full_numbers",
-                    "order": [2, "desc"],
-                    "columnDefs": [{ type: 'date', 'targets': [2] }],
-                    fixedColumns: {
-                        left: 3
-                    },
-                    "scrollX": true,
-                });
-            });
+    <script src="{{ asset('assets/libs/select2/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/select2/select2.js') }}"></script>
+
+    <script src="{{ asset('assets/libs/daterangepicker/moment.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/daterangepicker/daterangepicker.min.js') }}"></script>
+@endsection
+
+@section('custom-js')
+    <script type="text/javascript">
+        $(function() {
+            var start = moment().subtract(6, 'days');
+            var end = moment();
+
+            function cb(start, end) {
+                $('#datefilter span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                $('#daterange').val(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            }
+
+            $('#datefilter').daterangepicker({
+                buttonClasses: ['btn', 'btn-sm'],
+                applyClass: 'btn-primary',
+                cancelClass: 'btn-danger',
+                startDate: start,
+                endDate: end,
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                }
+            }, cb);
+
+            cb(start, end);
+
+        });
     </script>
 @endsection

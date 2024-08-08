@@ -215,7 +215,19 @@ Route::group(['middleware' => ['auth','twofactor','web','active.user']],function
             });
         });
 
-        // USERS
+        // REPORTS
+        Route::group(['prefix' => 'reports'],
+        function ()
+        {
+            Route::get('/joblogs', [PageController::class, 'showJobLogReports'])->name('reports.joblogs');
+            Route::get('/auditlogs', [PageController::class, 'showAuditLogReports'])->name('reports.auditlogs');
+            Route::get('/development', [PageController::class, 'showDevReports'])->name('reports.development');
+        });
+    });
+
+    // USERS
+    Route::group(['middleware' => ['role:admin,manager']], function ()
+    {
         Route::get('users', [PageController::class, 'showUsers'])->name('users.index');
         Route::group(['prefix' => 'user'],
         function ()
@@ -225,15 +237,6 @@ Route::group(['middleware' => ['auth','twofactor','web','active.user']],function
             Route::get('/show/{id}', [UserController::class,'show'])->name('user.show');
             Route::post('/update/{id}', [UserController::class,'update'])->name('user.update');
             Route::post('/delete/{id}', [UserController::class,'destroy'])->name('user.delete');
-        });
-
-        // REPORTS
-        Route::group(['prefix' => 'reports'],
-        function ()
-        {
-            Route::get('/joblogs', [PageController::class, 'showJobLogReports'])->name('reports.joblogs');
-            Route::get('/auditlogs', [PageController::class, 'showAuditLogReports'])->name('reports.auditlogs');
-            Route::get('/development', [PageController::class, 'showDevReports'])->name('reports.development');
         });
     });
 

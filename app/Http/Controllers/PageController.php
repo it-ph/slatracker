@@ -42,7 +42,8 @@ class PageController extends GlobalVariableController
     public function showHome()
     {
         $user = $this->thecredentials();
-        return view('index', compact('user'));
+        $developers = $this->thedevelopers();
+        return view('pages.dashboard.index', compact('user','developers'));
     }
 
     /** Add Job */

@@ -299,3 +299,32 @@ table.dataTable tfoot tr>.dtfc-fixed-right {
 .badge-roles {
     font-size: .70rem !important;
 }
+
+
+/* daterangepicker*/
+
+.datefilter {
+    background: #fff;
+    cursor: pointer;
+    padding: 8.5px 10px;
+    border: 1px solid #ccc;
+    width: 100%;
+}
+
+.daterangepicker .ranges li.active {
+    background-color: #00599D !important;
+}
+
+.daterangepicker td.active,
+.daterangepicker td.active:hover {
+    background-color: #00599D !important;
+}
+
+
+/* dashboard */
+
+.d-title {
+    font-size: 12px;
+    font-weight: 600 !important;
+    color: #4B5A64 !important;
+}
