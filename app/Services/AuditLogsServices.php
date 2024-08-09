@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Models\AuditLog;
 use Facades\App\Http\Helpers\TaskHelper;
 
-class AuditLogsServices 
+class AuditLogsServices
 {
     public function getRoles()
     {
@@ -169,8 +169,8 @@ class AuditLogsServices
         $functionality = $value->functionality ? 'Yes' : 'No';
         $c_functionality = $value->c_functionality ? $value->c_functionality : '';
         $qc_comments = $value->qc_comments ? $value->qc_comments : '';
-        $qc_start_at = $value->start_at ? date('d-M-y h:i:s A', strtotime($value->start_at)) : '-';
-        $qc_end_at = $value->end_at ? date('d-M-y h:i:s A', strtotime($value->end_at)) : '-';
+        $qc_start_at = $value->start_at ? date('d-M-y h:i:s A', strtotime($value->start_at)) : '';
+        $qc_end_at = $value->end_at ? date('d-M-y h:i:s A', strtotime($value->end_at)) : '';
 
         $job = [
             'id' => $value->id,

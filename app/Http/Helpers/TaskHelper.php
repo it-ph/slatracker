@@ -16,6 +16,15 @@ class TaskHelper {
         return sprintf('%02d:%02d:%02d', $hh, $mm, $ss);
     }
 
+    public function getTimeElapsedTime($start_at)
+    {
+        $now = Carbon::now();
+        $in_seconds = $start_at->diffInSeconds($now);
+        $in_hours = $in_seconds/3600;
+
+        return $in_hours;
+    }
+
     public function getActualHandlingTime($task)
     {
         if($task->actual_handling_time)

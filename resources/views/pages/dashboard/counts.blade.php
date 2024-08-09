@@ -5,8 +5,8 @@
                 <div class="card-body text-center">
                     <div class="media">
                         <div class="media-body">
-                            <h2 class="mb-0 text-white">23</h2>
-                            <p class="mb-0 text-white fw-bold">Total</p>
+                            <h3 class="mb-0 text-white">23</h3>
+                            <p class="mb-0 text-white fw-medium">Total</p>
                         </div>
                     </div>
                 </div>
@@ -17,8 +17,8 @@
                 <div class="card-body text-center">
                     <div class="media">
                         <div class="media-body">
-                            <h2 class="mb-0 text-white">23</h2>
-                            <p class="mb-0 text-white fw-bold">Closed</p>
+                            <h3 class="mb-0 text-white">23</h3>
+                            <p class="mb-0 text-white fw-medium">Closed</p>
                         </div>
                     </div>
                 </div>
@@ -29,8 +29,8 @@
                 <div class="card-body text-center">
                     <div class="media">
                         <div class="media-body">
-                            <h2 class="mb-0 text-white">23</h2>
-                            <p class="mb-0 text-white fw-bold">Not Started</p>
+                            <h3 class="mb-0 text-white">23</h3>
+                            <p class="mb-0 text-white fw-medium">Not Started</p>
                         </div>
                     </div>
                 </div>
@@ -41,8 +41,8 @@
                 <div class="card-body text-center">
                     <div class="media">
                         <div class="media-body">
-                            <h2 class="mb-0 text-white">23</h2>
-                            <p class="mb-0 text-white fw-bold">In Progress</p>
+                            <h3 class="mb-0 text-white">23</h3>
+                            <p class="mb-0 text-white fw-medium">In Progress</p>
                         </div>
                     </div>
                 </div>
@@ -53,8 +53,8 @@
                 <div class="card-body text-center">
                     <div class="media">
                         <div class="media-body">
-                            <h2 class="mb-0 text-white">23</h2>
-                            <p class="mb-0 text-white fw-bold">Quality Check</p>
+                            <h3 class="mb-0 text-white">23</h3>
+                            <p class="mb-0 text-white fw-medium">Quality Check</p>
                         </div>
                     </div>
                 </div>
@@ -65,8 +65,8 @@
                 <div class="card-body text-center">
                     <div class="media">
                         <div class="media-body">
-                            <h2 class="mb-0 text-white">23</h2>
-                            <p class="mb-0 text-white fw-bold">External Quality</p>
+                            <h3 class="mb-0 text-white">23</h3>
+                            <p class="mb-0 text-white fw-medium">External Quality</p>
                         </div>
                     </div>
                 </div>
@@ -80,8 +80,8 @@
                 <div class="card-body text-center">
                     <div class="media">
                         <div class="media-body">
-                            <h2 class="mb-0 text-white">23</h2>
-                            <p class="mb-0 text-white fw-bold">Job SLA Met</p>
+                            <h3 class="mb-0 text-white">23</h3>
+                            <p class="mb-0 text-white fw-medium">Job SLA Met</p>
                         </div>
                     </div>
                 </div>
@@ -92,8 +92,8 @@
                 <div class="card-body text-center">
                     <div class="media">
                         <div class="media-body">
-                            <h2 class="mb-0 text-white">23</h2>
-                            <p class="mb-0 text-white fw-bold">Job SLA Missed</p>
+                            <h3 class="mb-0 text-white">23</h3>
+                            <p class="mb-0 text-white fw-medium">Job SLA Missed</p>
                         </div>
                     </div>
                 </div>
@@ -104,8 +104,8 @@
                 <div class="card-body text-center">
                     <div class="media">
                         <div class="media-body">
-                            <h2 class="mb-0 text-white">23</h2>
-                            <p class="mb-0 text-white fw-bold">Jobs QCed</p>
+                            <h3 class="mb-0 text-white">23</h3>
+                            <p class="mb-0 text-white fw-medium">Jobs QCed</p>
                         </div>
                     </div>
                 </div>
@@ -116,8 +116,8 @@
                 <div class="card-body text-center">
                     <div class="media">
                         <div class="media-body">
-                            <h2 class="mb-0 text-white">23</h2>
-                            <p class="mb-0 text-white fw-bold">Job QC Pass</p>
+                            <h3 class="mb-0 text-white">23</h3>
+                            <p class="mb-0 text-white fw-medium">Job QC Pass</p>
                         </div>
                     </div>
                 </div>
@@ -128,8 +128,8 @@
                 <div class="card-body text-center">
                     <div class="media">
                         <div class="media-body">
-                            <h2 class="mb-0 text-white">23</h2>
-                            <p class="mb-0 text-white fw-bold">Job QC Fail</p>
+                            <h3 class="mb-0 text-white">23</h3>
+                            <p class="mb-0 text-white fw-medium">Job QC Fail</p>
                         </div>
                     </div>
                 </div>
@@ -140,8 +140,8 @@
                 <div class="card-body text-center">
                     <div class="media">
                         <div class="media-body">
-                            <h2 class="mb-0 text-white">23</h2>
-                            <p class="mb-0 text-white fw-bold">Internal Quality</p>
+                            <h3 class="mb-0 text-white">23</h3>
+                            <p class="mb-0 text-white fw-medium">Internal Quality</p>
                         </div>
                     </div>
                 </div>

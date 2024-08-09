@@ -2,12 +2,13 @@
 
 namespace App\Services;
 
+use Carbon\Carbon;
 use App\Models\Job;
 use App\Models\User;
 use App\Models\AuditLog;
 use Facades\App\Http\Helpers\TaskHelper;
 
-class JobsServices 
+class JobsServices
 {
     public function getRoles()
     {
@@ -32,7 +33,6 @@ class JobsServices
         ->select('id','name','request_type_id','request_volume_id','request_sla_id','special_request','created_at','start_at','end_at','time_taken','sla_missed','internal_quality','external_quality','developer_id','status')
         ->orderBy('created_at','DESC');
 
-
         $roles = $this->getRoles();
 
         // ADMIN
@@ -52,11 +52,23 @@ class JobsServices
             $request_volume = $value->therequestvolume ? $value->therequestvolume->name : '-';
             $special_request = $value->special_request ? 'Yes' : 'No';
             $created_at = $value->created_at ? date('d-M-y h:i:s a', strtotime($value->created_at)) : '-';
-            $start_at = $value->start_at ? date('d-M-y h:i:s a', strtotime($value->start_at)) : '-';
-            $end_at = $value->end_at ? date('d-M-y h:i:s a', strtotime($value->end_at)) : '-';
+            $start_at = $value->start_at ? date('d-M-y h:i:s a', strtotime($value->start_at)) : '';
+            $end_at = $value->end_at ? date('d-M-y h:i:s a', strtotime($value->end_at)) : '';
+            $agreed_sla_raw = $value->therequestsla ? $value->therequestsla->agreed_sla : '-';
             $agreed_sla = $value->therequestsla ? TaskHelper::convertTime($value->therequestsla->agreed_sla) : '-';
-            $time_taken = $value->time_taken ? $value->time_taken : '-';
-            $sla_missed = $value->sla_missed ? '<span class="text-danger">Yes</span>' : '<span class="text-success">No</span>';
+
+            if(in_array($value->status,['In Progress','Bounced Back','Quality Check']))
+            {
+                $t_elapsed = TaskHelper::getTimeElapsedTime($value->start_at);
+                $time_taken = TaskHelper::convertTime($t_elapsed);
+                $sla_missed = $t_elapsed > $agreed_sla_raw ? '<span class="text-danger">Yes</span>' : '<span class="text-success">No</span>';
+            }
+            else
+            {
+                $time_taken = $value->time_taken ? $value->time_taken : '00:00:00';
+                $sla_missed = $value->sla_missed ? '<span class="text-danger">Yes</span>' : '<span class="text-success">No</span>';
+            }
+
             $internal_quality = $value->internal_quality ? '<span class="text-'.($value->internal_quality == 'Pass' ? "success" : "danger").'">'.$value->internal_quality.'</span>' : '-';
             $external_quality = $value->external_quality ? '<span class="text-'.($value->external_quality == 'Pass' ? "success" : "danger").'">'.$value->external_quality.'</span>' : '-';
             $developer = $value->thedeveloper ? $value->thedeveloper->username : '-';
@@ -142,9 +154,9 @@ class JobsServices
             $request_volume = $value->therequestvolume ? $value->therequestvolume->name : '-';
             $special_request = $value->special_request ? 'Yes' : 'No';
             $created_at = $value->created_at ? date('d-M-y h:i:s a', strtotime($value->created_at)) : '-';
-            $start_at = $value->start_at ? date('d-M-y h:i:s a', strtotime($value->start_at)) : '-';
+            $start_at = $value->start_at ? date('d-M-y h:i:s a', strtotime($value->start_at)) : '';
             $agreed_sla = $value->therequestsla ? TaskHelper::convertTime($value->therequestsla->agreed_sla) : '-';
-            $time_taken = $value->time_taken ? $value->time_taken : '-';
+            $time_taken = $value->time_taken ? $value->time_taken : '00:00:00';
             $sla_missed = $value->sla_missed ? '<span class="text-danger">Yes</span>' : '<span class="text-success">No</span>';
             $p_sla_miss = $value->sla_missed ? '<span class="text-danger">Yes</span>' : '<span class="text-success">No</span>';
             $developer = $value->thedeveloper ? $value->thedeveloper->username : '-';
@@ -212,10 +224,10 @@ class JobsServices
             $request_volume = $value->therequestvolume ? $value->therequestvolume->name : '-';
             $special_request = $value->special_request ? 'Yes' : 'No';
             $created_at = $value->created_at ? date('d-M-y h:i:s a', strtotime($value->created_at)) : '-';
-            $start_at = $value->start_at ? date('d-M-y h:i:s a', strtotime($value->start_at)) : '-';
-            $end_at = $value->end_at ? date('d-M-y h:i:s a', strtotime($value->end_at)) : '-';
+            $start_at = $value->start_at ? date('d-M-y h:i:s a', strtotime($value->start_at)) : '';
+            $end_at = $value->end_at ? date('d-M-y h:i:s a', strtotime($value->end_at)) : '';
             $agreed_sla = $value->therequestsla ? TaskHelper::convertTime($value->therequestsla->agreed_sla) : '-';
-            $time_taken = $value->time_taken ? $value->time_taken : '-';
+            $time_taken = $value->time_taken ? $value->time_taken : '00:00:00';
             $sla_missed = $value->sla_missed ? '<span class="text-danger">Yes</span>' : '<span class="text-success">No</span>';
             $p_sla_miss = $value->sla_missed ? '<span class="text-danger">Yes</span>' : '<span class="text-success">No</span>';
 
@@ -307,8 +319,8 @@ class JobsServices
         $addon_comments = $value->addon_comments;
         $agreed_sla = $value->therequestsla ? $value->therequestsla->agreed_sla : '-';
         $sla_missed = $value->sla_missed;
-        $start_at = $value->start_at ? date('d-M-y h:i:s A', strtotime($value->start_at)) : '-';
-        $end_at = $value->end_at ? date('d-M-y h:i:s A', strtotime($value->end_at)) : '-';
+        $start_at = $value->start_at ? date('d-M-y h:i:s A', strtotime($value->start_at)) : '';
+        $end_at = $value->end_at ? date('d-M-y h:i:s A', strtotime($value->end_at)) : '';
         $status = $value->status;
 
         // additional details
