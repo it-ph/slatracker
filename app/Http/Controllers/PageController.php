@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Job;
 use App\Models\Task;
 use App\Models\User;
+use App\Models\Event;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -96,6 +97,16 @@ class PageController extends GlobalVariableController
         $user = $this->thecredentials();
         $auditors = $this->theauditors();
         return view('pages.admin.reallocation.qc.list', compact('user','auditors'));
+    }
+
+    /** Events */
+    public function showEvents()
+    {
+        $user = $this->thecredentials();
+        $events = Event::query()
+            ->clientevents()
+            ->get();
+        return view('pages.admin.events.calendar', compact('user','events'));
     }
 
     /** Users */

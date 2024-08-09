@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\TasksController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ExportController;
@@ -168,10 +169,23 @@ Route::group(['middleware' => ['auth','twofactor','web','active.user']],function
             });
         });
 
+        // EVENTS
+        Route::get('events', [PageController::class, 'showEvents']);
+        Route::group(['prefix' => 'event'],
+        function ()
+        {
+            Route::get('/all', [EventController::class,'index'])->name('event.index');
+            Route::post('/store', [EventController::class,'store'])->name('event.store');
+            Route::get('/show/{id}', [EventController::class,'show'])->name('event.show');
+            Route::post('/update/{id}', [EventController::class,'update'])->name('event.update');
+            Route::post('/delete/{id}', [EventController::class,'destroy'])->name('event.delete');
+        });
+
         // CLIENTS for TL / MANAGER
         Route::get('/configuration', [PageController::class, 'showConfiguration'])->name('configuration.index');
         Route::get('config/show/{id}', [ClientController::class,'show'])->name('client.config.show');
         Route::post('client/updateEmailConfig', [ClientController::class,'updateEmailConfig'])->name('client.updateEmailConfig');
+
 
         // REQUEST
         Route::group(['prefix' => 'request'],

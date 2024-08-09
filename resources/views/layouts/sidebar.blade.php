@@ -62,7 +62,7 @@
                         </li>
 
                         <li>
-                            <a href="{{ url('permissions') }}" class="waves-effect">
+                            <a href="{{ url('events') }}" class="waves-effect">
                                 <i class="fa fa-calendar"></i>
                                 <span key="t-users">Event Calendar</span>
                             </a>
